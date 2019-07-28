@@ -1,4 +1,6 @@
 # Vemama
 Vehicle Managment Manager
 
-Plan rutine service checks of fleet
+Checking cars regular service inspection, oil changes and rutine check.
+
+Developed for Autonapůl, first czech carsharing
