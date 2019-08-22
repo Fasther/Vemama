@@ -1,0 +1,17 @@
+body {
+  background-color: #2d1b1e;
+}
+
+.navbar-light .navbar-nav .nav-link {
+    color: rgba(0,0,0,1);
+    font-weight: 600;
+}
+
+.navbar {
+    background-color: #5baf0c;
+}
+
+.content {
+    background-color: white;
+    padding: 15px;
+}
