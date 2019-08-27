@@ -18,6 +18,7 @@ from django.urls import path, include
 from django.contrib.auth import views as auth_views
 from django.views.generic import TemplateView
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("", TemplateView.as_view(template_name="index.html"), name="index"),
@@ -25,4 +26,5 @@ urlpatterns = [
     path("logout/", auth_views.LogoutView.as_view(), name="logout"),
     path('change-password/', auth_views.PasswordChangeView.as_view(template_name='change-password.html'),
          name="change_password"),
+    path("cars/", include("cars.urls", namespace="cars"))
 ]

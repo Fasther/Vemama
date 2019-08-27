@@ -30,6 +30,9 @@ class Car(models.Model):
         return (int(min(self.car_next_oil_km, self.car_next_inspection_km)) - int(self.car_actual_driven_kms)) \
             if self.car_id else "0"
 
+    def get_absolute_url(self):
+        return reverse("post_detail",kwargs={'pk':self.pk})
+
     def __str__(self):
         return self.car_name
 
