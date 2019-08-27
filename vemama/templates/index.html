@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+    {% if user.is_authenticated %}
+    <h1>Welcome to main dashboard!</h1>
+    <p>Start working by choosing one Tasks or Cars from menu above.</p>
+    <p><i>More useful functions for dashboard are coming soon...</i></p>
+    {% else %}
+    <h1>Please log-in</h1>
+    <p>If you want to do some work, you need to be logged in.</p>
+    {% endif %}
+{% endblock %}
