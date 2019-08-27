@@ -9,7 +9,7 @@ class City(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse("cars:car_list", kwargs={'pk': self.pk})
+        return reverse("cars:car_list", kwargs={'city': self.pk})
 
     class Meta:
         verbose_name_plural = "Cities"
@@ -25,7 +25,7 @@ class Car(models.Model):
     car_next_oil_km = models.DecimalField(decimal_places=0, max_digits=10)
     car_last_check = models.DateField()
     car_actual_driven_kms = models.DecimalField(decimal_places=0, max_digits=10)
-    car_note = models.CharField(blank=True, max_length=1024)
+    car_note = models.TextField(blank=True, max_length=1024)
 
     def next_oil_or_inspection_date(self):
         return min(self.car_next_inspection_date, self.car_next_oil_date) if self.car_id else "0"
@@ -33,6 +33,9 @@ class Car(models.Model):
     def next_oil_or_inspection_kms(self):
         return (int(min(self.car_next_oil_km, self.car_next_inspection_km)) - int(self.car_actual_driven_kms)) \
             if self.car_id else "0"
+
+    def get_absolute_url(self):
+        return reverse("cars:car_detail", kwargs={'pk': self.pk, "city": self.car_city.pk})
 
     def __str__(self):
         return self.car_name

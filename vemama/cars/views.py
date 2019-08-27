@@ -1,4 +1,4 @@
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, UpdateView
 from .models import City, Car
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -23,3 +23,16 @@ class CarsInCityList(LoginRequiredMixin, ListView):
 class CarDetailView(LoginRequiredMixin, DetailView):
     model = Car
     template_name = "cars/car_detail.html"
+
+
+class CarUpdateView(LoginRequiredMixin, UpdateView):
+    model = Car
+    template_name = "cars/car_form.html"
+    fields = ["car_next_inspection_date",
+              "car_next_inspection_km",
+              "car_next_oil_date",
+              "car_next_oil_km",
+              "car_last_check",
+              "car_actual_driven_kms",
+              "car_note",
+              ]

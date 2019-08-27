@@ -26,5 +26,5 @@ urlpatterns = [
     path("logout/", auth_views.LogoutView.as_view(), name="logout"),
     path('change-password/', auth_views.PasswordChangeView.as_view(template_name='change-password.html'),
          name="change_password"),
-    path("cars/", include("cars.urls", namespace="cars"))
+    path("cars/", include("cars.urls", namespace="cars")),
 ]
