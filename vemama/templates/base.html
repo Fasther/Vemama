@@ -33,7 +33,7 @@
             <div class="collapse navbar-collapse" id="navbarText">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fas fa-sign-out-alt"></i> {{ user.username }}</a>
+                        <a class="nav-link" href="{% url 'login' %}"><i class="fas fa-sign-out-alt"></i> {{ user.username }}</a>
                     </li>
                 </ul>
             </div>
@@ -44,7 +44,7 @@
             <div class="collapse navbar-collapse" id="navbarText">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fas fa-sign-in-alt"></i> Login</a>
+                        <a class="nav-link" href="{% url 'login' %}"><i class="fas fa-sign-in-alt"></i> Login</a>
                     </li>
                 </ul>
             </div>
