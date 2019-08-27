@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 
 class City(models.Model):
@@ -6,6 +7,9 @@ class City(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse("cars:car_list", kwargs={'pk': self.pk})
 
     class Meta:
         verbose_name_plural = "Cities"
@@ -29,9 +33,6 @@ class Car(models.Model):
     def next_oil_or_inspection_kms(self):
         return (int(min(self.car_next_oil_km, self.car_next_inspection_km)) - int(self.car_actual_driven_kms)) \
             if self.car_id else "0"
-
-    def get_absolute_url(self):
-        return reverse("post_detail",kwargs={'pk':self.pk})
 
     def __str__(self):
         return self.car_name

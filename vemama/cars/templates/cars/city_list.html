@@ -3,7 +3,7 @@
 {% block content %}
 <ul>
     {% for city in cities %}
-    <li>{{ city.name}} </li>
+    <li><a href="{{city.pk}}"> {{ city.name}} </a></li>
     {% endfor %}
 </ul>
 

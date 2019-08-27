@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+<ul>
+    {% for car in cars %}
+    <li><a href="{{ car.pk }}"> car name {{ car.car_name }}</a> </li>
+    {% endfor %}
+</ul>
+
+{% endblock %}
