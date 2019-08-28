@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
+
+You are in: Cars
+
 <ul>
     {% for city in cities %}
     <li><a href="{{city.pk}}"> {{ city.name}} </a></li>
