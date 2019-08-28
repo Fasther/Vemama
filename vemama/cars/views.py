@@ -1,6 +1,8 @@
 from django.views.generic import ListView, DetailView, UpdateView
 from .models import City, Car
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404, redirect
 
 
 class CityList(LoginRequiredMixin, ListView):
@@ -36,3 +38,15 @@ class CarUpdateView(LoginRequiredMixin, UpdateView):
               "car_next_oil_km",
               "car_note",
               ]
+
+
+class CarCheckView(LoginRequiredMixin, DetailView):
+    model = Car
+    template_name = "cars/car_check.html"
+
+
+@login_required
+def do_check(request, pk, city):
+    car = get_object_or_404(Car, pk=pk)
+    car.do_check()
+    return redirect('cars:car_detail', city=city, pk=pk)

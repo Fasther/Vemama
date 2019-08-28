@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from django.utils import timezone
 
 
 class City(models.Model):
@@ -39,6 +40,10 @@ class Car(models.Model):
 
     def __str__(self):
         return self.car_name
+
+    def do_check(self):
+        self.car_last_check = timezone.now()
+        self.save()
 
     car_next_date = property(next_oil_or_inspection_date)
     car_next_km = property(next_oil_or_inspection_kms)
