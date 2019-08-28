@@ -16,7 +16,6 @@ class CarsInCityList(LoginRequiredMixin, ListView):
     template_name = "cars/cars_list.html"
     context_object_name = "cars"
 
-
     def get_queryset(self):
         return Car.objects.filter(car_city__exact=self.kwargs["city"])
 
@@ -29,11 +28,11 @@ class CarDetailView(LoginRequiredMixin, DetailView):
 class CarUpdateView(LoginRequiredMixin, UpdateView):
     model = Car
     template_name = "cars/car_form.html"
-    fields = ["car_next_inspection_date",
+    fields = ["car_actual_driven_kms",
+              "car_last_check",
+              "car_next_inspection_date",
               "car_next_inspection_km",
               "car_next_oil_date",
               "car_next_oil_km",
-              "car_last_check",
-              "car_actual_driven_kms",
               "car_note",
               ]
