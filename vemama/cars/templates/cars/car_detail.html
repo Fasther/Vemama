@@ -1,26 +1,36 @@
 {% extends "base.html" %}
 
 {% block content %}
-<nav>
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="{% url 'cars:city_list'%}">Cars</a></li>
-    <li class="breadcrumb-item"><a href="{% url 'cars:car_list' city=car.car_city.id %}">{{ car.car_city }}</a></li>
-    <li class="breadcrumb-item active">{{ car.car_name }}</li>
-  </ol>
+<nav xmlns="http://www.w3.org/1999/html">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'cars:city_list'%}">Cars</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'cars:car_list' city=car.car_city.id %}">{{ car.car_city }}</a></li>
+        <li class="breadcrumb-item active">{{ car.car_name }}</li>
+    </ol>
 </nav>
 
-
-<h2>{{car.car_name}}</h2>
 <a href="{% url 'cars:car_edit' city=car.car_city.pk pk=car.pk %}" class="btn btn-warning">Edit</a>
-<p>City: {{car.car_city}}</p>
-<p>External ID: {{}}</p>
-<p>External ID: {{}}</p>
-<p>External ID: {{}}</p>
-<p>External ID: {{}}</p>
-<p>External ID: {{}}</p>
-<p>External ID: {{}}</p>
-<p>External ID: {{}}</p>
-<p>External ID: {{}}</p>
-<p>External ID: {{}}</p>
+<p></p>
+<h3>Name: {{car.car_name}}</h3>
+<ul class="list-group ">
+    <li class="list-group-item list-group-item-action">City: {{car.car_city}} | External ID: {{car.car_id}}</li>
+    <li class="list-group-item list-group-item-action">Last check date: {{car.car_last_check}}</li>
+    <li class="list-group-item list-group-item-action">Driven kms: {{car.car_actual_driven_kms}}kms</li>
+    <li class="list-group-item list-group-item-action">Next oil or inspection date:
+        {{car.next_oil_or_inspection_date}}
+    </li>
+    <li class="list-group-item list-group-item-action">Next oil or inspection km: {{car.next_oil_or_inspection_kms}}km
+    </li>
+    <li class="list-group-item list-group-item-action">Next inspection on: {{car.car_next_inspection_date}} or
+        {{car.car_next_inspection_km}}kms
+    </li>
+    <li class="list-group-item list-group-item-action">Next oil on: {{car.car_next_oil_date}} or
+        {{car.car_next_oil_km}}kms
+    </li>
+    <li class="list-group-item list-group-item-action">Note: </br> {{car.car_note}}</li>
+</ul>
+<p></p>
+<h3>Active Tasks:</h3>
+
 
 {% endblock %}
