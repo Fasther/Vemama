@@ -8,10 +8,10 @@
   </ol>
 </nav>
 
-<ul>
+<div class="list-group">
     {% for city in cities %}
-    <li><a href="{{city.pk}}"> {{ city.name}} </a></li>
+    <a class="list-group-item list-group-item-action" href="{{city.pk}}"> {{ city.name}} </a>
     {% endfor %}
-</ul>
+</div>
 
 {% endblock %}
