@@ -1,7 +1,26 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Car name: {{car.car_name}}</h1>
-<p>{{car.car_city}}</p>
+<nav>
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'cars:city_list'%}">Cars</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'cars:car_list' city=car.car_city.id %}">{{ car.car_city }}</a></li>
+    <li class="breadcrumb-item active">{{ car.car_name }}</li>
+  </ol>
+</nav>
+
+
+<h2>{{car.car_name}}</h2>
 <a href="{% url 'cars:car_edit' city=car.car_city.pk pk=car.pk %}" class="btn btn-warning">Edit</a>
+<p>City: {{car.car_city}}</p>
+<p>External ID: {{}}</p>
+<p>External ID: {{}}</p>
+<p>External ID: {{}}</p>
+<p>External ID: {{}}</p>
+<p>External ID: {{}}</p>
+<p>External ID: {{}}</p>
+<p>External ID: {{}}</p>
+<p>External ID: {{}}</p>
+<p>External ID: {{}}</p>
+
 {% endblock %}

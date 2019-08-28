@@ -2,7 +2,16 @@
 
 {% block content %}
 
-You are in: Cars > {{ city.name }}
+{% with cars.all|first as city %}
+<nav>
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'cars:city_list'%}">Cars</a></li>
+    <li class="breadcrumb-item active">{{ city.car_city }}</li>
+  </ol>
+</nav>
+{% endwith %}
+
+
 
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>

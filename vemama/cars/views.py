@@ -16,6 +16,7 @@ class CarsInCityList(LoginRequiredMixin, ListView):
     template_name = "cars/cars_list.html"
     context_object_name = "cars"
 
+
     def get_queryset(self):
         return Car.objects.filter(car_city__exact=self.kwargs["city"])
 
