@@ -49,7 +49,7 @@ INSTALLED_APPS = [
     "debug_toolbar",
     "crispy_forms",
     "cars",
-    "tasks"
+    "tasks",
 ]
 
 MIDDLEWARE = [
