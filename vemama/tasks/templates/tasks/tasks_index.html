@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<nav>
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item active">Tasks</li>
+  </ol>
+</nav>
+
+<div class="list-group">
+    <a class="list-group-item list-group-item-action" href="#"> My tasks </a>
+    <a class="list-group-item list-group-item-action" href="#"> All active tasks </a>
+    {% if user.is_staff %}
+    <a class="list-group-item list-group-item-action" href="#"> Unassigned </a>
+    <a class="list-group-item list-group-item-action" href="#"> Past Due </a>
+    <a class="list-group-item list-group-item-action" href="#"> All tasks </a>
+    <a class="list-group-item list-group-item-action" href="#"> Create new </a>
+    {% endif %}
+</div>
+
+{% endblock %}
