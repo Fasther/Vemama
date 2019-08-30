@@ -7,12 +7,13 @@ class CarAdmin(admin.ModelAdmin):
                     "car_city",
                     "car_last_check",
                     "car_actual_driven_kms",
-                    "next_oil_or_inspection_date",
-                    "next_oil_or_inspection_kms",
+                    "car_next_km",
+                    "car_next_date",
                     ]
     list_editable = ["car_actual_driven_kms", ]
     readonly_fields = ["car_next_date",
                        "car_next_km",
+                       "next_oil_or_inspection_date",
                        ]
     list_filter = ["car_city"]
 

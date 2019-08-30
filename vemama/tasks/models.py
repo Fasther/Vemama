@@ -6,17 +6,19 @@ from django.contrib.auth.models import User
 class Task(models.Model):
     name = models.CharField(max_length=200)
     car = models.ForeignKey(cars.Car, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True, verbose_name="Person")
     description = models.TextField(blank=True)
     created_date = models.DateField(auto_now_add=True)
     due_date = models.DateField(blank=True, null=True)
     completed_date = models.DateField(blank=True, null=True)
+
 
     def is_completed(self):
         if self.completed_date:
             return True
         else:
             return False
+
     is_completed.boolean = True
 
     def __str__(self):

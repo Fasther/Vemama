@@ -44,8 +44,8 @@ $(document).ready( function () {
             <td><a href="{{ car.pk }}">{{ car.car_name }}</a></td>
             <td>{{ car.car_last_check|date:'d.m.' }}</td>
             <td>{{ car.car_actual_driven_kms }}</td>
-            <td>{{ car.next_oil_or_inspection_date|date:'d.m.y' }}</td>
-            <td>{{ car.next_oil_or_inspection_kms }}</td>
+            <td>{{ car.car_next_date|date:'d.m.y' }}</td>
+            <td>{{ car.car_next_km }}</td>
         </tr>
     {% endfor %}
     </tbody>
