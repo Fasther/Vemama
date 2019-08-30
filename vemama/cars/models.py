@@ -35,7 +35,7 @@ class Car(models.Model):
     def next_oil_or_inspection_kms(self):
         return (int(min(self.car_next_oil_km, self.car_next_inspection_km)) - int(self.car_actual_driven_kms)) \
             if self.car_id else "0"
-    next_oil_or_inspection_kms.short_description = "Next 🔧 date"
+    next_oil_or_inspection_kms.short_description = "Next 🔧 kms"
 
     def get_absolute_url(self):
         return reverse("cars:car_detail", kwargs={'pk': self.pk, "city": self.car_city.pk})
