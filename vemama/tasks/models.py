@@ -12,5 +12,12 @@ class Task(models.Model):
     due_date = models.DateField(blank=True, null=True)
     completed_date = models.DateField(blank=True, null=True)
 
+    def is_completed(self):
+        if self.completed_date:
+            return True
+        else:
+            return False
+    is_completed.boolean = True
+
     def __str__(self):
         return self.name

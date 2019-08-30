@@ -19,7 +19,7 @@ class City(models.Model):
 class Car(models.Model):
     car_name = models.CharField(max_length=200, unique=True)
     car_id = models.DecimalField(unique=True, decimal_places=0, max_digits=5)
-    car_city = models.ForeignKey(City, related_name="cars", on_delete=models.CASCADE)
+    car_city = models.ForeignKey(City, related_name="cars", on_delete=models.CASCADE, verbose_name="City")
     car_next_inspection_date = models.DateField()
     car_next_inspection_km = models.DecimalField(decimal_places=0, max_digits=10)
     car_next_oil_date = models.DateField()

@@ -14,6 +14,7 @@ class CarAdmin(admin.ModelAdmin):
     readonly_fields = ["car_next_date",
                        "car_next_km",
                        ]
+    list_filter = ["car_city"]
 
 
 admin.site.register(City)
