@@ -39,6 +39,20 @@ class MyTasksList(LoginRequiredMixin, ListView):
         return context
 
 
+class UnassignedTasksList(LoginRequiredMixin, ListView):
+    model = Task
+    template_name = "tasks/tasks_list.html"
+    context_object_name = "tasks"
+
+    def get_queryset(self):
+        return Task.objects.filter(user=None)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["actual_page"] = "Unassigned tasks"
+        context["last"] = "unassigned"
+        return context
+
 class TaskDetail(LoginRequiredMixin, DetailView):
     template_name = "tasks/tasks_detail.html"
     model = Task
