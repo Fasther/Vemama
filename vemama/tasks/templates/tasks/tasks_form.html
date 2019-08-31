@@ -2,5 +2,20 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
+<nav>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'tasks:tasks_index'%}">Tasks</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'tasks:'|add:view.kwargs.last|add:'_tasks' %}">{{ view.kwargs.last|title }} tasks</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'tasks:task_detail' last=view.kwargs.last pk=task.pk %}">{{ task.name }}</a> </li>
+        <li class="breadcrumb-item active">Edit</li>
+    </ol>
+</nav>
+<h3>Update task: {{ task.name }} </h3>
+     <form method="POST" class="form">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Save Changes</button>
+            <a class="btn btn-primary" href="{% url 'tasks:task_detail' last=view.kwargs.last pk=task.pk %}"><i class="fas fa-times"></i> Cancel</a>
+     </form>
 
 {% endblock %}

@@ -10,7 +10,7 @@
     </ol>
 </nav>
 
-<a href="#" class="btn btn-warning"><i class="fas fa-pen"></i> Edit</a>&ensp;
+<a href="{% url 'tasks:task_edit' last=view.kwargs.last pk=task.pk %}" class="btn btn-warning"><i class="fas fa-pen"></i> Edit</a>&ensp;
 {% if not task.completed %}
 <a href="#" class="btn btn-success"><i class="fas fa-check"></i> Completed</a>
 {% endif %}
@@ -33,7 +33,7 @@
     <li class="list-group-item list-group-item-action">Car: {{ task.car }}</li>
     <li class="list-group-item list-group-item-action">City: {{ task.city }}</li>
     <li class="list-group-item list-group-item-action">Person: {{ task.user }}</li>
-    <li class="list-group-item list-group-item-action">Description: {{ task.description }}</li>
+    <li class="list-group-item list-group-item-action">Description: {{ task.description|linebreaks }}</li>
     <li class="list-group-item list-group-item-action">Created date: {{ task.created_date }}</li>
     <li class="list-group-item list-group-item-action">Due date: {{ task.due_date }}</li>
     {% if task.completed %}

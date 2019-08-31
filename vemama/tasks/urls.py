@@ -9,5 +9,6 @@ urlpatterns = [
     path("active", views.ActiveTasksList.as_view(), name="active_tasks"),
     path("my", views.MyTasksList.as_view(), name="my_tasks"),
     path("<str:last>/<int:pk>", views.TaskDetail.as_view(), name="task_detail"),
+    path("<str:last>/<int:pk>/edit", views.EditTask.as_view(), name="task_edit"),
     path("unassigned", views.UnassignedTasksList.as_view(), name="unassigned_tasks"),
 ]

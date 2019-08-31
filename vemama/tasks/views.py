@@ -53,6 +53,19 @@ class UnassignedTasksList(LoginRequiredMixin, ListView):
         context["last"] = "unassigned"
         return context
 
+
 class TaskDetail(LoginRequiredMixin, DetailView):
     template_name = "tasks/tasks_detail.html"
     model = Task
+
+
+class EditTask(LoginRequiredMixin, UpdateView):
+    model = Task
+    template_name = "tasks/tasks_form.html"
+    fields = [
+        "name",
+        "car",
+        "user",
+        "description",
+        "due_date",
+    ]
