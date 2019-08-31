@@ -1,10 +1,11 @@
 {% extends "base.html" %}
 
+
 {% block content %}
 <nav>
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{% url 'tasks:tasks_index'%}">Tasks</a></li>
-        <li class="breadcrumb-item"><a href="#">My OR All OR (...)</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'tasks:'|add:view.kwargs.last|add:'_tasks' %}">{{ view.kwargs.last|title }} tasks</a></li>
         <li class="breadcrumb-item active">{{ task.name }}</li>
     </ol>
 </nav>

@@ -20,6 +20,7 @@ class AllActiveTasksList(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["actual_page"] = "All active tasks"
+        context["last"] = "all"
         return context
 
 
@@ -34,6 +35,7 @@ class MyTasksList(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["actual_page"] = "My tasks"
+        context["last"] = "my"
         return context
 
 

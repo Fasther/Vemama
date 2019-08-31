@@ -41,7 +41,7 @@ $(document).ready( function () {
     <tbody>
     {% for task in tasks %}
         <tr>
-            <td><a href="{{ task.pk }}">{{ task.name }}</a></td>
+            <td><a href="{% url 'tasks:task_detail' last=last pk=task.pk %}">{{ task.name }}</a></td>
             <td>{{ task.car }}</td>
             <td>{{ task.user }}</td>
             <td>{{ task.due_date|date:'d.m.' }}</td>
