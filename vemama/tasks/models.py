@@ -2,6 +2,7 @@ from django.db import models
 from cars import models as cars
 from django.contrib.auth.models import User
 from django.utils import timezone
+from django.urls import reverse
 
 
 class Task(models.Model):
@@ -32,3 +33,6 @@ class Task(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse("tasks:task_detail", kwargs={'pk': self.pk})

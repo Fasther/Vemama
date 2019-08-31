@@ -1,5 +1,44 @@
 {% extends "base.html" %}
 
 {% block content %}
+<nav>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'tasks:tasks_index'%}">Tasks</a></li>
+        <li class="breadcrumb-item"><a href="#">My OR All OR (...)</a></li>
+        <li class="breadcrumb-item active">{{ task.name }}</li>
+    </ol>
+</nav>
+
+<a href="#" class="btn btn-warning"><i class="fas fa-pen"></i> Edit</a>&ensp;
+{% if not task.completed %}
+<a href="#" class="btn btn-success"><i class="fas fa-check"></i> Completed</a>
+{% endif %}
+
+<p></p>
+<h3>Task: {{ task.name }}</h3>
+{% if task.completed %}
+<div class="alert alert-success" role="alert">
+  Task is completed!
+</div>
+{% endif %}
+
+{% if task.is_past_due %}
+<div class="alert alert-warning" role="alert">
+  Task is past due!
+</div>
+{% endif %}
+
+<ul class="list-group ">
+    <li class="list-group-item list-group-item-action">Car: {{ task.car }}</li>
+    <li class="list-group-item list-group-item-action">City: {{ task.city }}</li>
+    <li class="list-group-item list-group-item-action">Person: {{ task.user }}</li>
+    <li class="list-group-item list-group-item-action">Description: {{ task.description }}</li>
+    <li class="list-group-item list-group-item-action">Created date: {{ task.created_date }}</li>
+    <li class="list-group-item list-group-item-action">Due date: {{ task.due_date }}</li>
+    {% if task.completed %}
+    <li class="list-group-item list-group-item-action">Completed date: {{ task.completed_date }}</li>
+    {% endif %}
+</ul>
+<p></p>
 
 {% endblock %}

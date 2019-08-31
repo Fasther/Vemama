@@ -35,3 +35,8 @@ class MyTasksList(LoginRequiredMixin, ListView):
         context = super().get_context_data(**kwargs)
         context["actual_page"] = "My tasks"
         return context
+
+
+class TaskDetail(LoginRequiredMixin, DetailView):
+    template_name = "tasks/tasks_detail.html"
+    model = Task

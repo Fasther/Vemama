@@ -10,7 +10,7 @@
 </nav>
 
 <a href="{% url 'cars:car_edit' city=car.car_city.pk pk=car.pk %}" class="btn btn-warning"><i class="fas fa-pen"></i> Edit</a>&ensp;
-<a href="{% url 'cars:car_check' city=car.car_city.pk pk=car.pk %}" class="btn btn-info"><i class="fas fa-check-square"></i> Do Check</a>
+<a href="{% url 'cars:car_check' city=car.car_city.pk pk=car.pk %}" class="btn btn-info"><i class="far fa-check-square"></i> Do Check</a>
 <p></p>
 <h3>Name: {{car.car_name}}</h3>
 <ul class="list-group ">
