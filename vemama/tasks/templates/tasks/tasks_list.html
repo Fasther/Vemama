@@ -16,10 +16,13 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/plug-ins/1.10.19/sorting/datetime-moment.js"></script>
 
 <script>
 $(document).ready( function () {
-    $('#car-list').DataTable( {
+    $.fn.dataTable.moment( 'DD.MM.YY' );
+    $('#task-list').DataTable( {
     "paging":   false,
     }
     );
@@ -28,7 +31,7 @@ $(document).ready( function () {
 
 
 
-<table id="car-list" class="table table-striped table-bordered table-hover table-sm" style="width:100%">
+<table id="task-list" class="table table-striped table-bordered table-hover table-sm" style="width:100%">
     <thead>
         <tr>
             <td>Task Name</td>
@@ -44,7 +47,7 @@ $(document).ready( function () {
             <td><a href="{% url 'tasks:task_detail' last=last pk=task.pk %}">{{ task.name }}</a></td>
             <td>{{ task.car }}</td>
             <td>{{ task.user }}</td>
-            <td>{{ task.due_date|date:'d.m.' }}</td>
+            <td>{{ task.due_date|date:'d.m.y' }}</td>
             <td>{{ task.city }}</td>
         </tr>
     {% endfor %}
