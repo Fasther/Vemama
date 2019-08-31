@@ -6,5 +6,6 @@ app_name = "tasks"
 
 urlpatterns = [
     path("", views.TasksIndexView.as_view(), name="tasks_index"),
-    path("alltasks", views.AllActiveTasksList.as_view(), name="all_tasks"),
+    path("all", views.AllActiveTasksList.as_view(), name="all_tasks"),
+    path("my", views.MyTasksList.as_view(), name="my_tasks"),
 ]
