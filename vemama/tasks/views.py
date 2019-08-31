@@ -9,7 +9,7 @@ class TasksIndexView(LoginRequiredMixin, TemplateView):
     template_name = "tasks/tasks_index.html"
 
 
-class AllActiveTasksList(LoginRequiredMixin, ListView):
+class ActiveTasksList(LoginRequiredMixin, ListView):
     model = Task
     template_name = "tasks/tasks_list.html"
     context_object_name = "tasks"
@@ -19,8 +19,8 @@ class AllActiveTasksList(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["actual_page"] = "All active tasks"
-        context["last"] = "all"
+        context["actual_page"] = "Active tasks"
+        context["last"] = "active"
         return context
 
 

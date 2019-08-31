@@ -10,7 +10,7 @@
 
 <div class="list-group">
     <a class="list-group-item list-group-item-action" href="{% url 'tasks:my_tasks' %}"> My tasks </a>
-    <a class="list-group-item list-group-item-action" href="{% url 'tasks:all_tasks' %}"> All active tasks </a>
+    <a class="list-group-item list-group-item-action" href="{% url 'tasks:active_tasks' %}"> All active tasks </a>
     {% if user.is_staff %}
     <a class="list-group-item list-group-item-action" href="#"> Unassigned </a>
     <a class="list-group-item list-group-item-action" href="#"> Past Due </a>
