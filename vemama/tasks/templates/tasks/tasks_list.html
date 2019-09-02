@@ -36,8 +36,14 @@ $(document).ready( function () {
         <tr>
             <td>Task Name</td>
             <td>Car</td>
+            {% if not last == 'my' %}
             <td>User</td>
+            {% endif %}
+            {% if last == 'completed' %}
+            <td>Completed at</td>
+            {% else %}
             <td>Due date</td>
+            {% endif %}
             <td>City</td>
         </tr>
     </thead>
@@ -46,8 +52,14 @@ $(document).ready( function () {
         <tr>
             <td><a href="{% url 'tasks:task_detail' last=last pk=task.pk %}">{{ task.name }}</a></td>
             <td>{{ task.car }}</td>
+            {% if not last == 'my' %}
             <td>{{ task.user }}</td>
+            {% endif %}
+            {% if last == 'completed' %}
+            <td>{{ task.completed_date|date:'d.m.y' }}</td>
+            {% else %}
             <td>{{ task.due_date|date:'d.m.y' }}</td>
+            {% endif %}
             <td>{{ task.city }}</td>
         </tr>
     {% endfor %}
