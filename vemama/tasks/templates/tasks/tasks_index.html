@@ -16,7 +16,7 @@
 {% if user.is_staff %}
 <div class="list-group">
     <a class="list-group-item list-group-item-action" href="{% url 'tasks:unassigned_tasks' %}"> Unassigned </a>
-    <a class="list-group-item list-group-item-action" href="{% url 'tasks:pastdue_tasks' %}"> Past Due </a>
+    <a class="list-group-item list-group-item-action" href="{% url 'tasks:overdue_tasks' %}"> Overdue </a>
     <a class="list-group-item list-group-item-action" href="#"> Completed </a>
     <a class="list-group-item list-group-item-action" href="#"> Create new </a>
 </div>

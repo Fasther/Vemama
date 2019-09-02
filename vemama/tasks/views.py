@@ -56,7 +56,7 @@ class UnassignedTasksList(LoginRequiredMixin, ListView):
         return context
 
 
-class PastDueTasksList(LoginRequiredMixin, ListView):
+class OverdueTasksList(LoginRequiredMixin, ListView):
     model = Task
     template_name = "tasks/tasks_list.html"
     context_object_name = "tasks"
@@ -66,8 +66,8 @@ class PastDueTasksList(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["actual_page"] = "Past due tasks"
-        context["last"] = "pastdue"
+        context["actual_page"] = "Overdue tasks"
+        context["last"] = "overdue"
         return context
 
 
