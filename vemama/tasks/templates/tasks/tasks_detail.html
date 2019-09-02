@@ -12,7 +12,7 @@
 
 <a href="{% url 'tasks:task_edit' last=view.kwargs.last pk=task.pk %}" class="btn btn-warning"><i class="fas fa-pen"></i> Edit</a>&ensp;
 {% if not task.completed %}
-<a href="#" class="btn btn-success"><i class="fas fa-check"></i> Completed</a>
+<a href="{% url 'tasks:task_complete' last=view.kwargs.last pk=task.pk %}" class="btn btn-success"><i class="fas fa-check"></i> Completed</a>
 {% endif %}
 
 <p></p>
@@ -35,9 +35,10 @@
     <li class="list-group-item list-group-item-action">Person: {{ task.user }}</li>
     <li class="list-group-item list-group-item-action">Description: {{ task.description|linebreaks }}</li>
     <li class="list-group-item list-group-item-action">Created date: {{ task.created_date }}</li>
-    <li class="list-group-item list-group-item-action">Due date: {{ task.due_date }}</li>
     {% if task.completed %}
     <li class="list-group-item list-group-item-action">Completed date: {{ task.completed_date }}</li>
+    {% else %}
+    <li class="list-group-item list-group-item-action">Due date: {{ task.due_date }}</li>
     {% endif %}
 </ul>
 <p></p>

@@ -36,3 +36,7 @@ class Task(models.Model):
 
     def get_absolute_url(self):
         return reverse("tasks:task_detail",  kwargs={"last": "my", 'pk': self.pk})
+
+    def complete(self):
+        self.completed_date = timezone.now()
+        self.save()

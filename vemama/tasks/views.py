@@ -96,12 +96,19 @@ class EditTask(LoginRequiredMixin, UpdateView):
     template_name = "tasks/tasks_form.html"
     fields = [
         "name",
-        "user",
         "description",
         "due_date",
+        "completed_date",
     ]
 
     def get_success_url(self):
         last = self.kwargs.get("last")
         pk = self.kwargs.get("pk")
         return reverse("tasks:task_detail", kwargs={"last": last, "pk": pk})
+
+
+@login_required
+def mark_as_complete(request, pk, last):
+    task = get_object_or_404(Task, pk=pk)
+    task.complete()
+    return redirect('tasks:task_detail', last=last, pk=pk)

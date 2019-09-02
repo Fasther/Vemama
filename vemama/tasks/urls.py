@@ -11,5 +11,5 @@ urlpatterns = [
     path("overdue", views.OverdueTasksList.as_view(), name="overdue_tasks"),
     path("<str:last>/<int:pk>", views.TaskDetail.as_view(), name="task_detail"),
     path("<str:last>/<int:pk>/edit", views.EditTask.as_view(), name="task_edit"),
-    path("unassigned", views.UnassignedTasksList.as_view(), name="unassigned_tasks"),
+    path("<str:last>/<int:pk>/complete", views.mark_as_complete, name="task_complete"),
 ]
