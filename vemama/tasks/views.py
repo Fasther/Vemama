@@ -71,6 +71,21 @@ class OverdueTasksList(LoginRequiredMixin, ListView):
         return context
 
 
+class CompletedTasksList(LoginRequiredMixin, ListView):
+    model = Task
+    template_name = "tasks/tasks_list.html"
+    context_object_name = "tasks"
+
+    def get_queryset(self):
+        return Task.objects.filter(completed=True)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["actual_page"] = "Completed tasks"
+        context["last"] = "completed"
+        return context
+
+
 class TaskDetail(LoginRequiredMixin, DetailView):
     template_name = "tasks/tasks_detail.html"
     model = Task
