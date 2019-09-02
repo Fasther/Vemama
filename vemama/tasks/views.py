@@ -4,6 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse
+from django.utils import timezone
 
 
 class TasksIndexView(LoginRequiredMixin, TemplateView):
@@ -52,6 +53,21 @@ class UnassignedTasksList(LoginRequiredMixin, ListView):
         context = super().get_context_data(**kwargs)
         context["actual_page"] = "Unassigned tasks"
         context["last"] = "unassigned"
+        return context
+
+
+class PastDueTasksList(LoginRequiredMixin, ListView):
+    model = Task
+    template_name = "tasks/tasks_list.html"
+    context_object_name = "tasks"
+
+    def get_queryset(self):
+        return Task.objects.filter(due_date__lte=timezone.now())
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["actual_page"] = "Past due tasks"
+        context["last"] = "pastdue"
         return context
 
 
