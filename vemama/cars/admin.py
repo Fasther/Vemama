@@ -4,9 +4,10 @@ from .models import City, Car
 
 class CarAdmin(admin.ModelAdmin):
     list_display = ["car_name",
+                    "car_id",
                     "car_city",
-                    "car_last_check",
                     "car_actual_driven_kms",
+                    "car_last_check",
                     "car_next_km",
                     "car_next_date",
                     ]
