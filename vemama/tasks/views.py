@@ -3,6 +3,7 @@ from .models import Task
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect
+from django.urls import reverse
 
 
 class TasksIndexView(LoginRequiredMixin, TemplateView):
@@ -64,8 +65,12 @@ class EditTask(LoginRequiredMixin, UpdateView):
     template_name = "tasks/tasks_form.html"
     fields = [
         "name",
-        "car",
         "user",
         "description",
         "due_date",
     ]
+
+    def get_success_url(self):
+        last = self.kwargs.get("last")
+        pk = self.kwargs.get("pk")
+        return reverse("tasks:task_detail", kwargs={"last": last, "pk": pk})

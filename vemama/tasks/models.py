@@ -35,4 +35,4 @@ class Task(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse("tasks:task_detail", kwargs={'pk': self.pk})
+        return reverse("tasks:task_detail",  kwargs={"last": "my", 'pk': self.pk})
