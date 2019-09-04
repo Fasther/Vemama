@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse
 from django.utils import timezone
+from datetime import timedelta
 
 
 class TasksIndexView(LoginRequiredMixin, TemplateView):
@@ -32,14 +33,13 @@ class MyTasksList(LoginRequiredMixin, ListView):
     context_object_name = "tasks"
 
     def get_queryset(self):
-        return Task.objects.filter(user=self.request.user)
+        return Task.objects.filter(user=self.request.user, completed=False)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["actual_page"] = "My tasks"
         context["last"] = "my"
         return context
-
 
 class UnassignedTasksList(LoginRequiredMixin, ListView):
     model = Task
