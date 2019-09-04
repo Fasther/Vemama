@@ -11,7 +11,7 @@ class TaskAdmin(admin.ModelAdmin):
                     "completed",
                     "completed_date",
                     ]
-    readonly_fields = ["created_date", "completed", "is_past_due", ]
+    readonly_fields = ["created_date", "completed", "is_past_due", "city", ]
     raw_id_fields = ["car", ]
     list_filter = ["city", "completed", "user"]
 

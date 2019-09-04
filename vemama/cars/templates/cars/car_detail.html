@@ -37,7 +37,7 @@
 <h3>Active Tasks:</h3>
 <div class="list-group">
     {% for task in tasks %}
-        <a href="{% url 'tasks:task_detail' last='active' pk=task.pk %}" class="list-group-item list-group-item-action">{{ task.name }} | Person: {{ task.user }}</a>
+        <a href="{% url 'tasks:task_detail' last='active' pk=task.pk %}" class="list-group-item list-group-item-action">{{ task.name }} | Due date: {{task.due_date}} | Person: {{ task.user }}</a>
     {% endfor %}
 </div>
 {% endif %}

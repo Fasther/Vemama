@@ -28,7 +28,7 @@ class CarDetailView(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["tasks"] = self.object.tasks.filter(completed=False)
+        context["tasks"] = self.object.tasks.filter(completed=False).order_by("due_date")
         return context
 
 
