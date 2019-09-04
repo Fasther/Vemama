@@ -43,8 +43,6 @@ class CarUpdateView(LoginRequiredMixin, UpdateView):
 class CarCheckView(LoginRequiredMixin, DetailView):
     model = Car
     template_name = "cars/car_check.html"
-    # TODO  Check that I checked/updated service info
-    # TODO  Go back from check
 
 
 @login_required

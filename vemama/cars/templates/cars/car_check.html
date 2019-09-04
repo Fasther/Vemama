@@ -10,11 +10,15 @@
     </ol>
 </nav>
 
-
 <p></p>
 <h3>Checking car: {{car.car_name}}</h3>
+<p></p>
+<a href="{% url 'cars:car_edit' city=car.car_city.pk pk=car.pk %}" class="btn btn-warning"><i class="fas fa-pen"></i> Update car info </a>
+<p></p>
+
 <p>I have checked/did:</p>
 <ul class="list-group ">
+    <li class="list-group-item list-group-item-action">I checked/updated service info - if not, do it now.</li>
     <li class="list-group-item list-group-item-action">Car is clean from outside</li>
     <li class="list-group-item list-group-item-action">Car is clean from inside: <br>
                                                         - I cleaned doorframes<br>
@@ -37,8 +41,8 @@
                                                         - I picked the receipts
 </ul>
 <p></p>
-<a href="{% url 'cars:car_do_check' city=car.car_city.pk pk=car.pk %}" class="btn btn-success"><i class="fas fa-check-square"></i> Everythning is OK!</a>
-
+<a href="{% url 'cars:car_do_check' city=car.car_city.pk pk=car.pk %}" class="btn btn-success"><i class="fas fa-check-square"></i> Everything is OK!</a> &nbsp;
+<a href="{% url 'cars:car_detail' city=car.car_city.id pk=car.pk %}" class="btn btn-primary"><i class="fas fa-times"></i> Cancel</a>
 
 
 
