@@ -41,6 +41,7 @@ class MyTasksList(LoginRequiredMixin, ListView):
         context["last"] = "my"
         return context
 
+
 class UnassignedTasksList(LoginRequiredMixin, ListView):
     model = Task
     template_name = "tasks/tasks_list.html"
@@ -77,7 +78,7 @@ class CompletedTasksList(LoginRequiredMixin, ListView):
     context_object_name = "tasks"
 
     def get_queryset(self):
-        return Task.objects.filter(completed=True)
+        return Task.objects.filter(completed=True, completed_date__gte=(timezone.now()-timedelta(days=60)))
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
