@@ -26,6 +26,11 @@ class CarDetailView(LoginRequiredMixin, DetailView):
     model = Car
     template_name = "cars/car_detail.html"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["tasks"] = self.object.tasks.filter(completed=False)
+        return context
+
 
 class CarUpdateView(LoginRequiredMixin, UpdateView):
     model = Car
