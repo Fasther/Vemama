@@ -6,6 +6,7 @@ from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse
 from django.utils import timezone
 from datetime import timedelta
+from tasks import create_tasks
 
 
 class TasksIndexView(LoginRequiredMixin, TemplateView):
@@ -117,3 +118,9 @@ def mark_as_complete(request, pk, last):
     task = get_object_or_404(Task, pk=pk)
     task.complete()
     return redirect('tasks:task_detail', last=last, pk=pk)
+
+
+@login_required
+def create_service_tasks(request):
+    create_tasks.create_service_tasks()
+    return redirect("tasks:create_tasks")
