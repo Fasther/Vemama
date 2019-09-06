@@ -12,8 +12,13 @@ def tasks_already_exist(car, task_name):
     return False
 
 
+def create_task(car, task_name):
+    task = tasksmodels.Task(name=task_name, car=car, description="This task was created automatically")
+    task.save()
+
+
 def create_service_tasks():
-    task_name = "Regular service inspection will be soon"  # service tasks name that will be used
+    task_name = "Regular service inspection soon"  # service tasks name that will be used
     cars = carsmodels.Car.objects.all()
     for car in cars:
         car_needs_service = False
@@ -28,5 +33,6 @@ def create_service_tasks():
         if car_needs_service:
             if not tasks_already_exist(car, task_name): # if task is not existing...
                 print(str(car) + "have no task of that name")
+                create_task(car, task_name)
 
 
