@@ -33,5 +33,5 @@ def create_service_tasks():
             if not tasks_already_exist(car, task_name): # if task is not existing...
                 create_task(car, task_name)
                 tasks_created += 1
-
+    return tasks_created
 

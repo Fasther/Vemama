@@ -14,4 +14,5 @@ urlpatterns = [
     path("<str:last>/<int:pk>", views.TaskDetail.as_view(), name="task_detail"),
     path("<str:last>/<int:pk>/edit", views.EditTask.as_view(), name="task_edit"),
     path("<str:last>/<int:pk>/complete", views.mark_as_complete, name="task_complete"),
+    path("create", views.CreateTasks.as_view(), name="create_tasks"),
 ]

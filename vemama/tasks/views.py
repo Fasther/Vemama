@@ -108,6 +108,10 @@ class EditTask(LoginRequiredMixin, UpdateView):
         return reverse("tasks:task_detail", kwargs={"last": last, "pk": pk})
 
 
+class CreateTasks(LoginRequiredMixin, TemplateView):
+    template_name = "tasks/create_tasks.html"
+
+
 @login_required
 def mark_as_complete(request, pk, last):
     task = get_object_or_404(Task, pk=pk)
