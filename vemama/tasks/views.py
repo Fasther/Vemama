@@ -112,6 +112,14 @@ class EditTask(LoginRequiredMixin, UpdateView):
 class CreateTasks(LoginRequiredMixin, TemplateView):
     template_name = "tasks/create_tasks.html"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        try:
+            context["msg"] = str(self.request.session.pop("msg"))
+        except KeyError:
+            pass
+        return context
+
 
 @login_required
 def mark_as_complete(request, pk, last):
@@ -121,6 +129,7 @@ def mark_as_complete(request, pk, last):
 
 
 @login_required
-def create_service_tasks(request):
-    create_tasks.create_service_tasks()
+def create_service_tasks_view(request):
+    msg = create_tasks.create_service_tasks()
+    request.session['msg'] = msg
     return redirect("tasks:create_tasks")

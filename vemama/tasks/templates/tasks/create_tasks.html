@@ -9,9 +9,9 @@
   </ol>
 </nav>
 <p></p>
-{% if view.kwargs.message %}
+{% if msg %}
 <div class="alert alert-primary" role="alert">
-  I have created {{view.kwargs.message}} new tasks.
+  I have created {{ msg }} new tasks.
 </div>
 {% endif %}
 

@@ -12,7 +12,7 @@ def tasks_already_exist(car, task_name):
     return False
 
 
-def create_task(car, task_name):
+def create_task(car, task_name, due_date):
     task = tasksmodels.Task(name=task_name, car=car, description="This task was created automatically")
     task.save()
 
@@ -21,6 +21,7 @@ def create_service_tasks():
     task_name = "Regular service inspection soon"  # service tasks name that will be used
     cars = carsmodels.Car.objects.all()
     tasks_created = 0
+    due_date = timezone.now().date() + timedelta(30)
     for car in cars:
         car_needs_service = False
         # check for date - service in less than 30 days
@@ -30,8 +31,8 @@ def create_service_tasks():
         if car.next_oil_or_inspection_kms() < 3000:
             car_needs_service = True
         if car_needs_service:
-            if not tasks_already_exist(car, task_name): # if task is not existing...
-                create_task(car, task_name)
+            if not tasks_already_exist(car, task_name):  # if task is not existing...
+                create_task(car, task_name, due_date)
                 tasks_created += 1
     return tasks_created
 
