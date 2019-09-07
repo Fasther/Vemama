@@ -13,7 +13,10 @@ def tasks_already_exist(car, task_name):
 
 
 def create_task(car, task_name, due_date):
-    task = tasksmodels.Task(name=task_name, car=car, description="This task was created automatically")
+    task = tasksmodels.Task(name=task_name,
+                            car=car,
+                            description="This task was created automatically",
+                            due_date=due_date)
     task.save()
 
 
@@ -36,3 +39,6 @@ def create_service_tasks():
                 tasks_created += 1
     return tasks_created
 
+
+def create_check_tasks():
+    task_name = "Routine check"
