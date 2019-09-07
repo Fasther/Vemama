@@ -42,3 +42,11 @@ def create_service_tasks():
 
 def create_check_tasks():
     task_name = "Routine check"
+    cars = carsmodels.Car.objects.all()
+    tasks_created = 0
+    due_date = timezone.now().date() + timedelta(15)
+    for car in cars:
+        car_needs_check = False
+        if timedelta(30) < (timezone.now().date() - car.car_last_check):
+            pass
+        # TODO - create check task for no check after 30 day, due in 15
