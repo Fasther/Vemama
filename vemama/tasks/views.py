@@ -133,3 +133,10 @@ def create_service_tasks_view(request):
     msg = create_tasks.create_service_tasks()
     request.session['msg'] = msg
     return redirect("tasks:create_tasks")
+
+
+@login_required
+def create_check_tasks_view(request):
+    msg = create_tasks.create_check_tasks()
+    request.session['msg'] = msg
+    return redirect("tasks:create_tasks")
