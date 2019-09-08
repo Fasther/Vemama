@@ -46,7 +46,8 @@ def create_check_tasks():
     tasks_created = 0
     due_date = timezone.now().date() + timedelta(15)
     for car in cars:
-        car_needs_check = False
         if timedelta(30) < (timezone.now().date() - car.car_last_check):
-            pass
-        # TODO - create check task for no check after 30 day, due in 15
+            if not tasks_already_exist(car, task_name):
+                create_task(car, task_name, due_date)
+                tasks_created += 1
+    return tasks_created
