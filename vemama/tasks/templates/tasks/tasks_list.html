@@ -46,7 +46,9 @@ $(document).ready( function () {
             {% else %}
             <td>Due date</td>
             {% endif %}
+            {% if not last == 'my' %}
             <td>City</td>
+            {% endif %}
         </tr>
     </thead>
     <tbody>
@@ -62,7 +64,9 @@ $(document).ready( function () {
             {% else %}
             <td>{{ task.due_date|date:'d.m.y' }}</td>
             {% endif %}
+            {% if not last == 'my' %}
             <td>{{ task.city }}</td>
+            {% endif %}
         </tr>
     {% endfor %}
     </tbody>
