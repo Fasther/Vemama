@@ -16,6 +16,7 @@ class CarAdmin(admin.ModelAdmin):
                        "car_next_km",
                        ]
     list_filter = ["car_city"]
+    search_fields = ["car_name"]
 
 
 admin.site.register(City)
