@@ -5,7 +5,7 @@ from django.utils import timezone
 
 
 def tasks_already_exist(car, task_name):
-    tasks = car.tasks.all()
+    tasks = car.tasks.filter(completed=False)
     for task in tasks:
         if task.name == task_name:
             return True
