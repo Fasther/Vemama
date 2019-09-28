@@ -124,6 +124,8 @@ class CreateTasks(LoginRequiredMixin, TemplateView):
 @login_required
 def mark_as_complete(request, pk, last):
     task = get_object_or_404(Task, pk=pk)
+    if task.name == "Routine check":
+        task.car.do_check()
     task.complete()
     return redirect('tasks:task_detail', last=last, pk=pk)
 

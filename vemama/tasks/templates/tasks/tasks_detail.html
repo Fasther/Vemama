@@ -30,11 +30,38 @@
 </div>
 {% endif %}
 
-<ul class="list-group ">
+<ul class="list-group">
     <li class="list-group-item list-group-item-action">Car: {{ task.car }}</li>
     <li class="list-group-item list-group-item-action">City: {{ task.city }}</li>
     <li class="list-group-item list-group-item-action">Person: {{ task.user }}</li>
-    <li class="list-group-item list-group-item-action">Description: {{ task.description|linebreaks }}</li>
+    <li class="list-group-item list-group-item-action">Description: {{ task.description|linebreaks }}
+        {% if task.name == 'Routine check' %}
+        <p>I have checked that:<br>
+        <ul class="list-group ">
+            <li class="list-group-item list-group-item-action list-group-item-secondary">Car is clean from outside</li>
+            <li class="list-group-item list-group-item-action list-group-item-secondary">Car is clean from inside: <br>
+                - I cleaned doorframes<br>
+                - I vacuumed the car<br>
+                - I cleaned windows<br>
+                - I cleaned dashboard<br></li>
+            <li class="list-group-item list-group-item-action list-group-item-secondary">I topped up the washer fluid
+            </li>
+            <li class="list-group-item list-group-item-action list-group-item-secondary">I checked oil level</li>
+            <li class="list-group-item list-group-item-action list-group-item-secondary">I checked tire pressures</li>
+            <li class="list-group-item list-group-item-action list-group-item-secondary">I checked equipment:<br>
+                - Safety vest at drivers door<br>
+                - First aid kit<br>
+                - Warning triangle<br>
+                - Chains and scrapers (in winter)<br>
+                - Charger and holder - all functional<br></li>
+            <li class="list-group-item list-group-item-action list-group-item-secondary">I've checked log-book:<br>
+                - Documents from car OK<br>
+                - Info, map, exp not payed by CCS, damage report OK<br>
+                - I picked the receipts<br></li>
+        </ul>
+        </p>
+        {% endif %}
+    </li>
     <li class="list-group-item list-group-item-action">Created date: {{ task.created_date }}</li>
     {% if task.completed %}
     <li class="list-group-item list-group-item-action">Completed date: {{ task.completed_date }}</li>
@@ -43,5 +70,6 @@
     {% endif %}
 </ul>
 <p></p>
+
 
 {% endblock %}
