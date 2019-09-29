@@ -26,7 +26,7 @@ SECRET_KEY = 'kbj5e+y=b85!-b9w7zjrq4mc+h-)v(ho3w!(u-h=15hdeqzkb('
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["a361c4b9.ngrok.io", ]
 
 INTERNAL_IPS = [
     '127.0.0.1',
