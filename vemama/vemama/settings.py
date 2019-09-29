@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     "crispy_forms",
     "cars",
     "tasks",
+    "messenger",
 ]
 
 MIDDLEWARE = [
