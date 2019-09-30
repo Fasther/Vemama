@@ -9,12 +9,11 @@ from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 
 VERIFY_TOKEN = "83254341743"
-PAGE_ACCESS_TOKEN = "EAAeZC8VVDjr0BANZBWd51sBNRFfXoyi2Oza2ryC0NSKkbga7ByEncIVAfMfrtFM2DKcZALnQViBkoajpO9" \
-                    "SAbrCSHeWIZC7tptOYQxKHFOb919UVIjqqQcvWm3F2O9YtWhuWynuu6Og4Iq1BYlsSUFPNbczJqP9LDodLGDuTaAZDZD"
+PAGE_ACCESS_TOKEN = "EAAeZC8VVDjr0BANZBWd51sBNRFfXoyi2Oza2ryC0NSKkbga7ByEncIVAfMfrtFM2DKcZALnQViBkoajpO9SAbrCSHeWIZC7tptOYQxKHFOb919UVIjqqQcvWm3F2O9YtWhuWynuu6Og4Iq1BYlsSUFPNbczJqP9LDodLGDuTaAZDZD"
 
 
 def post_facebook_message(fbid, recevied_message):
-    post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token={}'.format(PAGE_ACCESS_TOKEN)
+    post_message_url = 'https://graph.facebook.com/v4.0/me/messages?access_token={}'.format(PAGE_ACCESS_TOKEN)
     response_msg = json.dumps({"recipient": {"id": fbid}, "message": {"text": recevied_message}})
     status = requests.post(post_message_url, headers={"Content-Type": "application/json"}, data=response_msg)
     pprint("--- odpověď ---", status.json())
