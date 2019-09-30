@@ -12,11 +12,17 @@ VERIFY_TOKEN = "83254341743"
 PAGE_ACCESS_TOKEN = "EAAeZC8VVDjr0BANZBWd51sBNRFfXoyi2Oza2ryC0NSKkbga7ByEncIVAfMfrtFM2DKcZALnQViBkoajpO9SAbrCSHeWIZC7tptOYQxKHFOb919UVIjqqQcvWm3F2O9YtWhuWynuu6Og4Iq1BYlsSUFPNbczJqP9LDodLGDuTaAZDZD"
 
 
-def post_facebook_message(fbid, recevied_message):
+def send_message_view():
+    post_facebook_message("2727863353912727", "It works if you read this!")
+    return HttpResponse()
+
+
+def post_facebook_message(fbid, message):
     post_message_url = 'https://graph.facebook.com/v4.0/me/messages?access_token={}'.format(PAGE_ACCESS_TOKEN)
-    response_msg = json.dumps({"recipient": {"id": fbid}, "message": {"text": recevied_message}})
+    response_msg = json.dumps({"recipient": {"id": fbid}, "message": {"text": message}})
     status = requests.post(post_message_url, headers={"Content-Type": "application/json"}, data=response_msg)
-    pprint("--- odpověď ---", status.json())
+    print("--- sending message ---")
+    pprint(status.json())
 
 
 class MessengerView(generic.View):
