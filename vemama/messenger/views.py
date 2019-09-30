@@ -13,7 +13,7 @@ PAGE_ACCESS_TOKEN = "EAAeZC8VVDjr0BANZBWd51sBNRFfXoyi2Oza2ryC0NSKkbga7ByEncIVAfM
 
 
 def send_message_view():
-    post_facebook_message("2727863353912727", "It works if you read this!")
+    post_facebook_message("", "It works if you read this! 2")
     return HttpResponse()
 
 
