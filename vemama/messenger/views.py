@@ -40,5 +40,6 @@ class MessengerView(generic.View):
             pprint(entry)
             for message in entry['messaging']:
                 if 'message' in message:
-                    pprint(message)
+                    with open("messages.txt", "a") as file:
+                        file.write(message)
         return HttpResponse()
