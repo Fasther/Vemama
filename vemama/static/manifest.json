@@ -1,0 +1,21 @@
+{
+  "short_name": "Vemama",
+  "name": "Vemama",
+  "icons": [
+    {
+      "src": "/static/pic/icons-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/static/pic/icons-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#2d1b1e",
+  "display": "standalone",
+  "scope": "/",
+  "theme_color": "#00bfbc"
+}
