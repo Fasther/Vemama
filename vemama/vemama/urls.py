@@ -29,7 +29,6 @@ urlpatterns = [
          name="change_password"),
     path("cars/", include("cars.urls", namespace="cars")),
     path("tasks/", include("tasks.urls", namespace="tasks")),
-    path("messenger/", include("messenger.urls", namespace="messenger")),
 ]
 
 if settings.DEBUG:
