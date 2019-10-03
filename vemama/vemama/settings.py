@@ -141,3 +141,12 @@ LOGOUT_REDIRECT_URL = '/'
 THOUSAND_SEPARATOR = " "
 DECIMAL_SEPARATOR = ","
 USE_THOUSAND_SEPARATOR = True
+
+# email settings
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.seznam.cz"
+EMAIL_USE_SSL = True
+EMAIL_PORT = 465
+EMAIL_HOST_USER = "vemama@pancho.cz"
+EMAIL_HOST_PASSWORD = ""
