@@ -64,7 +64,7 @@ class OverdueTasksList(LoginRequiredMixin, ListView):
     context_object_name = "tasks"
 
     def get_queryset(self):
-        return Task.objects.filter(due_date__lte=timezone.now())
+        return Task.objects.filter(completed=False, due_date__lte=timezone.now())
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
