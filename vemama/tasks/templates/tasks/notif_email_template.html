@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,'Helvetica Neue',sans-serif;">
+    <h2>{{ heading }}</h2>
+    <ul>
+        {% for task in tasks %}
+        <li><a href="https://vemama.pancho.cz{% url 'tasks:task_detail' last='my' pk=task.pk %}" target="_blank"> {{
+            task.name }} </a></li>
+        {% endfor %}
+    </ul>
+    <p>Have a nice day!</p>
+    <p>&nbsp;</p>
+</div>
+</body>
+</html>

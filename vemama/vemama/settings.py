@@ -149,4 +149,5 @@ EMAIL_HOST = "smtp.seznam.cz"
 EMAIL_USE_SSL = True
 EMAIL_PORT = 465
 EMAIL_HOST_USER = "vemama@pancho.cz"
-EMAIL_HOST_PASSWORD = ""
+with open('vemama/emailpass.txt') as f:
+    EMAIL_HOST_PASSWORD = f.read().strip()
