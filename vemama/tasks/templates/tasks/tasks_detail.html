@@ -10,6 +10,7 @@
     </ol>
 </nav>
 
+
 <a href="{% url 'tasks:task_edit' last=view.kwargs.last pk=task.pk %}" class="btn btn-warning"><i class="fas fa-pen"></i> Edit</a>&ensp;
 <a href="{% url 'cars:car_detail' city=task.car.car_city.pk pk=task.car.pk %}" class="btn btn-primary"><i class="fas fa-car"></i> Go to car page</a>&ensp;
 {% if not task.completed %}
