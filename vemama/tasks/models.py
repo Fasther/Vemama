@@ -3,6 +3,7 @@ from cars import models as cars
 from django.contrib.auth.models import User
 from django.utils import timezone
 from django.urls import reverse
+from tasks.notifications import send_notification
 
 
 class Task(models.Model):
@@ -17,6 +18,11 @@ class Task(models.Model):
     completed = models.BooleanField(verbose_name="Completed", default=False)
 
     def save(self, *args, **kwargs):
+        if self.pk:  # notification for assigned user
+            orig = Task.objects.get(pk=self.pk)
+            if orig.user != self.user and (self.user is not None):
+                print("sending")
+                send_notification("New task for you", [self, ])
         self.city = str(self.car.car_city)
         self.completed = True if self.completed_date else False
         if self.completed:
