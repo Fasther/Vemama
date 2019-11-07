@@ -9,10 +9,11 @@
     <ul>
         {% for task in tasks %}
         <li><a href="https://vemama.pancho.cz{% url 'tasks:task_detail' last='my' pk=task.pk %}" target="_blank">
-            {{ task.name }} </a>
+            {{ task.name }} | {{ task.due_date }} </a>
         </li>
         {% endfor %}
     </ul>
+    <p><a href="https://vemama.pancho.cz{% url 'tasks:my_tasks' %}"> See all your tasks</a></p>
     <p>Have a nice day!</p>
     <p>&nbsp;</p>
 </div>
