@@ -19,3 +19,8 @@ body {
 .btn {
     margin-bottom: .2rem;
 }
+
+.tasks-list p {
+    margin-top: 1rem;
+    margin-bottom: 0rem;
+}

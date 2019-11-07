@@ -8,20 +8,26 @@
   </ol>
 </nav>
 
+<div class="tasks-list">
 <div class="list-group">
     <a class="list-group-item list-group-item-action" href="{% url 'tasks:my_tasks' %}"> My tasks </a>
     <a class="list-group-item list-group-item-action" href="{% url 'tasks:active_tasks' %}"> All active tasks </a>
 </div>
 <p></p>
 {% if user.is_staff %}
+    <p>Admin overview</p>
 <div class="list-group">
     <a class="list-group-item list-group-item-action" href="{% url 'tasks:unassigned_tasks' %}"> Unassigned </a>
     <a class="list-group-item list-group-item-action" href="{% url 'tasks:overdue_tasks' %}"> Overdue </a>
     <a class="list-group-item list-group-item-action" href="{% url 'tasks:completed_tasks' %}"> Completed </a>
-    <a class="list-group-item list-group-item-action" href="{% url 'tasks:create_tasks' %}"> Create new tasks </a>
 </div>
+    <p>Automation stuff</p>
+    <div class="list-group">
+        <a class="list-group-item list-group-item-action" href="{% url 'tasks:create_tasks' %}"> Create new tasks,
+            assign, notifications </a>
+    </div>
 {% endif %}
-
+</div>
 <p></p>
 
 {% endblock %}

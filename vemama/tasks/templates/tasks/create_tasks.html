@@ -4,22 +4,35 @@
 
 <nav>
   <ol class="breadcrumb">
-    <li class="breadcrumb-item">Tasks</li>
-    <li class="breadcrumb-item active">Create new</li>
+      <li class="breadcrumb-item"><a href="{% url 'tasks:tasks_index' %}"> Tasks</a></li>
+      <li class="breadcrumb-item active">Create new tasks, assign, notifications</li>
   </ol>
 </nav>
 <p></p>
 {% if msg %}
 <div class="alert alert-primary" role="alert">
-  I have created {{ msg }} new tasks.
+    I did {{ msg }} things you told me to do.
 </div>
 {% endif %}
 
+<div class="tasks-list">
+    <p>Create tasks</p>
 <div class="list-group">
     <a class="list-group-item list-group-item-action" href="{% url 'tasks:create_service_tasks' %}"> Create service tasks </a>
     <a class="list-group-item list-group-item-action" href="{% url 'tasks:create_check_tasks' %}"> Create check tasks </a>
 </div>
 
+    <p>Assign tasks</p>
+    <div class="list-group">
+        <a class="list-group-item list-group-item-action" href=""> Asign tasks </a>
+    </div>
+
+    <p>Send notifications</p>
+    <div class="list-group">
+        <a class="list-group-item list-group-item-action" href=""> Notification on this week deadlines </a>
+        <a class="list-group-item list-group-item-action" href=""> Notification on tomorrow deadline </a>
+    </div>
+</div>
 
 
 <p></p>
