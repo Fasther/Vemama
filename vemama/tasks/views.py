@@ -146,3 +146,9 @@ def send_daily_notification_view(request):
     msg = notifications.summary_notification("Tasks due tomorrow", 1)
     request.session['msg'] = "I have sent {} email(s) about tasks due tomorrow".format(msg)
     return redirect("tasks:create_tasks")
+
+
+def send_weekly_notification_view(request):
+    msg = notifications.summary_notification("Tasks due this week", 7)
+    request.session['msg'] = "I have sent {} email(s) about tasks due in this week".format(msg)
+    return redirect("tasks:create_tasks")

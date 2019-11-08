@@ -18,5 +18,6 @@ urlpatterns = [
     path("create/service", views.create_service_tasks_view, name="create_service_tasks"),
     path("create/check", views.create_check_tasks_view, name="create_check_tasks"),
     path("create/notify-daily", views.send_daily_notification_view, name="send_daily_notify"),
+    path("create/notify-weekly", views.send_weekly_notification_view, name="send_weekly_notify"),
 
 ]
