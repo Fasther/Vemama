@@ -23,6 +23,9 @@ class Task(models.Model):
             orig = Task.objects.get(pk=self.pk)
             if orig.user != self.user and (self.user is not None):
                 send_notification("New task for you", [self, ])
+        elif self.user:
+            super().save(*args, **kwargs)
+            send_notification("New task for you", [self, ])
         self.city = str(self.car.car_city)
         self.completed = True if self.completed_date else False
         if self.completed:
