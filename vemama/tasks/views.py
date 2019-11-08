@@ -6,7 +6,7 @@ from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse
 from django.utils import timezone
 from datetime import timedelta
-from tasks import create_tasks
+from tasks import create_tasks, notifications
 
 
 class TasksIndexView(LoginRequiredMixin, TemplateView):
@@ -141,3 +141,8 @@ def create_check_tasks_view(request):
     request.session['msg'] = msg
     return redirect("tasks:create_tasks")
 
+
+def send_daily_notification_view(request):
+    msg = notifications.summary_notification("Tasks due tomorrow", 1)
+    request.session['msg'] = msg
+    return redirect("tasks:create_tasks")
