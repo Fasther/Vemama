@@ -30,7 +30,8 @@
     <p>Send notifications</p>
     <div class="list-group">
         <a class="list-group-item list-group-item-action" href=""> Notification on this week deadlines </a>
-        <a class="list-group-item list-group-item-action" href=""> Notification on tomorrow deadline </a>
+        <a class="list-group-item list-group-item-action" href="{% url 'tasks:send_daily_notify' %}"> Notification on
+            tomorrow deadline </a>
     </div>
 </div>
 

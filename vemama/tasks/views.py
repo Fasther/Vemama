@@ -144,5 +144,5 @@ def create_check_tasks_view(request):
 
 def send_daily_notification_view(request):
     msg = notifications.summary_notification("Tasks due tomorrow", 1)
-    request.session['msg'] = "I have sent {} email about tasks due tomorrow".format(msg)
+    request.session['msg'] = "I have sent {} email(s) about tasks due tomorrow".format(msg)
     return redirect("tasks:create_tasks")
