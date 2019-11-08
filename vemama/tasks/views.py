@@ -114,8 +114,8 @@ class CreateTasks(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        try:
-            context["msg"] = str(self.request.session.pop("msg"))
+        try:  # show message of what work have been done (created tasks, send emails,...)
+            context["msg"] = self.request.session.pop("msg")
         except KeyError:
             pass
         return context
@@ -132,17 +132,17 @@ def mark_as_complete(request, pk, last):
 
 def create_service_tasks_view(request):
     msg = create_tasks.create_service_tasks()
-    request.session['msg'] = msg
+    request.session['msg'] = "I have created {} new service tasks".format(msg)
     return redirect("tasks:create_tasks")
 
 
 def create_check_tasks_view(request):
     msg = create_tasks.create_check_tasks()
-    request.session['msg'] = msg
+    request.session['msg'] = "I have created {} new check tasks".format(msg)
     return redirect("tasks:create_tasks")
 
 
 def send_daily_notification_view(request):
     msg = notifications.summary_notification("Tasks due tomorrow", 1)
-    request.session['msg'] = msg
+    request.session['msg'] = "I have sent {} email about tasks due tomorrow".format(msg)
     return redirect("tasks:create_tasks")
