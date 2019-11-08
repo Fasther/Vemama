@@ -9,7 +9,8 @@ from tasks.notifications import send_notification
 class Task(models.Model):
     name = models.CharField(max_length=200)
     car = models.ForeignKey(cars.Car, related_name="tasks", on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True, verbose_name="Person")
+    user = models.ForeignKey(User, related_name="tasks", on_delete=models.CASCADE, blank=True, null=True,
+                             verbose_name="Person")
     description = models.TextField(blank=True)
     created_date = models.DateField(auto_now_add=True)
     due_date = models.DateField(blank=True, null=True)
