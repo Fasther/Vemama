@@ -22,9 +22,12 @@ def get_tasks(tasks_name):
 # Get users in corresponding groups and they tasks counts
 
 def assign_tasks(tasks: dict):
-    task_type = tasks.popitem()[1][0].name
-    print(task_type)
+    task_type = " worker" if next(iter(tasks.items()))[1][0].name == "Routine check" else " fleet"
     for city in tasks:
-        workers = get_user_model()
+        group_name = city + task_type
+        users = get_user_model().objects.filter(groups__name=group_name)
+        users_counts = {}  # get user counts to assign task to user with lowest tasks count
+        for user in users:
+            users_counts[user.username] = user.tasks.filter(completed=False).count()
 
 # Assign the task to a person having the least number of tasks
