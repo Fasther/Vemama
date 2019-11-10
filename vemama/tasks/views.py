@@ -6,7 +6,7 @@ from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse
 from django.utils import timezone
 from datetime import timedelta
-from tasks import create_tasks, notifications
+from tasks import create_tasks, notifications, assign_tasks
 
 
 class TasksIndexView(LoginRequiredMixin, TemplateView):
@@ -151,4 +151,10 @@ def send_daily_notification_view(request):
 def send_weekly_notification_view(request):
     msg = notifications.summary_notification("Tasks due this week", 7)
     request.session['msg'] = "I have sent {} email(s) about tasks due in this week".format(msg)
+    return redirect("tasks:create_tasks")
+
+
+def assign_tasks_view(request):
+    msg = assign_tasks.assign_check_inspection_tasks()
+    request.session['msg'] = "I have assigned {} tasks".format(msg)
     return redirect("tasks:create_tasks")

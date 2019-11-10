@@ -27,7 +27,6 @@ def assign_tasks(tasks: dict):
         group_name = city + task_type
         users = get_user_model().objects.filter(groups__name=group_name)
         users_counts = {}  # get user counts to assign task to user with lowest tasks count
-        print(users_counts)
         for user in users:
             users_counts[user] = user.tasks.filter(completed=False).count()
         tasks_assigned = 0
