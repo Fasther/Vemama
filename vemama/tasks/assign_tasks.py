@@ -9,7 +9,7 @@ fleet_grp = "fleet"  # surname for fleet group. Always used as: "{{ city }} flee
 worker_gtp = "worker"  # surname for worker group. Always used as: "{{ city }} worker"
 
 
-# Get tasks to be assigned
+# Get tasks to be assigned and group them by city
 
 def get_tasks(tasks_name):
     tasks = Task.objects.filter(name=tasks_name, completed=False, user=None)
@@ -19,7 +19,7 @@ def get_tasks(tasks_name):
     return tasks_dict
 
 
-# Get users in corresponding groups and they tasks counts
+# Assign tasks based on city
 
 def assign_tasks(tasks: dict):
     task_type = " worker" if next(iter(tasks.items()))[1][0].name == "Routine check" else " fleet"
@@ -27,7 +27,20 @@ def assign_tasks(tasks: dict):
         group_name = city + task_type
         users = get_user_model().objects.filter(groups__name=group_name)
         users_counts = {}  # get user counts to assign task to user with lowest tasks count
+        print(users_counts)
         for user in users:
-            users_counts[user.username] = user.tasks.filter(completed=False).count()
+            users_counts[user] = user.tasks.filter(completed=False).count()
+        tasks_assigned = 0
+        for task in tasks[city]:
+            user = min(users_counts, key=users_counts.get)
+            task.user = user
+            task.save()
+            users_counts[user] += 1
+            tasks_assigned += 1
+        return tasks_assigned
 
-# Assign the task to a person having the least number of tasks
+
+def assign_check_inspection_tasks():  # main function returning results to view
+    assigned_tasks_count = assign_tasks(get_tasks(routine_check_name)) + \
+                           assign_tasks(get_tasks(inspection_name))
+    return assigned_tasks_count
