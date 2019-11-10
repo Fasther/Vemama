@@ -1,6 +1,5 @@
 from django.urls import path
 from . import views
-from django.views.generic import TemplateView
 
 app_name = "tasks"
 
@@ -19,5 +18,6 @@ urlpatterns = [
     path("create/check", views.create_check_tasks_view, name="create_check_tasks"),
     path("create/notify-daily", views.send_daily_notification_view, name="send_daily_notify"),
     path("create/notify-weekly", views.send_weekly_notification_view, name="send_weekly_notify"),
+    path("create/assign", views.assign_tasks_view, name="assign_tasks"),
 
 ]
