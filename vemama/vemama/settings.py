@@ -12,7 +12,7 @@ SECRET_KEY = config("SECRET_KEY", default="kbj5e+y=b85!")
 
 DEBUG = config("DEBUG", default="False", cast=bool)
 
-ALLOWED_HOSTS = ["127.0.0.1", ]
+ALLOWED_HOSTS = ["127.0.0.1", "vemama.pancho.cz", ]
 
 INTERNAL_IPS = [
     '127.0.0.1',
