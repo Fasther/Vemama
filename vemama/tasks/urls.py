@@ -12,6 +12,7 @@ urlpatterns = [
     path("unassigned", views.UnassignedTasksList.as_view(), name="unassigned_tasks"),
     path("<str:last>/<int:pk>", views.TaskDetail.as_view(), name="task_detail"),
     path("<str:last>/<int:pk>/edit", views.EditTask.as_view(), name="task_edit"),
+    path("<str:last>/<int:pk>/do", views.DoTask.as_view(), name="do_task"),
     path("<str:last>/<int:pk>/complete", views.mark_as_complete, name="task_complete"),
     path("create", views.CreateTasks.as_view(), name="create_tasks"),
     path("create/service", views.create_service_tasks_view, name="create_service_tasks"),

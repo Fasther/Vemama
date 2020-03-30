@@ -126,7 +126,7 @@ USE_THOUSAND_SEPARATOR = True
 
 # email settings
 
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_BACKEND = config("EMAIL_BACKEND", default="django.core.mail.backends.smtp.EmailBackend")
 EMAIL_HOST = config("EMAIL_HOST", default="")
 EMAIL_USE_SSL = config("EMAIL_USE_SSL", default="True", cast=bool)
 EMAIL_PORT = config("EMAIL_PORT", default=0, cast=int)

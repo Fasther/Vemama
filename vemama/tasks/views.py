@@ -109,6 +109,12 @@ class EditTask(LoginRequiredMixin, UpdateView):
         return reverse("tasks:task_detail", kwargs={"last": last, "pk": pk})
 
 
+class DoTask(LoginRequiredMixin, UpdateView):
+    model = Task
+    template_name = "tasks/tasks_do.html"
+    fields = ("completed",)
+
+
 class CreateTasks(LoginRequiredMixin, TemplateView):
     template_name = "tasks/create_tasks.html"
 
