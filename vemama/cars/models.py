@@ -27,7 +27,9 @@ class Car(models.Model):
         (2, "Few stains, still good enough"),
         (3, "Car needs wet cleaning. Really.")
     )
-    is_active = models.BooleanField(default=True, verbose_name="Active")
+    is_active = models.BooleanField(default=True, verbose_name="Active",
+                                    help_text="Use to deactivate car. Deactivated cars "
+                                              "do not get automatic tasks and reminders.")
     car_name = models.CharField(max_length=200, unique=True, verbose_name="Name")
     car_id = models.DecimalField(unique=True, decimal_places=0, max_digits=5, verbose_name="External ID",
                                  help_text="ID for finding car in Zemtu, Convadis,...")
