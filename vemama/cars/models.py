@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse
 from django.utils import timezone
+from simple_history.models import HistoricalRecords
 
 
 class City(models.Model):
@@ -47,6 +48,7 @@ class Car(models.Model):
     car_last_check = models.DateField(blank=True, null=True, verbose_name="Last check")
     car_actual_driven_kms = models.DecimalField(decimal_places=0, max_digits=10, verbose_name="Driven KMs")
     car_note = models.TextField(blank=True, max_length=1024, verbose_name="Notes")
+    history = HistoricalRecords()
 
     def next_oil_or_inspection_date(self):
         return min(self.car_next_inspection_date, self.car_next_oil_date) if self.car_id else "0"

@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 from django.urls import reverse
 from tasks.notifications import send_notification
+from simple_history.models import HistoricalRecords
 
 
 class Task(models.Model):
@@ -26,6 +27,7 @@ class Task(models.Model):
     completed_date = models.DateField(blank=True, null=True)
     city = models.CharField(blank=True, null=True, max_length=150, verbose_name="City")
     completed = models.BooleanField(verbose_name="Completed", default=False)
+    history = HistoricalRecords()
 
     def save(self, *args, **kwargs):
         if self.pk:  # notification for assigned user
