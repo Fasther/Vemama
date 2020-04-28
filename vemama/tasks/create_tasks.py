@@ -2,6 +2,7 @@ from cars import models as carsmodels
 from tasks import models as tasksmodels
 from datetime import timedelta
 from django.utils import timezone
+from django.conf import settings
 
 
 def tasks_already_exist(car, task_name):
@@ -46,7 +47,7 @@ def create_check_tasks():
     tasks_created = 0
     due_date = timezone.now().date() + timedelta(15)
     for car in cars:
-        if timedelta(30) < (timezone.now().date() - car.car_last_check):
+        if timedelta(days=settings.ROUTINE_CHECK_INTERVAL) < (timezone.now().date() - car.car_last_check):
             if not tasks_already_exist(car, task_name):
                 create_task(car, task_name, due_date)
                 tasks_created += 1
