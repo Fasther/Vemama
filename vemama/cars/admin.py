@@ -6,6 +6,7 @@ from .models import City, Car
 class CarAdmin(SimpleHistoryAdmin):
     list_display = ["car_name",
                     "car_id",
+                    "is_active",
                     "car_city",
                     "car_actual_driven_kms",
                     "car_last_check",
@@ -17,7 +18,7 @@ class CarAdmin(SimpleHistoryAdmin):
     readonly_fields = ["car_next_date",
                        "car_next_km",
                        ]
-    list_filter = ["car_city"]
+    list_filter = ["car_city", "is_active"]
     search_fields = ["car_name"]
 
     @staticmethod
