@@ -13,7 +13,7 @@ class Task(models.Model):
         (2, "Big cleaning and check"),
         (3, "Service check / Oil change"),
         (4, "STK"),
-        (5, "Tires change"),
+        (5, "Tyres change"),
         (99, "Other"),
     )
     name = models.CharField(max_length=200)

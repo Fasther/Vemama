@@ -81,6 +81,14 @@ class Car(models.Model):
         self.car_next_km = self._next_oil_or_inspection_kms()
         super().save(*args, **kwargs)
 
+    # TODO:
+    #         (1, "Regular cleaning and check"),
+    #         (2, "Big cleaning and check"),
+    #         (3, "Service check / Oil change"),
+    #         (4, "STK"),
+    #         (5, "Tyres change"),
+    #         (99, "Other"),
+
     def needs_service(self):
         pass
         # TODO add car needs service
@@ -89,6 +97,10 @@ class Car(models.Model):
         pass
         # TODO create on spring to change to summer tyres,
         #  on autumn to change to winter and check all-year
+
+    def needs_check(self):
+        pass
+        # TODO add
 
     # car_next_date = property(next_oil_or_inspection_date)
     # car_next_km = property(next_oil_or_inspection_kms)
