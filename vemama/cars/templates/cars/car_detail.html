@@ -12,26 +12,30 @@
 <p></p>
 <h3>Name: {{car.car_name}}</h3>
 <p></p>
-<a href="{% url 'cars:car_edit' city=car.car_city.pk pk=car.pk %}" class="btn btn-warning"><i class="fas fa-pen"></i> Edit</a>&ensp;
-<a href="{% url 'cars:car_check' city=car.car_city.pk pk=car.pk %}" class="btn btn-info"><i class="far fa-check-square"></i> Do Check</a>
-<p></p>
-<ul class="list-group ">
-    <li class="list-group-item list-group-item-action">City: {{car.car_city}} | External ID: {{car.car_id}}</li>
-    <li class="list-group-item list-group-item-action">Last check date: {{car.car_last_check}}</li>
-    <li class="list-group-item list-group-item-action">Driven kms: {{car.car_actual_driven_kms}}kms</li>
-    <li class="list-group-item list-group-item-action">Next oil or inspection date:
-        {{car.car_next_date}}
-    </li>
-    <li class="list-group-item list-group-item-action">Next oil or inspection in: {{car.car_next_km}}km
-    </li>
-    <li class="list-group-item list-group-item-action">Next inspection on: {{car.car_next_inspection_date}} or
-        {{car.car_next_inspection_km}}kms
-    </li>
-    <li class="list-group-item list-group-item-action">Next oil on: {{car.car_next_oil_date}} or
-        {{car.car_next_oil_km}}kms
-    </li>
-    <li class="list-group-item list-group-item-action">Note: </br> {{car.car_note|linebreaks}}</li>
-</ul>
+<a href="{% url 'cars:car_edit' city=car.car_city.pk pk=car.pk %}" class="btn btn-warning"><i class="fas fa-pen"></i>
+    Edit</a>&ensp;
+    <a href="{% url 'cars:car_check' city=car.car_city.pk pk=car.pk %}" class="btn btn-info"><i
+            class="far fa-check-square"></i> Do Check</a>
+    <p></p>
+    <ul class="list-group ">
+        <li class="list-group-item list-group-item-action">City: {{ car.car_city }} | External ID: {{ car.car_id }}</li>
+        <li class="list-group-item list-group-item-action">Last check date: {{ car.car_last_check }}</li>
+        <li class="list-group-item list-group-item-action">Driven kms: {{ car.car_actual_driven_kms }}kms</li>
+        <li class="list-group-item list-group-item-action">Next oil or inspection date:
+            {{ car.car_next_date }}
+        </li>
+        <li class="list-group-item list-group-item-action">Need of wet cleaning: {{ car.get_car_dirtiness_display }}
+        </li>
+        <li class="list-group-item list-group-item-action">Next oil or inspection in: {{ car.car_next_km }}km
+        </li>
+        <li class="list-group-item list-group-item-action">Next inspection on: {{ car.car_next_inspection_date }} or
+            {{ car.car_next_inspection_km }}kms
+        </li>
+        <li class="list-group-item list-group-item-action">Next oil on: {{ car.car_next_oil_date }} or
+            {{ car.car_next_oil_km }}kms
+        </li>
+        <li class="list-group-item list-group-item-action">Note: </br> {{ car.car_note|linebreaks }}</li>
+    </ul>
 <p></p>
 {% if tasks %}
 <h3>Active Tasks:</h3>

@@ -4,6 +4,7 @@ from django.urls import reverse
 from django.utils import timezone
 from cars.managers import ActiveCarManager
 from simple_history.models import HistoricalRecords
+from django.conf import settings
 
 
 class City(models.Model):
@@ -79,6 +80,15 @@ class Car(models.Model):
         self.car_next_date = self._next_oil_or_inspection_date()
         self.car_next_km = self._next_oil_or_inspection_kms()
         super().save(*args, **kwargs)
+
+    def needs_service(self):
+        pass
+        # TODO add car needs service
+
+    def needs_tyres_switch(self):
+        pass
+        # TODO create on spring to change to summer tyres,
+        #  on autumn to change to winter and check all-year
 
     # car_next_date = property(next_oil_or_inspection_date)
     # car_next_km = property(next_oil_or_inspection_kms)

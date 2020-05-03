@@ -32,6 +32,7 @@ def create_service_tasks():
         if timedelta(30) > (car.next_oil_or_inspection_date() - timezone.now().date()):
             car_needs_service = True
         # check for kms
+        # TODO this needs change!
         if car.next_oil_or_inspection_kms() < 3000:
             car_needs_service = True
         if car_needs_service:
