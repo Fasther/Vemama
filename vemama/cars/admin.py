@@ -28,5 +28,6 @@ class CarAdmin(SimpleHistoryAdmin):
             return delta.changed_fields
         return None
 
+
 admin.site.register(City)
 admin.site.register(Car, CarAdmin)
