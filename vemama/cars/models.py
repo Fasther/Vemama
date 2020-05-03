@@ -6,7 +6,6 @@ from cars.managers import ActiveCarManager
 from simple_history.models import HistoricalRecords
 
 
-
 class City(models.Model):
     name = models.CharField(max_length=200)
 
@@ -50,22 +49,21 @@ class Car(models.Model):
     car_next_stk_date = models.DateField(blank=True, null=True, verbose_name="Next STK date")
     car_last_check = models.DateField(blank=True, null=True, verbose_name="Last check")
     car_actual_driven_kms = models.DecimalField(decimal_places=0, max_digits=10, verbose_name="Driven KMs")
+    car_next_date = models.DateField(blank=True, null=True, verbose_name="Next 🔧 date")
+    car_next_km = models.DecimalField(blank=True, null=True, decimal_places=0, max_digits=10,
+                                      verbose_name="Next 🔧 kms")
     car_note = models.TextField(blank=True, max_length=1024, verbose_name="Notes")
     history = HistoricalRecords()
 
     objects = Manager()
     active = ActiveCarManager()
 
-    def next_oil_or_inspection_date(self):
+    def _next_oil_or_inspection_date(self):
         return min(self.car_next_inspection_date, self.car_next_oil_date) if self.car_id else "0"
 
-    next_oil_or_inspection_date.short_description = "Next 🔧 date"
-
-    def next_oil_or_inspection_kms(self):
+    def _next_oil_or_inspection_kms(self):
         return (int(min(self.car_next_oil_km, self.car_next_inspection_km)) - int(self.car_actual_driven_kms)) \
             if self.car_id else "0"
-
-    next_oil_or_inspection_kms.short_description = "Next 🔧 kms"
 
     def get_absolute_url(self):
         return reverse("cars:car_detail", kwargs={'pk': self.pk, "city": self.car_city.pk})
@@ -77,5 +75,10 @@ class Car(models.Model):
         self.car_last_check = timezone.now()
         self.save()
 
-    car_next_date = property(next_oil_or_inspection_date)
-    car_next_km = property(next_oil_or_inspection_kms)
+    def save(self, *args, **kwargs):
+        self.car_next_date = self._next_oil_or_inspection_date()
+        self.car_next_km = self._next_oil_or_inspection_kms()
+        super().save(*args, **kwargs)
+
+    # car_next_date = property(next_oil_or_inspection_date)
+    # car_next_km = property(next_oil_or_inspection_kms)
