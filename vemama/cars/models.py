@@ -1,3 +1,5 @@
+from datetime import timedelta
+
 from django.db import models
 from django.db.models import Manager
 from django.urls import reverse
@@ -89,18 +91,36 @@ class Car(models.Model):
     #         (5, "Tyres change"),
     #         (99, "Other"),
 
+    def needs_check(self):
+        time_from_last_check = timezone.now().date() - self.car_last_check
+        if time_from_last_check > timedelta(days=settings.ROUTINE_CHECK_INTERVAL):
+            return True
+        else:
+            return False
+        pass
+
+    def needs_cleaning(self):
+        if self.car_dirtiness == 3:
+            return True
+        else:
+            return False
+
     def needs_service(self):
+        needs_service = False
+        # check date:
+
+        # check kms
+
         pass
         # TODO add car needs service
+
+    def needs_stk(self):
+        pass
 
     def needs_tyres_switch(self):
         pass
         # TODO create on spring to change to summer tyres,
         #  on autumn to change to winter and check all-year
-
-    def needs_check(self):
-        pass
-        # TODO add
 
     # car_next_date = property(next_oil_or_inspection_date)
     # car_next_km = property(next_oil_or_inspection_kms)

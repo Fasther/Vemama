@@ -8,6 +8,13 @@ from simple_history.models import HistoricalRecords
 
 
 class Task(models.Model):
+    # Task type definition
+    CHECK = 1
+    CLEANING = 2
+    SERVICE = 3
+    STK = 4
+    TYRES = 5
+    OTHER = 99
     TASK_TYPES = (
         (1, "Regular cleaning and check"),
         (2, "Big cleaning and check"),
@@ -16,6 +23,7 @@ class Task(models.Model):
         (5, "Tyres change"),
         (99, "Other"),
     )
+
     name = models.CharField(max_length=200)
     car = models.ForeignKey(cars.Car, related_name="tasks", on_delete=models.CASCADE)
     user = models.ForeignKey(User, related_name="tasks", on_delete=models.CASCADE, blank=True, null=True,
