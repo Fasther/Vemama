@@ -1,6 +1,6 @@
 from django.db import models
 from cars import models as cars
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.utils import timezone
 from django.urls import reverse
 from tasks.notifications import send_notification
@@ -26,7 +26,7 @@ class Task(models.Model):
 
     name = models.CharField(max_length=200)
     car = models.ForeignKey(cars.Car, related_name="tasks", on_delete=models.CASCADE)
-    user = models.ForeignKey(User, related_name="tasks", on_delete=models.CASCADE, blank=True, null=True,
+    user = models.ForeignKey(get_user_model(), related_name="tasks", on_delete=models.CASCADE, blank=True, null=True,
                              verbose_name="Person")
     task_type = models.IntegerField(choices=TASK_TYPES, default=1)
     description = models.TextField(blank=True)

@@ -137,9 +137,19 @@ class Car(models.Model):
 
     @property
     def needs_tyres_switch(self):
-        pass
-        # TODO create on spring to change to summer tyres,
-        #  on autumn to change to winter and check all-year
+        if self.car_tyres == Car.TYRE_ALL_YEAR:
+            return False
 
-    # car_next_date = property(next_oil_or_inspection_date)
-    # car_next_km = property(next_oil_or_inspection_kms)
+        winter_tyre_months = ("11", "12", "01", "02", "03")
+        # we want to generate notification one month before.
+        current_month = (timezone.now() + timedelta(weeks=4)).strftime("%m")
+        if current_month in winter_tyre_months:  # it winter time!
+            if self.car_tyres == Car.TYRE_SUMMER:
+                return True
+            else:
+                return False
+        else:
+            if self.car_tyres == Car.TYRE_WINTER:
+                return True
+            else:
+                return False

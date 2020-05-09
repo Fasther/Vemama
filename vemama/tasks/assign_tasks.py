@@ -3,6 +3,8 @@ from tasks.models import Task
 
 # this is used to assign users to tasks automatically
 
+# TODO This needs serious work over.
+
 routine_check_name = "Routine check"  # routine check task name
 inspection_name = "Regular service inspection soon"  # Regular service tasks name
 fleet_grp = "fleet"  # surname for fleet group. Always used as: "{{ city }} fleet"
