@@ -79,7 +79,7 @@ class Car(models.Model):
         return reverse("cars:car_detail", kwargs={'pk': self.pk, "city": self.car_city.pk})
 
     def __str__(self):
-        return self.car_name
+        return f"{self.car_name} ({self.car_city})"
 
     def do_check(self):
         self.car_last_check = timezone.now()

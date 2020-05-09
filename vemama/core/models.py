@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 from django.db import models
@@ -25,8 +26,16 @@ class ChoiceArrayField(ArrayField):
         return value
 
 
+class Person(User):
+    class Meta:
+        proxy = True
+
+    def __str__(self):
+        return f"{self.first_name} {self.last_name} ({self.username})"
+
+
 class Profile(models.Model):
-    user = models.OneToOneField(get_user_model(), related_name="profile", on_delete=models.CASCADE, blank=False,
+    user = models.OneToOneField(Person, related_name="profile", on_delete=models.CASCADE, blank=False,
                                 verbose_name="User")
     suitable_tasks = ChoiceArrayField(base_field=models.IntegerField(choices=Task.TASK_TYPES))
     cities = models.ManyToManyField(City)
