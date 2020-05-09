@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     "crispy_forms",
     "simple_history",
+    "core",
     "cars",
     "tasks",
 ]
