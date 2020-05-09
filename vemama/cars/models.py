@@ -23,11 +23,18 @@ class City(models.Model):
 
 
 class Car(models.Model):
+    # Car tyres definition
+    TYRE_ALL_YEAR = 1
+    TYRE_SUMMER = 2
+    TYRE_WINTER = 3
     CAR_TYRES = (
         (1, "All year"),
         (2, "Summer"),
         (3, "Winter")
     )
+
+    # Dirtiness definition
+
     DIRTINESS = (
         (1, "Fine, looks good"),
         (2, "Few stains, still good enough"),
@@ -90,7 +97,7 @@ class Car(models.Model):
     #         (4, "STK"),
     #         (5, "Tyres change"),
     #         (99, "Other"),
-
+    @property
     def needs_check(self):
         time_from_last_check = timezone.now().date() - self.car_last_check
         if time_from_last_check > timedelta(days=settings.ROUTINE_CHECK_INTERVAL):
@@ -99,24 +106,36 @@ class Car(models.Model):
             return False
         pass
 
+    @property
     def needs_cleaning(self):
         if self.car_dirtiness == 3:
             return True
         else:
             return False
 
+    @property
     def needs_service(self):
         needs_service = False
         # check date:
-
+        next_date = self._next_oil_or_inspection_date()
+        days_till_service = next_date - timezone.now().date()
+        if days_till_service < timedelta(days=settings.CAR_SERVICE_DAYS_THRESHOLD):
+            needs_service = True
         # check kms
+        if self.car_actual_driven_kms < (self._next_oil_or_inspection_kms() + settings.CAR_SERVICE_KM_THRESHOLD):
+            needs_service = True
+        return needs_service
 
-        pass
-        # TODO add car needs service
-
+    @property
     def needs_stk(self):
-        pass
+        next_date = self.car_next_stk_date
+        days_till_stk = next_date - timezone.now().date()
+        if days_till_stk < timedelta(days=settings.CAR_SERVICE_DAYS_THRESHOLD):
+            return True
+        else:
+            return False
 
+    @property
     def needs_tyres_switch(self):
         pass
         # TODO create on spring to change to summer tyres,
