@@ -6,6 +6,7 @@ from core.models import Profile, Person
 
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
+    autocomplete_fields = ("user",)
     search_fields = ("user",)
 
 

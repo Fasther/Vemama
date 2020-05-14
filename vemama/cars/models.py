@@ -90,13 +90,6 @@ class Car(models.Model):
         self.car_next_km = self._next_oil_or_inspection_kms()
         super().save(*args, **kwargs)
 
-    # TODO:
-    #         (1, "Regular cleaning and check"),
-    #         (2, "Big cleaning and check"),
-    #         (3, "Service check / Oil change"),
-    #         (4, "STK"),
-    #         (5, "Tyres change"),
-    #         (99, "Other"),
     @property
     def needs_check(self):
         time_from_last_check = timezone.now().date() - self.car_last_check
@@ -122,7 +115,7 @@ class Car(models.Model):
         if days_till_service < timedelta(days=settings.CAR_SERVICE_DAYS_THRESHOLD):
             needs_service = True
         # check kms
-        if self.car_actual_driven_kms < (self._next_oil_or_inspection_kms() + settings.CAR_SERVICE_KM_THRESHOLD):
+        if settings.CAR_SERVICE_KM_THRESHOLD > self._next_oil_or_inspection_kms():
             needs_service = True
         return needs_service
 
