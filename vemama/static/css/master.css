@@ -24,3 +24,7 @@ body {
     margin-top: 1rem;
     margin-bottom: 0rem;
 }
+
+#warning-backgroud {
+    background-color: #ffeeba;
+}
