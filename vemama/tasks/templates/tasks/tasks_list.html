@@ -45,7 +45,7 @@
             <td>User</td>
             {% endif %}
             {% if last == 'completed' %}
-            <td>Completed at</td>
+                <td>Completed at</td>
             {% else %}
                 <td>Due date</td>
             {% endif %}
@@ -55,7 +55,8 @@
             <tbody>
             {% for task in tasks %}
                 <tr>
-                    <td><a href="{% url 'tasks:task_detail' last=last pk=task.pk %}">{{ task.name }}</a></td>
+                    <td><a href="{% url 'tasks:task_detail' last=last pk=task.pk %}">{{ task.name }}</a>
+                        {% if task.is_past_due %}<i class="fas fa-exclamation"></i>{% endif %}</td>
                     <td>{{ task.car.car_name }}</td>
                     {% if not last == 'my' %}
                         <td>{{ task.user.username }}</td>
@@ -63,7 +64,7 @@
                     {% if last == 'completed' %}
                         <td>{{ task.completed_date|date:'d.m.y' }}</td>
                     {% else %}
-                        <td {% if task.is_past_due %}id="warning-backgroud"{% endif %}>{{ task.due_date|date:'d.m.y' }}</td>
+                        <td>{{ task.due_date|date:'d.m.y' }}</td>
                     {% endif %}
                     <td>{{ task.city }}</td>
                 </tr>

@@ -122,6 +122,8 @@ class Car(models.Model):
     @property
     def needs_stk(self):
         next_date = self.car_next_stk_date
+        if not next_date:
+            return False
         days_till_stk = next_date - timezone.now().date()
         if days_till_stk < timedelta(days=settings.CAR_SERVICE_DAYS_THRESHOLD):
             return True
@@ -146,3 +148,8 @@ class Car(models.Model):
                 return True
             else:
                 return False
+
+    @property
+    def needs_attention(self):
+        return any((self.needs_service, self.needs_check, self.needs_tyres_switch,
+                    self.needs_cleaning, self.needs_stk))
