@@ -1,3 +1,4 @@
+from django.views import View
 from django.views.generic import ListView, DetailView, UpdateView, TemplateView
 from .models import Task
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -109,12 +110,6 @@ class EditTask(LoginRequiredMixin, UpdateView):
         return reverse("tasks:task_detail", kwargs={"last": last, "pk": pk})
 
 
-class DoTask(LoginRequiredMixin, UpdateView):
-    model = Task
-    template_name = "tasks/tasks_do.html"
-    fields = ("completed",)
-
-
 class CreateTasks(LoginRequiredMixin, TemplateView):
     template_name = "tasks/create_tasks.html"
 
@@ -125,6 +120,16 @@ class CreateTasks(LoginRequiredMixin, TemplateView):
         except KeyError:
             pass
         return context
+
+
+class DoTask(LoginRequiredMixin, TemplateView):
+    template_name = "tasks/tasks_do.html"
+
+    def get_context_data(self, **kwargs):
+        pass
+
+    def get(self, request, *args, **kwargs):
+        pass
 
 
 @login_required

@@ -37,10 +37,13 @@ class CarUpdateView(LoginRequiredMixin, UpdateView):
     template_name = "cars/car_form.html"
     fields = ["car_actual_driven_kms",
               "car_last_check",
+              "car_tyres",
+              "car_dirtiness",
               "car_next_inspection_date",
               "car_next_inspection_km",
               "car_next_oil_date",
               "car_next_oil_km",
+              "car_next_stk_date",
               "car_note",
               ]
 
