@@ -16,7 +16,8 @@
     <h3>Complete task: {{ task.name }} </h3>
     <form method="POST" class="form">
         {% csrf_token %}
-        {{ form|crispy }}
+        {{ car_form|crispy }}
+        {{ task_form|crispy }}
         <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Save Changes</button>
         <a class="btn btn-primary" href="{% url 'tasks:task_detail' last=view.kwargs.last pk=task.pk %}"><i
                 class="fas fa-times"></i> Cancel</a>

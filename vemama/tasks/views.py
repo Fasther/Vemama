@@ -1,5 +1,7 @@
-from django.views import View
 from django.views.generic import ListView, DetailView, UpdateView, TemplateView
+
+from cars.forms import CarTaskForm
+from .forms import CompleteTaskForm
 from .models import Task
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
@@ -126,10 +128,18 @@ class DoTask(LoginRequiredMixin, TemplateView):
     template_name = "tasks/tasks_do.html"
 
     def get_context_data(self, **kwargs):
-        pass
+        context = super().get_context_data(**kwargs)
+        task_instance = get_object_or_404(Task, pk=kwargs.get("pk"))
+        car_instance = task_instance.car
+        context["car"] = car_instance
+        context["task"] = task_instance
+        context["car_form"] = CarTaskForm(exclude_fields=("car_actual_driven_kms",))
+        context["task_form"] = CompleteTaskForm()
+        return context
 
     def get(self, request, *args, **kwargs):
-        pass
+        context = self.get_context_data(**kwargs)
+        return self.render_to_response(context)
 
 
 @login_required
