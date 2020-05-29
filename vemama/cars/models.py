@@ -62,7 +62,9 @@ class Car(models.Model):
     car_next_date = models.DateField(blank=True, null=True, verbose_name="Next 🔧 date")
     car_next_km = models.DecimalField(blank=True, null=True, decimal_places=0, max_digits=10,
                                       verbose_name="Next 🔧 kms")
-    car_note = models.TextField(blank=True, max_length=1024, verbose_name="Notes")
+    car_note = models.TextField(blank=True, max_length=1024, verbose_name="Notes",
+                                help_text="This is just for internal notes and tips.\n If you want to report some"
+                                          "damage or problem, please inform responsible person.")
     history = HistoricalRecords()
 
     objects = Manager()

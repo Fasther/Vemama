@@ -139,6 +139,11 @@ class DoTask(LoginRequiredMixin, TemplateView):
 
         if task_type == Task.CHECK:
             exclude = ("car_tyres",)
+            context["task_info"] = "This is regular maintenance checks.\n" \
+                                   "Please follow instructions and edit info, if needed."
+            context["task_actions"] = (
+                "I vacuumed seats and floor", "I wiped the dust"
+            )
 
         context["car_form"] = CarTaskForm(exclude_fields=("car_actual_driven_kms",),
                                           instance=car_instance,

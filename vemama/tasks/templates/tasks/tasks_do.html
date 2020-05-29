@@ -21,7 +21,7 @@
             <li class="list-group-item list-group-item-action">
                 <h5>Task info</h5>
                 <hr>
-                <p>{{ task_info }}</p>
+                <p>{{ task_info|linebreaks }}</p>
                 {% if task_actions %}
                     <ul class="list-group ">
                         {% for task_action in task_actions %}
