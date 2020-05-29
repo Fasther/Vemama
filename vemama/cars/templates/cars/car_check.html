@@ -30,20 +30,22 @@
     <li class="list-group-item list-group-item-action">I checked tire pressures</li>
     <li class="list-group-item list-group-item-action">I checked equipment:<br>
                                                         - Safety vest at drivers door<br>
-                                                        - First aid kit<br>
-                                                        - Warning triangle<br>
-                                                        - Chains and scrapers (in winter)<br>
-                                                        - Charger and holder - all functional<br></li>
+        - First aid kit<br>
+        - Warning triangle<br>
+        - Chains and scrapers (in winter)<br>
+        - Charger and holder - all functional<br></li>
     <li class="list-group-item list-group-item-action">I've checked log-book:<br>
-                                                        - Documents from car OK<br>
-                                                        - Info, map, exp not payed by CCS, damage report OK<br>
+        - Documents from car OK<br>
+        - Info, map, exp not payed by CCS, damage report OK<br>
         - I picked the receipts<br></li>
 </ul>
-<p></p>
-<a href="{% url 'cars:car_do_check' city=car.car_city.pk pk=car.pk %}" class="btn btn-success"><i class="fas fa-check-square"></i> Everything is OK!</a> &nbsp;
-<a href="{% url 'cars:car_detail' city=car.car_city.id pk=car.pk %}" class="btn btn-primary"><i class="fas fa-times"></i> Cancel</a>
+    <p></p>
+    <a href="{% url 'cars:car_do_check' city=car.car_city.pk pk=car.pk %}" class="btn btn-success"><i
+            class="fas fa-check"></i> Everything is OK!</a> &nbsp;
+    <a href="{% url 'cars:car_detail' city=car.car_city.id pk=car.pk %}" class="btn btn-primary"><i
+            class="fas fa-times"></i> Cancel</a>
 
-<p></p>
+    <p></p>
 
 
 {% endblock %}

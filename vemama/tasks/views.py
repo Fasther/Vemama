@@ -132,9 +132,14 @@ class DoTask(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         task_instance = get_object_or_404(Task, pk=kwargs.get("pk"))
+        task_type = task_instance.task_type
         car_instance = task_instance.car
         context["car"] = car_instance
         context["task"] = task_instance
+
+        if task_type == Task.CHECK:
+            exclude = ("car_tyres",)
+
         context["car_form"] = CarTaskForm(exclude_fields=("car_actual_driven_kms",),
                                           instance=car_instance,
                                           )

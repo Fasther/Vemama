@@ -13,7 +13,7 @@
             <li class="breadcrumb-item active">Complete</li>
         </ol>
     </nav>
-    <h3>Complete task: {{ task.name }} </h3>
+    <h3><small class="text-muted">Complete task:</small> {{ task.name }} </h3>
     <h4><span class="badge badge-info">Car: {{ car.car_name }}</span></h4>
     <form method="POST" class="form">
         {% csrf_token %}
@@ -21,12 +21,16 @@
             <li class="list-group-item list-group-item-action">
                 <h5>Task info</h5>
                 <hr>
-                <p>Task text</p>
-                <ul class="list-group ">
-                    <li class="list-group-item list-group-item-action list-group-item-secondary">
-                        Task list of actions
-                    </li>
-                </ul>
+                <p>{{ task_info }}</p>
+                {% if task_actions %}
+                    <ul class="list-group ">
+                        {% for task_action in task_actions %}
+                            <li class="list-group-item list-group-item-action list-group-item-secondary">
+                                {{ task_action }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
             </li>
             <li class="list-group-item list-group-item-action">
                 <h5>Car info</h5>
@@ -35,9 +39,10 @@
             </li>
         </ul>
         <p>{{ task_form|crispy }}</p>
-        <button type="submit" class="btn btn-success"><i class="fas fa-check"></i> Save Changes</button>
+        <button type="submit" class="btn btn-success"><i class="fas fa-check"></i> Task is done!</button>
         <a class="btn btn-primary" href="{% url 'tasks:task_detail' last=view.kwargs.last pk=task.pk %}"><i
                 class="fas fa-times"></i> Cancel</a>
     </form>
+    <p></p>
 
 {% endblock %}

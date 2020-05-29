@@ -3,7 +3,7 @@ body {
 }
 
 .navbar-light .navbar-nav .nav-link {
-    color: rgba(0,0,0,1);
+    color: rgba(0, 0, 0, 1);
     font-weight: 600;
 }
 
@@ -11,9 +11,20 @@ body {
     background-color: #5baf0c;
 }
 
+.dataTables_filter {
+    margin-right: 1em;
+    text-align: center !important;
+}
+
+.container {
+    padding-right: 5px;
+    padding-left: 5px;
+}
+
 .content {
     background-color: white;
-    padding: 15px;
+    padding: 0.3em 0.3em 2em;
+    margin-bottom: 2em;
 }
 
 .btn {
