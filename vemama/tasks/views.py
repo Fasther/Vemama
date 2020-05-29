@@ -1,4 +1,6 @@
+from django.forms import model_to_dict
 from django.views.generic import ListView, DetailView, UpdateView, TemplateView
+from pylint.checkers import initialize
 
 from cars.forms import CarTaskForm
 from .forms import CompleteTaskForm
@@ -133,8 +135,10 @@ class DoTask(LoginRequiredMixin, TemplateView):
         car_instance = task_instance.car
         context["car"] = car_instance
         context["task"] = task_instance
-        context["car_form"] = CarTaskForm(exclude_fields=("car_actual_driven_kms",))
-        context["task_form"] = CompleteTaskForm()
+        context["car_form"] = CarTaskForm(exclude_fields=("car_actual_driven_kms",),
+                                          instance=car_instance,
+                                          )
+        context["task_form"] = CompleteTaskForm(initial={"completed": True, }, instance=task_instance)
         return context
 
     def get(self, request, *args, **kwargs):

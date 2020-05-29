@@ -4,8 +4,8 @@ from cars.models import Car
 
 class CarTaskForm(ModelForm):
     def __init__(self, *args, **kwargs):
-        super().__init__()
         exclude_fields = kwargs.pop("exclude_fields", None)
+        super().__init__(*args, **kwargs)
         if exclude_fields:
             for field in exclude_fields:
                 self.fields[field].widget = HiddenInput()

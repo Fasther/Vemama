@@ -10,15 +10,32 @@
             </li>
             <li class="breadcrumb-item"><a
                     href="{% url 'tasks:task_detail' last=view.kwargs.last pk=task.pk %}">{{ task.name }}</a></li>
-            <li class="breadcrumb-item active">Edit</li>
+            <li class="breadcrumb-item active">Complete</li>
         </ol>
     </nav>
     <h3>Complete task: {{ task.name }} </h3>
+    <h4><span class="badge badge-info">Car: {{ car.car_name }}</span></h4>
     <form method="POST" class="form">
         {% csrf_token %}
-        {{ car_form|crispy }}
-        {{ task_form|crispy }}
-        <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Save Changes</button>
+        <ul class="list-group">
+            <li class="list-group-item list-group-item-action">
+                <h5>Task info</h5>
+                <hr>
+                <p>Task text</p>
+                <ul class="list-group ">
+                    <li class="list-group-item list-group-item-action list-group-item-secondary">
+                        Task list of actions
+                    </li>
+                </ul>
+            </li>
+            <li class="list-group-item list-group-item-action">
+                <h5>Car info</h5>
+                <hr>
+                {{ car_form|crispy }}
+            </li>
+        </ul>
+        <p>{{ task_form|crispy }}</p>
+        <button type="submit" class="btn btn-success"><i class="fas fa-check"></i> Save Changes</button>
         <a class="btn btn-primary" href="{% url 'tasks:task_detail' last=view.kwargs.last pk=task.pk %}"><i
                 class="fas fa-times"></i> Cancel</a>
     </form>
