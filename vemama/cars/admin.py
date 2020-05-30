@@ -12,6 +12,7 @@ class CarAdmin(SimpleHistoryAdmin):
                     "car_last_check",
                     "car_next_km",
                     "car_next_date",
+                    "car_next_stk_date",
                     ]
     list_editable = ["car_actual_driven_kms", ]
     history_list_display = ["car_actual_driven_kms", ]

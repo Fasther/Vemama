@@ -4,7 +4,7 @@
 {% block content %}
 <nav xmlns="http://www.w3.org/1999/html">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{% url 'cars:city_list'%}">Cars</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'cars:city_list' %}">Cars</a></li>
         <li class="breadcrumb-item"><a href="{% url 'cars:car_list' city=car.car_city.id %}">{{ car.car_city }}</a></li>
         <li class="breadcrumb-item"><a
                 href="{% url 'cars:car_detail' city=car.car_city.id pk=car.pk %}">{{ car.car_name }}</a></li>
@@ -12,7 +12,7 @@
     </ol>
 </nav>
 
-    <h3>Edit: {{ car.car_name }}</h3>
+    <h3><small class="text-muted">Edit car:</small> {{ car.car_name }}</h3>
     <form method="POST" class="form">
         {% csrf_token %}
         {{ form|crispy }}
