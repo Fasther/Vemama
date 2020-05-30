@@ -23,7 +23,7 @@ class Task(models.Model):
         (99, "Other"),
     )
 
-    name = models.CharField(max_length=200)
+    name = models.CharField(max_length=200, blank=True)
     car = models.ForeignKey("cars.Car", related_name="tasks", on_delete=models.CASCADE)
     user = models.ForeignKey("core.Person", related_name="tasks", on_delete=models.CASCADE, blank=True, null=True,
                              verbose_name="Person")
@@ -59,7 +59,8 @@ class Task(models.Model):
     is_past_due.boolean = True
 
     def __str__(self):
-        return self.name
+        return f"{self.get_task_type_display()}: {self.name}" if self.name \
+            else f"{self.get_task_type_display()} #{self.id}"
 
     def get_absolute_url(self):
         return reverse("tasks:task_detail",  kwargs={"last": "my", 'pk': self.pk})

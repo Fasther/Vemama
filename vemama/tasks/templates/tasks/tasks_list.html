@@ -55,7 +55,7 @@
             <tbody>
             {% for task in tasks %}
                 <tr>
-                    <td><a href="{% url 'tasks:task_detail' last=last pk=task.pk %}">{{ task.name }}</a>
+                    <td><a href="{% url 'tasks:task_detail' last=last pk=task.pk %}">{{ task }}</a>
                         {% if task.is_past_due %}<i class="fas fa-exclamation"></i>{% endif %}</td>
                     <td>{{ task.car.car_name }}</td>
                     {% if not last == 'my' %}

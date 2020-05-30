@@ -4,7 +4,7 @@ from .models import Task
 
 
 class TaskAdmin(SimpleHistoryAdmin):
-    list_display = ["name",
+    list_display = ["__str__",
                     "car",
                     "user",
                     "city",
@@ -17,7 +17,7 @@ class TaskAdmin(SimpleHistoryAdmin):
     search_fields = ["name", "car"]
     history_list_display = ["completed", "changed_fields"]
     raw_id_fields = ["car", ]
-    list_filter = ["city", "completed", "user"]
+    list_filter = ["city", "task_type", "completed", "user"]
 
     @staticmethod
     def changed_fields(obj):
