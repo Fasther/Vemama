@@ -182,9 +182,16 @@ class DoTask(LoginRequiredMixin, TemplateView):
             context["task_actions"] = ("Plan appointment, reserve car for that date.", "Take car to the service",
                                        "Take it back", "Update service info")
         elif task_type == Task.STK:
-            exclude = ()
-            context["task_info"] = ""
-            context["task_actions"] = ""
+            exclude = ("car_tyres", "car_next_oil_date", "car_next_oil_km", "car_next_inspection_date",
+                       "car_next_inspection_km", "car_dirtiness",)
+            context["task_info"] = f"{car_instance.car_name} will need STK check.\n " \
+                                   f"STK is valid till: {date_format(car_instance.car_next_stk_date, 'DATE_FORMAT')}"
+            context["task_actions"] = ('Get "Velký TP" from Brno Office',
+                                       "If needed, make appointment at local STK workshop",
+                                       "Check, that car looks ok (lights, etc). If not, fix it.",
+                                       "Take car to STK workshop an do STK inspection",
+                                       "Update next STK date.")
+
         elif task_type == Task.TYRES:
             exclude = ()
             context["task_info"] = ""
