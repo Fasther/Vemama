@@ -153,7 +153,8 @@ class DoTask(LoginRequiredMixin, TemplateView):
         )
 
         if task_type == Task.CHECK:
-            exclude = ("car_tyres",)
+            exclude = ("car_tyres", "car_next_oil_date", "car_next_oil_km", "car_next_inspection_date",
+                       "car_next_inspection_km", "car_next_stk_date",)
             context["task_info"] = "This is regular maintenance task. Do checks.\n" \
                                    "Please follow instructions and edit car info, if needed."
             context["task_actions"] = (
@@ -163,9 +164,16 @@ class DoTask(LoginRequiredMixin, TemplateView):
                                           "that are often touched.\n- Windows are clean\n",
                                       ) + car_check_actions
         elif task_type == Task.CLEANING:
-            exclude = ("car_tyres",)
-            context["task_info"] = ""
-            context["task_actions"] = ""
+            exclude = ("car_dirtiness", "car_tyres", "car_next_oil_date", "car_next_oil_km", "car_next_inspection_date",
+                       "car_next_inspection_km", "car_next_stk_date",)
+            context["task_info"] = "Car needs bigger cleaning, also with wet cleaning of seats.\n" \
+                                   "Also do regular check."
+            context["task_actions"] = (
+                "Wet cleaning:\n"
+                "- Plan appointment for this car at local cleaning business.\n"
+                "- Take the car to cleaning\n"
+                "- and from cleaning :)"
+            )
         elif task_type == Task.SERVICE:
             exclude = ()
             context["task_info"] = ""
@@ -197,6 +205,7 @@ class DoTask(LoginRequiredMixin, TemplateView):
 @login_required
 def mark_as_complete(request, pk, last):
     task = get_object_or_404(Task, pk=pk)
+    # TODO if check - set check, if wet, set dirtiness to 0
     if task.name == "Routine check":
         task.car.do_check()
     task.complete()

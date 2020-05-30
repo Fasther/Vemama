@@ -12,5 +12,7 @@ class CarTaskForm(ModelForm):
 
     class Meta:
         model = Car
-        fields = ["car_actual_driven_kms", "car_dirtiness", "car_tyres", "car_note"]
+        fields = ["car_actual_driven_kms", "car_dirtiness", "car_tyres", "car_next_oil_date",
+                  "car_next_oil_km", "car_next_inspection_date", "car_next_inspection_km", "car_next_stk_date",
+                  "car_note"]
         exclude = []
