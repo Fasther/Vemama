@@ -46,8 +46,6 @@ class Task(models.Model):
             send_notification("New task for you", [self, ])
         self.city = str(self.car.car_city)
         self.completed = True if self.completed_date else False
-        if self.completed:
-            self.is_past_due = "null"
         super().save(*args, **kwargs)
 
     def is_past_due(self):

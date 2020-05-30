@@ -2,80 +2,54 @@
 
 
 {% block content %}
-<nav>
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{% url 'tasks:tasks_index'%}">Tasks</a></li>
-        <li class="breadcrumb-item"><a href="{% url 'tasks:'|add:view.kwargs.last|add:'_tasks' %}">{{ view.kwargs.last|title }} tasks</a></li>
-        <li class="breadcrumb-item active">{{ task.name }}</li>
-    </ol>
-</nav>
-
-
-<a href="{% url 'tasks:task_edit' last=view.kwargs.last pk=task.pk %}" class="btn btn-warning"><i class="fas fa-pen"></i> Edit</a>&ensp;
-<a href="{% url 'cars:car_detail' city=task.car.car_city.pk pk=task.car.pk %}" class="btn btn-primary"><i class="fas fa-car"></i> Go to car page</a>&ensp;
-{% if not task.completed %}
-<a href="{% url 'tasks:task_complete' last=view.kwargs.last pk=task.pk %}" class="btn btn-success"><i
-        class="fas fa-check"></i>
-    {% if task.name == 'Routine check' %}
-    Do check and Complete task
-    {% else %}
-    Complete task{% endif %}</a>
-{% endif %}
-
-<p></p>
-<h3>Task: {{ task.name }}</h3>
-{% if task.completed %}
-<div class="alert alert-success" role="alert">
-  Task is completed!
-</div>
-{% endif %}
-
-{% if task.is_past_due %}
-<div class="alert alert-warning" role="alert">
-  Task is past due!
-</div>
-{% endif %}
-
-<ul class="list-group">
-    <li class="list-group-item list-group-item-action">Car: {{ task.car }}</li>
-    <li class="list-group-item list-group-item-action">City: {{ task.city }}</li>
-    <li class="list-group-item list-group-item-action">Person: {{ task.user }}</li>
-    <li class="list-group-item list-group-item-action">Description: {{ task.description|linebreaks }}
-        {% if task.name == 'Routine check' %}
-        <p>I have checked that:<br>
-        <ul class="list-group ">
-            <li class="list-group-item list-group-item-action list-group-item-secondary">Car is clean from outside</li>
-            <li class="list-group-item list-group-item-action list-group-item-secondary">Car is clean from inside: <br>
-                - I cleaned doorframes<br>
-                - I vacuumed the car<br>
-                - I cleaned windows<br>
-                - I cleaned dashboard<br></li>
-            <li class="list-group-item list-group-item-action list-group-item-secondary">I topped up the washer fluid
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'tasks:tasks_index' %}">Tasks</a></li>
+            <li class="breadcrumb-item"><a
+                    href="{% url 'tasks:'|add:view.kwargs.last|add:'_tasks' %}">{{ view.kwargs.last|title }} tasks</a>
             </li>
-            <li class="list-group-item list-group-item-action list-group-item-secondary">I checked oil level</li>
-            <li class="list-group-item list-group-item-action list-group-item-secondary">I checked tire pressures</li>
-            <li class="list-group-item list-group-item-action list-group-item-secondary">I checked equipment:<br>
-                - Safety vest at drivers door<br>
-                - First aid kit<br>
-                - Warning triangle<br>
-                - Chains and scrapers (in winter)<br>
-                - Charger and holder - all functional<br></li>
-            <li class="list-group-item list-group-item-action list-group-item-secondary">I've checked log-book:<br>
-                - Documents from car OK<br>
-                - Info, map, exp not payed by CCS, damage report OK<br>
-                - I picked the receipts<br></li>
-        </ul>
-        </p>
-        {% endif %}
-    </li>
-    <li class="list-group-item list-group-item-action">Created date: {{ task.created_date }}</li>
-    {% if task.completed %}
-    <li class="list-group-item list-group-item-action">Completed date: {{ task.completed_date }}</li>
-    {% else %}
-    <li class="list-group-item list-group-item-action">Due date: {{ task.due_date }}</li>
+            <li class="breadcrumb-item active">{{ task.name }}</li>
+        </ol>
+    </nav>
+
+    <a href="{% url 'tasks:do_task' last=view.kwargs.last pk=task.pk %}" class="btn btn-primary">
+        <i class="fas fa-check"></i> Do task</a>&ensp;
+    <a href="{% url 'cars:car_detail' city=task.car.car_city.pk pk=task.car.pk %}" class="btn btn-info">
+        <i class="fas fa-car"></i> Go to car page</a>
+    <a href="{% url 'tasks:task_edit' last=view.kwargs.last pk=task.pk %}" class="btn btn-warning">
+        <i class="fas fa-pen"></i> Edit</a>
+    {% if not task.completed %}
+
     {% endif %}
-</ul>
-<p></p>
+
+    <p></p>
+    <h3>Task: {{ task }}</h3>
+    {% if task.completed %}
+        <div class="alert alert-success" role="alert">
+            Task is completed!
+        </div>
+    {% endif %}
+
+    {% if task.is_past_due %}
+        <div class="alert alert-warning" role="alert">
+            Task is past due!
+        </div>
+    {% endif %}
+
+    <ul class="list-group">
+        <li class="list-group-item list-group-item-action">Car: {{ task.car }}</li>
+        <li class="list-group-item list-group-item-action">City: {{ task.city }}</li>
+        <li class="list-group-item list-group-item-action">Person: {{ task.user }}</li>
+        <li class="list-group-item list-group-item-action">Type: {{ task.get_task_type_display }}</li>
+        <li class="list-group-item list-group-item-action">Description: <br> {{ task.description|linebreaksbr }}</li>
+        <li class="list-group-item list-group-item-action">Created date: {{ task.created_date }}</li>
+        {% if task.completed %}
+            <li class="list-group-item list-group-item-action">Completed date: {{ task.completed_date }}</li>
+        {% else %}
+            <li class="list-group-item list-group-item-action">Due date: {{ task.due_date }}</li>
+        {% endif %}
+    </ul>
+    <p></p>
 
 
 {% endblock %}

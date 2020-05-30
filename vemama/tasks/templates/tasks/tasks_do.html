@@ -39,8 +39,8 @@
             </li>
         </ul>
         <p>{{ task_form|crispy }}</p>
-        <button type="submit" class="btn btn-success"><i class="fas fa-check"></i> Task is done!</button>
-        <a class="btn btn-primary" href="{% url 'tasks:task_detail' last=view.kwargs.last pk=task.pk %}"><i
+        <button type="submit" class="btn btn-success"><i class="fas fa-check"></i> Task is done!</button>&ensp;
+        <a class="btn btn-secondary" href="{% url 'tasks:task_detail' last=view.kwargs.last pk=task.pk %}"><i
                 class="fas fa-times"></i> Cancel</a>
     </form>
     <p></p>
