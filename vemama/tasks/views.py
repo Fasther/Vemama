@@ -158,8 +158,9 @@ class DoTask(LoginRequiredMixin, TemplateView):
                                    "Please follow instructions and edit car info, if needed."
             context["task_actions"] = (
                                           "Cleaning:\n"
-                                          "- The car is washed and clean\n- I vacuumed seats and floor\n- I cleaned all plastic parts\n"
-                                          "- I disinfected the steering wheel and other surfaces that are often touched.\n- Windows are clean\n",
+                                          "- The car is washed and clean\n- I vacuumed seats and floor\n- I cleaned "
+                                          "all plastic parts\n- I disinfected the steering wheel and other surfaces "
+                                          "that are often touched.\n- Windows are clean\n",
                                       ) + car_check_actions
         elif task_type == Task.CLEANING:
             exclude = ("car_tyres",)
