@@ -142,10 +142,25 @@ class DoTask(LoginRequiredMixin, TemplateView):
             context["task_info"] = "This is regular maintenance checks.\n" \
                                    "Please follow instructions and edit info, if needed."
             context["task_actions"] = (
-                "I vacuumed seats and floor", "I wiped the dust"
+                "Cleaning:\n"
+                "- The car is washed and clean\n- I vacuumed seats and floor\n- I cleaned all plastic parts\n"
+                "- I disinfected the steering wheel and other surfaces that are often touched.\n- Windows are clean\n",
+
+                "Car checks:\n"
+                "- I checked oil level\n- I checked tire pressures\n- I topped up the washer fluid\n"
+                "- I checked all lights are functional",
+
+                "Equipment checks:\n"
+                "- Safety vest at drivers door\n- First aid kit\n- Warning triangle\n"
+                "- Chains and scrapers (in winter-time)\n- Charger and holder - all functional\n",
+
+                "Log book checks:\n"
+                "- I picked up all bills from log-book and placed them to separate folder.\n"
+                "- There are all legal documents for car (ORV, Insurance card, CCS card, European Accident statement)\n"
+                "- Papers with: Info about car, Map with zone, expenses not payed by CCS card, damage report"
             )
 
-        context["car_form"] = CarTaskForm(exclude_fields=("car_actual_driven_kms",),
+        context["car_form"] = CarTaskForm(exclude_fields=exclude,
                                           instance=car_instance,
                                           )
         context["task_form"] = CompleteTaskForm(initial={"completed": True, }, instance=task_instance)

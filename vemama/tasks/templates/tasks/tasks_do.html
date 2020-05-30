@@ -26,7 +26,7 @@
                     <ul class="list-group ">
                         {% for task_action in task_actions %}
                             <li class="list-group-item list-group-item-action list-group-item-secondary">
-                                {{ task_action }}
+                                {{ task_action|linebreaksbr }}
                             </li>
                         {% endfor %}
                     </ul>

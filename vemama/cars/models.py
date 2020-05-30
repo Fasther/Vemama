@@ -64,7 +64,7 @@ class Car(models.Model):
                                       verbose_name="Next 🔧 kms")
     car_note = models.TextField(blank=True, max_length=1024, verbose_name="Notes",
                                 help_text="This is just for internal notes and tips.\n If you want to report some"
-                                          "damage or problem, please inform responsible person.")
+                                          " damage or problem, please inform responsible person.")
     history = HistoricalRecords()
 
     objects = Manager()
