@@ -1,7 +1,5 @@
-from django.forms import model_to_dict
 from django.views.generic import ListView, DetailView, UpdateView, TemplateView
-from pylint.checkers import initialize
-
+from django.utils.formats import date_format
 from cars.forms import CarTaskForm
 from .forms import CompleteTaskForm
 from .models import Task
@@ -175,9 +173,14 @@ class DoTask(LoginRequiredMixin, TemplateView):
                 "- and from cleaning :)"
             )
         elif task_type == Task.SERVICE:
-            exclude = ()
-            context["task_info"] = ""
-            context["task_actions"] = ""
+            exclude = ("car_tyres", "car_next_stk_date",)
+            context["task_info"] = "Car needs service soon!\n" \
+                                   f"KMs till service: {car_instance.car_next_km}, " \
+                                   f"Service date: {date_format(car_instance.car_next_date, 'DATE_FORMAT')}\n" \
+                                   f"Please plan service appointment for {car_instance.car_name} in your local car " \
+                                   "service"
+            context["task_actions"] = ("Plan appointment, reserve car for that date.", "Take car to the service",
+                                       "Take it back", "Update service info")
         elif task_type == Task.STK:
             exclude = ()
             context["task_info"] = ""
