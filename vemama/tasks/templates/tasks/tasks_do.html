@@ -9,11 +9,11 @@
                     href="{% url 'tasks:'|add:view.kwargs.last|add:'_tasks' %}">{{ view.kwargs.last|title }} tasks</a>
             </li>
             <li class="breadcrumb-item"><a
-                    href="{% url 'tasks:task_detail' last=view.kwargs.last pk=task.pk %}">{{ task.name }}</a></li>
+                    href="{% url 'tasks:task_detail' last=view.kwargs.last pk=task.pk %}">{{ task }}</a></li>
             <li class="breadcrumb-item active">Complete</li>
         </ol>
     </nav>
-    <h3><small class="text-muted">Complete task:</small> {{ task.name }} </h3>
+    <h3><small class="text-muted">Complete task:</small> {{ task }} </h3>
     <h4><span class="badge badge-info">Car: {{ car.car_name }}</span></h4>
     <form method="POST" class="form">
         {% csrf_token %}

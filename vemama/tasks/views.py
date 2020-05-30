@@ -1,6 +1,7 @@
 from django.views.generic import ListView, DetailView, UpdateView, TemplateView
 from django.utils.formats import date_format
 from cars.forms import CarTaskForm
+from cars.models import Car
 from .forms import CompleteTaskForm
 from .models import Task
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -82,7 +83,7 @@ class CompletedTasksList(LoginRequiredMixin, ListView):
     context_object_name = "tasks"
 
     def get_queryset(self):
-        return Task.objects.filter(completed=True, completed_date__gte=(timezone.now()-timedelta(days=60)))
+        return Task.objects.filter(completed=True, completed_date__gte=(timezone.now() - timedelta(days=60)))
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -185,21 +186,35 @@ class DoTask(LoginRequiredMixin, TemplateView):
             exclude = ("car_tyres", "car_next_oil_date", "car_next_oil_km", "car_next_inspection_date",
                        "car_next_inspection_km", "car_dirtiness",)
             context["task_info"] = f"{car_instance.car_name} will need STK check.\n " \
-                                   f"STK is valid till: {date_format(car_instance.car_next_stk_date, 'DATE_FORMAT')}"
+                                   f"STK is valid till: " \
+                                   f"{date_format(car_instance.car_next_stk_date, 'DATE_FORMAT') if car_instance.car_next_stk_date else 'Unknown'}"
             context["task_actions"] = ('Get "Velký TP" from Brno Office',
                                        "If needed, make appointment at local STK workshop",
                                        "Check, that car looks ok (lights, etc). If not, fix it.",
-                                       "Take car to STK workshop an do STK inspection",
+                                       "Take the car to STK workshop and do STK inspection",
                                        "Update next STK date.")
 
         elif task_type == Task.TYRES:
-            exclude = ()
-            context["task_info"] = ""
-            context["task_actions"] = ""
+            exclude = ("car_next_oil_date", "car_next_oil_km", "car_next_inspection_date", "car_next_inspection_km",
+                       "car_next_stk_date",)
+            context["task_info"] = "Car needs check, if tyres are still good!" if \
+                car_instance.car_tyres == Car.TYRE_ALL_YEAR else "Car needs seasonal tyre change!"
+            all_year_action = ("Check if car have at least 4.5mm tread depth on all tyres.",
+                               "If yes, check that the front ones are not significantly shallower than the rear ones.\n"
+                               "- If yes, plan tyre rotation\n- If not, your task is done.",
+                               "If no, order new ones and do regular tyre change (see bellow):",) \
+                if car_instance.car_tyres == Car.TYRE_ALL_YEAR else ()
+            context["task_actions"] = all_year_action + (
+                "Check, that you have right tyres for replacement.\n"
+                "- if not, order them.",
+                "Plan appointment in your local service for tyre change",
+                "Take the car for tyre change", "Write current tyres bellow and this task is done",
+            )
         else:  # task_type == OTHER
-            exclude = ()
-            context["task_info"] = ""
-            context["task_actions"] = ""
+            exclude = ("car_tyres", "car_next_oil_date", "car_next_oil_km", "car_next_inspection_date",
+                       "car_next_inspection_km", "car_next_stk_date",)
+            context["task_info"] = "Special task! See description bellow. \n"
+            context["task_actions"] = (f"Description:\n{task_instance.description}",)
 
         context["car_form"] = CarTaskForm(exclude_fields=exclude,
                                           instance=car_instance,
