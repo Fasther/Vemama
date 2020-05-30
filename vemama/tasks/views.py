@@ -159,6 +159,26 @@ class DoTask(LoginRequiredMixin, TemplateView):
                 "- There are all legal documents for car (ORV, Insurance card, CCS card, European Accident statement)\n"
                 "- Papers with: Info about car, Map with zone, expenses not payed by CCS card, damage report"
             )
+        if task_type == Task.CLEANING:
+            exclude = ()
+            context["task_info"] = ""
+            context["task_actions"] = ""
+        elif task_type == Task.SERVICE:
+            exclude = ()
+            context["task_info"] = ""
+            context["task_actions"] = ""
+        elif task_type == Task.STK:
+            exclude = ()
+            context["task_info"] = ""
+            context["task_actions"] = ""
+        elif task_type == Task.TYRES:
+            exclude = ()
+            context["task_info"] = ""
+            context["task_actions"] = ""
+        else:  # task_type == OTHER
+            exclude = ()
+            context["task_info"] = ""
+            context["task_actions"] = ""
 
         context["car_form"] = CarTaskForm(exclude_fields=exclude,
                                           instance=car_instance,
