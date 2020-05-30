@@ -137,30 +137,32 @@ class DoTask(LoginRequiredMixin, TemplateView):
         context["car"] = car_instance
         context["task"] = task_instance
 
+        car_check_actions = (
+            "Car checks:\n"
+            "- I checked oil level\n- I checked tire pressures\n- I topped up the washer fluid\n"
+            "- I checked all lights are functional",
+
+            "Equipment checks:\n"
+            "- Safety vest at drivers door\n- First aid kit\n- Warning triangle\n"
+            "- Chains and scrapers (in winter-time)\n- Charger and holder - all functional\n",
+
+            "Log book checks:\n"
+            "- I picked up all bills from log-book and placed them to separate folder.\n"
+            "- There are all legal documents for car (ORV, Insurance card, CCS card, European Accident statement)\n"
+            "- Papers with: Info about car, Map with zone, expenses not payed by CCS card, damage report"
+        )
+
         if task_type == Task.CHECK:
             exclude = ("car_tyres",)
-            context["task_info"] = "This is regular maintenance checks.\n" \
-                                   "Please follow instructions and edit info, if needed."
+            context["task_info"] = "This is regular maintenance task. Do checks.\n" \
+                                   "Please follow instructions and edit car info, if needed."
             context["task_actions"] = (
-                "Cleaning:\n"
-                "- The car is washed and clean\n- I vacuumed seats and floor\n- I cleaned all plastic parts\n"
-                "- I disinfected the steering wheel and other surfaces that are often touched.\n- Windows are clean\n",
-
-                "Car checks:\n"
-                "- I checked oil level\n- I checked tire pressures\n- I topped up the washer fluid\n"
-                "- I checked all lights are functional",
-
-                "Equipment checks:\n"
-                "- Safety vest at drivers door\n- First aid kit\n- Warning triangle\n"
-                "- Chains and scrapers (in winter-time)\n- Charger and holder - all functional\n",
-
-                "Log book checks:\n"
-                "- I picked up all bills from log-book and placed them to separate folder.\n"
-                "- There are all legal documents for car (ORV, Insurance card, CCS card, European Accident statement)\n"
-                "- Papers with: Info about car, Map with zone, expenses not payed by CCS card, damage report"
-            )
-        if task_type == Task.CLEANING:
-            exclude = ()
+                                          "Cleaning:\n"
+                                          "- The car is washed and clean\n- I vacuumed seats and floor\n- I cleaned all plastic parts\n"
+                                          "- I disinfected the steering wheel and other surfaces that are often touched.\n- Windows are clean\n",
+                                      ) + car_check_actions
+        elif task_type == Task.CLEANING:
+            exclude = ("car_tyres",)
             context["task_info"] = ""
             context["task_actions"] = ""
         elif task_type == Task.SERVICE:
