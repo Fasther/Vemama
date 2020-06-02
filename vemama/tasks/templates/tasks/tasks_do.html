@@ -15,6 +15,11 @@
     </nav>
     <h3><small class="text-muted">Complete task:</small> {{ task }} </h3>
     <h4><span class="badge badge-info">Car: {{ car.car_name }}</span></h4>
+    {% if errors %}
+        <div class="alert alert-danger" role="alert">
+            {{ errors|escape }}
+        </div>
+    {% endif %}
     <form method="POST" class="form">
         {% csrf_token %}
         <ul class="list-group">

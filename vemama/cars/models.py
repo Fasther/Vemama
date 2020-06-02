@@ -71,7 +71,7 @@ class Car(models.Model):
     active = ActiveCarManager()
 
     def _next_oil_or_inspection_date(self):
-        return min(self.car_next_inspection_date, self.car_next_oil_date) if self.car_id else "0"
+        return min(self.car_next_inspection_date, self.car_next_oil_date) if self.car_id else timezone.now()
 
     def _next_oil_or_inspection_kms(self):
         return (int(min(self.car_next_oil_km, self.car_next_inspection_km)) - int(self.car_actual_driven_kms)) \

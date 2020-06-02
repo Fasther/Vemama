@@ -1,3 +1,4 @@
+from django.http import HttpResponseRedirect
 from django.views.generic import ListView, DetailView, UpdateView, TemplateView
 from django.utils.formats import date_format
 from cars.forms import CarTaskForm
@@ -226,6 +227,19 @@ class DoTask(LoginRequiredMixin, TemplateView):
         context = self.get_context_data(**kwargs)
         return self.render_to_response(context)
 
+    def post(self, request, *args, **kwargs):
+        car_form = CarTaskForm(self.request.POST)
+        task_form = CompleteTaskForm(self.request.POST)
+        if car_form.is_valid() and task_form.is_valid():
+            car = car_form.save(commit=False)
+            car.save()
+            return HttpResponseRedirect(reverse("tasks:task_detail", args, kwargs))
+
+        else:
+            kwargs["errors"] = car_form.errors
+            return self.get(request, *args, **kwargs)
+    # TODO post
+
 
 @login_required
 def mark_as_complete(request, pk, last):
@@ -236,6 +250,9 @@ def mark_as_complete(request, pk, last):
     task.complete()
     return redirect('tasks:task_detail', last=last, pk=pk)
 
+
+# TODO do daily and weekly task view?
+# TODO log this?
 
 def create_service_tasks_view(request):
     msg = create_tasks.create_service_tasks()
