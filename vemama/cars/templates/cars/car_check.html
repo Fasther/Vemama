@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load crispy_forms_tags %}
 
 {% block content %}
 <nav>
@@ -10,41 +11,47 @@
     </ol>
 </nav>
 
-<p></p>
-<h3>Checking car: {{car.car_name}}</h3>
-<p></p>
-<a href="{% url 'cars:car_edit' city=car.car_city.pk pk=car.pk %}" class="btn btn-warning"><i class="fas fa-pen"></i> Update car info </a>
-<p></p>
-
-<p>I have checked/did:</p>
-<ul class="list-group ">
-    <li class="list-group-item list-group-item-action">I checked/updated service info - if not, do it now.</li>
-    <li class="list-group-item list-group-item-action">Car is clean from outside</li>
-    <li class="list-group-item list-group-item-action">Car is clean from inside: <br>
-                                                        - I cleaned doorframes<br>
-                                                        - I vacuumed the car<br>
-                                                        - I cleaned windows<br>
-                                                        - I cleaned dashboard<br></li>
-    <li class="list-group-item list-group-item-action">I topped up the washer fluid</li>
-    <li class="list-group-item list-group-item-action">I checked oil level</li>
-    <li class="list-group-item list-group-item-action">I checked tire pressures</li>
-    <li class="list-group-item list-group-item-action">I checked equipment:<br>
-                                                        - Safety vest at drivers door<br>
-        - First aid kit<br>
-        - Warning triangle<br>
-        - Chains and scrapers (in winter)<br>
-        - Charger and holder - all functional<br></li>
-    <li class="list-group-item list-group-item-action">I've checked log-book:<br>
-        - Documents from car OK<br>
-        - Info, map, exp not payed by CCS, damage report OK<br>
-        - I picked the receipts<br></li>
-</ul>
     <p></p>
-    <a href="{% url 'cars:car_do_check' city=car.car_city.pk pk=car.pk %}" class="btn btn-success"><i
-            class="fas fa-check"></i> Everything is OK!</a> &nbsp;
-    <a href="{% url 'cars:car_detail' city=car.car_city.id pk=car.pk %}" class="btn btn-primary"><i
-            class="fas fa-times"></i> Cancel</a>
+    <h3>Checking car: {{ car.car_name }}</h3>
+    <p></p>
+    <a href="{% url 'cars:car_edit' city=car.car_city.pk pk=car.pk %}" class="btn btn-warning"><i
+            class="fas fa-pen"></i> Update car info </a>
+    <p></p>
 
+    <p>I have checked/did:</p>
+    <form method="POST" class="form">
+        <ul class="list-group ">
+            <li class="list-group-item list-group-item-action">Car is clean from outside</li>
+            <li class="list-group-item list-group-item-action">Car is clean from inside: <br>
+                - I cleaned doorframes<br>
+                - I vacuumed the car<br>
+                - I cleaned windows<br>
+                - I cleaned dashboard<br></li>
+            <li class="list-group-item list-group-item-action">I topped up the washer fluid</li>
+            <li class="list-group-item list-group-item-action">I checked oil level</li>
+            <li class="list-group-item list-group-item-action">I checked tire pressures</li>
+            <li class="list-group-item list-group-item-action">I checked equipment:<br>
+                - Safety vest at drivers door<br>
+                - First aid kit<br>
+                - Warning triangle<br>
+                - Chains and scrapers (in winter)<br>
+                - Charger and holder - all functional<br></li>
+            <li class="list-group-item list-group-item-action">I've checked log-book:<br>
+                - Documents from car OK<br>
+                - Info, map, exp not payed by CCS, damage report OK<br>
+                - I picked the receipts<br></li>
+            <li class="list-group-item list-group-item-secondary list-group-item-action">
+                <h5>Car data</h5>
+                <hr>
+                {% csrf_token %}
+                {{ form|crispy }}
+            </li>
+        </ul>
+        <p></p>
+        <button type="submit" class="btn btn-success"><i class="fas fa-check"></i> Everything is OK!</button> &nbsp;
+        <a href="{% url 'cars:car_detail' city=car.car_city.id pk=car.pk %}" class="btn btn-primary"><i
+                class="fas fa-times"></i> Cancel</a>
+    </form>
     <p></p>
 
 
