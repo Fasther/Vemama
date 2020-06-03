@@ -236,22 +236,12 @@ class DoTask(LoginRequiredMixin, TemplateView):
         if car_form.is_valid() and task_form.is_valid():
             car_form.save()
             task = task_form.save()
+            # TODO if check, wet cleaning etc. edit that info on car.
             return HttpResponseRedirect(reverse("tasks:task_detail", kwargs={**kwargs}))
 
         else:
             kwargs["errors"] = car_form.errors
             return self.get(request, *args, **kwargs)
-    # TODO post
-
-
-@login_required
-def mark_as_complete(request, pk, last):
-    task = get_object_or_404(Task, pk=pk)
-    # TODO if check - set check, if wet, set dirtiness to 0
-    if task.name == "Routine check":
-        task.car.do_check()
-    task.complete()
-    return redirect('tasks:task_detail', last=last, pk=pk)
 
 
 # TODO do daily and weekly task view?
