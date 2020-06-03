@@ -220,7 +220,8 @@ class DoTask(LoginRequiredMixin, TemplateView):
         context["car_form"] = CarTaskForm(exclude_fields=exclude,
                                           instance=car_instance,
                                           )
-        context["task_form"] = CompleteTaskForm(initial={"completed": True, }, instance=task_instance)
+        context["task_form"] = CompleteTaskForm(initial={"completed_date": timezone.now().date(), },
+                                                instance=task_instance)
         return context
 
     def get(self, request, *args, **kwargs):
@@ -228,12 +229,14 @@ class DoTask(LoginRequiredMixin, TemplateView):
         return self.render_to_response(context)
 
     def post(self, request, *args, **kwargs):
-        car_form = CarTaskForm(self.request.POST)
-        task_form = CompleteTaskForm(self.request.POST)
+        task_instance = get_object_or_404(Task, pk=kwargs.get("pk"))
+        car_instance = task_instance.car
+        car_form = CarTaskForm(self.request.POST, instance=car_instance)
+        task_form = CompleteTaskForm(self.request.POST, instance=task_instance)
         if car_form.is_valid() and task_form.is_valid():
-            car = car_form.save(commit=False)
-            car.save()
-            return HttpResponseRedirect(reverse("tasks:task_detail", args, kwargs))
+            car_form.save()
+            task = task_form.save()
+            return HttpResponseRedirect(reverse("tasks:task_detail", kwargs={**kwargs}))
 
         else:
             kwargs["errors"] = car_form.errors
