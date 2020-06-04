@@ -1,4 +1,5 @@
 from django.http import HttpResponseRedirect
+from django.views import View
 from django.views.generic import ListView, DetailView, UpdateView, TemplateView
 from django.utils.formats import date_format
 from cars.forms import CarTaskForm
@@ -10,7 +11,7 @@ from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse
 from django.utils import timezone
 from datetime import timedelta
-from tasks import create_tasks, notifications, assign_tasks
+from tasks import notifications, assign_tasks
 
 
 class TasksIndexView(LoginRequiredMixin, TemplateView):
@@ -113,7 +114,7 @@ class EditTask(LoginRequiredMixin, UpdateView):
         return reverse("tasks:task_detail", kwargs={"last": last, "pk": pk})
 
 
-class CreateTasks(LoginRequiredMixin, TemplateView):
+class CreateTasksIndex(LoginRequiredMixin, TemplateView):
     template_name = "tasks/create_tasks.html"
 
     def get_context_data(self, **kwargs):
@@ -123,6 +124,10 @@ class CreateTasks(LoginRequiredMixin, TemplateView):
         except KeyError:
             pass
         return context
+
+
+class CreateTasks(View):
+    pass
 
 
 class DoTask(LoginRequiredMixin, TemplateView):
@@ -252,31 +257,31 @@ class DoTask(LoginRequiredMixin, TemplateView):
 # TODO do daily and weekly task view?
 # TODO log this?
 
-def create_service_tasks_view(request):
-    msg = create_tasks.create_service_tasks()
-    request.session['msg'] = "I have created {} new service tasks".format(msg)
-    return redirect("tasks:create_tasks")
-
-
-def create_check_tasks_view(request):
-    msg = create_tasks.create_check_tasks()
-    request.session['msg'] = "I have created {} new check tasks".format(msg)
-    return redirect("tasks:create_tasks")
+# def create_service_tasks_view(request):
+#     msg = create_tasks.create_service_tasks()
+#     request.session['msg'] = "I have created {} new service tasks".format(msg)
+#     return redirect("tasks:create_tasks")
+#
+#
+# def create_check_tasks_view(request):
+#     msg = create_tasks.create_check_tasks()
+#     request.session['msg'] = "I have created {} new check tasks".format(msg)
+#     return redirect("tasks:create_tasks")
 
 
 def send_daily_notification_view(request):
     msg = notifications.summary_notification("Tasks due tomorrow", 1)
     request.session['msg'] = "I have sent {} email(s) about tasks due tomorrow".format(msg)
-    return redirect("tasks:create_tasks")
+    return redirect("tasks:create_tasks_index")
 
 
 def send_weekly_notification_view(request):
     msg = notifications.summary_notification("Tasks due this week", 7)
     request.session['msg'] = "I have sent {} email(s) about tasks due in this week".format(msg)
-    return redirect("tasks:create_tasks")
+    return redirect("tasks:create_tasks_index")
 
 
 def assign_tasks_view(request):
     msg = assign_tasks.assign_check_inspection_tasks()
     request.session['msg'] = "I have assigned {} tasks".format(msg)
-    return redirect("tasks:create_tasks")
+    return redirect("tasks:create_tasks_index")
