@@ -6,7 +6,6 @@ from cars.models import Car
 from .forms import CompleteTaskForm
 from .models import Task
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse
 from django.utils import timezone
@@ -234,9 +233,15 @@ class DoTask(LoginRequiredMixin, TemplateView):
         car_form = CarTaskForm(self.request.POST, instance=car_instance)
         task_form = CompleteTaskForm(self.request.POST, instance=task_instance)
         if car_form.is_valid() and task_form.is_valid():
-            car_form.save()
-            task = task_form.save()
-            # TODO if check, wet cleaning etc. edit that info on car.
+            car = car_form.save(commit=False)
+            if task_instance.task_type == Task.CHECK:
+                car.car_last_check = timezone.now().date()
+            elif task_instance.task_type == Task.CLEANING:
+                car.car_dirtiness = 1  # clean car
+                car.car_last_check = timezone.now().date()
+            car.save()
+            task_form.save()
+
             return HttpResponseRedirect(reverse("tasks:task_detail", kwargs={**kwargs}))
 
         else:
