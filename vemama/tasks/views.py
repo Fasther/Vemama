@@ -1,9 +1,10 @@
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.views import View
 from django.views.generic import ListView, DetailView, UpdateView, TemplateView
 from django.utils.formats import date_format
 from cars.forms import CarTaskForm
 from cars.models import Car
+from .create_tasks import create_all_tasks
 from .forms import CompleteTaskForm
 from .models import Task
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -127,7 +128,18 @@ class CreateTasksIndex(LoginRequiredMixin, TemplateView):
 
 
 class CreateTasks(View):
-    pass
+
+    def get(self, request, *args, **kwargs):
+        created_tasks = create_all_tasks()
+
+        enumerated_tasks = []
+        for order, task in created_tasks:
+            enumerated_tasks.append(f"{order:<2}: {task}")
+        enumerated_tasks = "\n".join(enumerated_tasks)
+
+        return HttpResponse(f"Created: {len(created_tasks)}\n"
+                            f"List of tasks:\n"
+                            f"{enumerated_tasks}", content_type="text/plain")
 
 
 class DoTask(LoginRequiredMixin, TemplateView):

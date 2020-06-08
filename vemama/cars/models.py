@@ -141,7 +141,7 @@ class Car(models.Model):
         # we want to generate notification one month before.
         current_month = (timezone.now() + timedelta(weeks=4)).strftime("%m")
         if current_month in winter_tyre_months:  # it is winter time! ❄
-            if self.car_tyres == Car.TYRE_SUMMER:
+            if self.car_tyres in (Car.TYRE_SUMMER, Car.TYRE_ALL_YEAR):
                 return True
             else:
                 return False

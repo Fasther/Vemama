@@ -5,6 +5,7 @@ from django.utils import timezone
 from django.conf import settings
 
 
+
 def tasks_already_exist(car, task_name):
     tasks = car.tasks.filter(completed=False)
     for task in tasks:
@@ -53,3 +54,25 @@ def create_check_tasks():
                 create_task(car, task_name, due_date)
                 tasks_created += 1
     return tasks_created
+
+
+def create_all_tasks():
+    cars = carsmodels.Car.objects.all()
+    for car in cars:
+        # check for car needs:
+        if not car.needs_attention:
+            continue
+        else:
+            if car.needs_check:
+                pass
+            if car.needs_cleaning:
+                pass
+            if car.needs_service:
+                pass
+            if car.needs_stk:
+                pass
+            if car.needs_tyres_switch:
+                pass
+
+    created_tasks = []
+    return created_tasks
