@@ -58,10 +58,3 @@ class CarCheckView(LoginRequiredMixin, UpdateView):
     def form_valid(self, form):
         form.instance.car_last_check = timezone.now().date()
         return super().form_valid(form)
-
-
-@login_required
-def do_check(request, pk, city):
-    car = get_object_or_404(Car, pk=pk)
-    car.do_check()
-    return redirect('cars:car_detail', city=city, pk=pk)
