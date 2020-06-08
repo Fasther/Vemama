@@ -4,6 +4,7 @@ from datetime import timedelta
 from django.utils import timezone
 from django.conf import settings
 
+from tasks.models import Task
 
 
 def tasks_already_exist(car, task_name):
@@ -64,14 +65,21 @@ def create_all_tasks():
             continue
         else:
             if car.needs_check:
+                task_type = Task.CHECK
+                # check if tasks not exist
+                # create one
                 pass
             if car.needs_cleaning:
+                task_type = Task.CLEANING
                 pass
             if car.needs_service:
+                task_type = Task.SERVICE
                 pass
             if car.needs_stk:
+                task_type = Task.STK
                 pass
             if car.needs_tyres_switch:
+                task_type = Task.TYRES
                 pass
 
     created_tasks = []
