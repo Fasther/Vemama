@@ -28,10 +28,13 @@ class PersonAdmin(admin.ModelAdmin):
     search_fields = ("username", "first_name", "last_name")
     list_display = ("__str__", "email", "is_active", "is_staff")
     list_filter = ("is_active",)
+    readonly_fields = ("last_login", "date_joined", "password",)
+    fields = ("username", "is_active", "email", "first_name", "last_name", "groups", "user_permissions",
+              "is_superuser", "date_joined", "last_login", "password",)
 
 
 admin.site.unregister(User)
-admin.site.unregister(Group)
+# admin.site.unregister(Group)
 
 admin.site.site_header = "Vemama, takes care"
 admin.site.site_title = "Vemama Admin"
