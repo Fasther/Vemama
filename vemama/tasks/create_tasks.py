@@ -1,10 +1,8 @@
 from cars.models import Car
 from tasks.models import Task
-from datetime import timedelta, datetime, date
+from datetime import timedelta, date
 from django.utils import timezone
 from django.conf import settings
-
-from tasks.models import Task
 
 
 def task_already_exist(car, task_type):
@@ -13,39 +11,6 @@ def task_already_exist(car, task_type):
 
 def create_task(car, task_type, due_date):
     return Task.objects.create(car=car, task_type=task_type, due_date=due_date)
-
-def create_service_tasks():
-    task_name = "Regular service inspection soon"  # service tasks name that will be used
-    cars = carsmodels.Car.objects.all()
-    tasks_created = 0
-    due_date = timezone.now().date() + timedelta(30)
-    for car in cars:
-        car_needs_service = False
-        # check for date - service in less than 30 days
-        if timedelta(30) > (car.next_oil_or_inspection_date() - timezone.now().date()):
-            car_needs_service = True
-        # check for kms
-        # TODO this needs change!
-        if car.next_oil_or_inspection_kms() < 3000:
-            car_needs_service = True
-        if car_needs_service:
-            if not tasks_already_exist(car, task_name):  # if task is not existing...
-                create_task(car, task_name, due_date)
-                tasks_created += 1
-    return tasks_created
-
-
-def create_check_tasks():
-    task_name = "Routine check"
-    cars = carsmodels.Car.objects.all()
-    tasks_created = 0
-    due_date = timezone.now().date() + timedelta(15)
-    for car in cars:
-        if timedelta(days=settings.ROUTINE_CHECK_INTERVAL) < (timezone.now().date() - car.car_last_check):
-            if not tasks_already_exist(car, task_name):
-                create_task(car, task_name, due_date)
-                tasks_created += 1
-    return tasks_created
 
 
 def create_all_tasks():
