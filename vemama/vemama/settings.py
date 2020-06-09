@@ -3,7 +3,7 @@ Django settings for Vemama project.
 """
 
 import os
-from decouple import config
+from decouple import config, Csv
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
@@ -138,5 +138,8 @@ EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", default="")
 
 # APP settings
 ROUTINE_CHECK_INTERVAL = config("ROUTINE_CHECK_INTERVAL", default=30, cast=int)
+CHECK_TASK_DUE_DATE = config("CHECK_TASK_DUE_DATE", default=15, cast=int)
 CAR_SERVICE_KM_THRESHOLD = config("CAR_SERVICE_KM_THRESHOLD", default=3000, cast=int)
 CAR_SERVICE_DAYS_THRESHOLD = config("CAR_SERVICE_DAYS_THRESHOLD", default=30, cast=int)
+WINTER_TYRE_SWITCH_DUE_DATE = config("WINTER_TYRE_SWITCH_DUE_DATE", default="10,31", cast=Csv())
+SUMMER_TYRE_SWITCH_DUE_DATE = config("SUMMER_TYRE_SWITCH_DUE_DATE", default="5,30", cast=Csv())
