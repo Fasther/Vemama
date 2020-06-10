@@ -1,3 +1,6 @@
+from datetime import timedelta
+from django.conf import settings
+from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.utils import timezone
 from django.views import View
@@ -55,7 +58,18 @@ class CarReport(LoginRequiredMixin, TemplateView):
         car = get_object_or_404(Car, pk=kwargs.get("pk"))
         task_form = CreateReportTask(self.request.POST)
         if task_form.is_valid():
-            pass
+
+            task_instance = task_form.save(commit=False)
+            task_instance.car = car
+            task_instance.due_date = timezone.now().date() + timedelta(days=settings.CHECK_TASK_DUE_DATE)
+            # TODO also assign it right away!
+            task_instance.save()
+            request.session["car_msg"] = f'Task "{task_instance}" created.'
+            return HttpResponseRedirect(reverse("cars:car_detail", kwargs={**kwargs}))
+        else:
+            kwargs["errors"] = task_form.errors
+            return self.get(request, *args, **kwargs)
+
 
 class CarUpdateView(LoginRequiredMixin, UpdateView):
     model = Car
