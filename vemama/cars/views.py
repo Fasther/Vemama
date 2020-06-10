@@ -2,6 +2,8 @@ from django.urls import reverse
 from django.utils import timezone
 from django.views import View
 from django.views.generic import ListView, DetailView, UpdateView, TemplateView
+
+from tasks.forms import CreateReportTask
 from .models import City, Car
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
@@ -41,8 +43,17 @@ class CarDetailView(LoginRequiredMixin, DetailView):
 
 class CarReport(LoginRequiredMixin, TemplateView):
     def get(self, request, *args, **kwargs):
+        context = self.get_context_data(**kwargs)
         car = get_object_or_404(Car, pk=kwargs.get("pk"))
+        context["car"] = car
+        context["task_form"] = CreateReportTask()
+        return self.render_to_response(context)
 
+    def post(self, request, *args, **kwargs):
+        car = get_object_or_404(Car, pk=kwargs.get("pk"))
+        task_form = CreateReportTask(self.request.POST)
+        if task_form.is_valid():
+            pass
 
 class CarUpdateView(LoginRequiredMixin, UpdateView):
     model = Car
