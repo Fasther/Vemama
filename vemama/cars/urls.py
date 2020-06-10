@@ -10,5 +10,5 @@ urlpatterns = [
     path("<int:city>/<int:pk>", views.CarDetailView.as_view(), name="car_detail"),
     path("<int:city>/<int:pk>/edit", views.CarUpdateView.as_view(), name="car_edit"),
     path("<int:city>/<int:pk>/check", views.CarCheckView.as_view(), name="car_check"),
+    path("<int:city>/<int:pk>/report", views.CarReport.as_view(), name="car_report"),
 ]
-

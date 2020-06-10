@@ -12,7 +12,7 @@
             <li class="breadcrumb-item active">Report</li>
         </ol>
     </nav>
-    <h3><small class="text-muted">New report</small> {{ car }} </h3>
+    <h3><small class="text-muted">New report:</small> {{ car }} </h3>
 
     {% if errors %}
         <div class="alert alert-danger" role="alert">
@@ -28,6 +28,7 @@
                 {{ task_form|crispy }}
             </li>
         </ul>
+        <p></p>
         <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Save Report</button>&ensp;
         <a class="btn btn-secondary" href="{% url 'cars:car_detail' city=car.car_city.id pk=car.pk %}"><i
                 class="fas fa-times"></i> Cancel</a>
