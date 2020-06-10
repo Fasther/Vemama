@@ -1,6 +1,7 @@
 from django.urls import reverse
 from django.utils import timezone
-from django.views.generic import ListView, DetailView, UpdateView
+from django.views import View
+from django.views.generic import ListView, DetailView, UpdateView, TemplateView
 from .models import City, Car
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
@@ -31,7 +32,16 @@ class CarDetailView(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["tasks"] = self.object.tasks.filter(completed=False).order_by("due_date")
+        try:  # show message of what work have been done
+            context["car_msg"] = self.request.session.pop("car_msg")
+        except KeyError:
+            pass
         return context
+
+
+class CarReport(LoginRequiredMixin, TemplateView):
+    def get(self, request, *args, **kwargs):
+        car = get_object_or_404(Car, pk=kwargs.get("pk"))
 
 
 class CarUpdateView(LoginRequiredMixin, UpdateView):
@@ -49,6 +59,10 @@ class CarUpdateView(LoginRequiredMixin, UpdateView):
               "car_note",
               ]
 
+    def post(self, request, *args, **kwargs):
+        request.session["car_msg"] = "Car updated successfully!"
+        return super().post(self, request, *args, **kwargs)
+
 
 class CarCheckView(LoginRequiredMixin, UpdateView):
     model = Car
@@ -58,3 +72,7 @@ class CarCheckView(LoginRequiredMixin, UpdateView):
     def form_valid(self, form):
         form.instance.car_last_check = timezone.now().date()
         return super().form_valid(form)
+
+    def post(self, request, *args, **kwargs):
+        request.session["car_msg"] = "Check completed! Thank you!"
+        return super().post(self, request, *args, **kwargs)

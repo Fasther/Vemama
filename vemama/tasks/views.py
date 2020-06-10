@@ -127,7 +127,7 @@ class CreateTasksIndex(LoginRequiredMixin, TemplateView):
         return context
 
 
-class CreateTasks(View):
+class CreateTasks(LoginRequiredMixin, View):
 
     def get(self, request, *args, **kwargs):
         created_tasks = create_all_tasks()

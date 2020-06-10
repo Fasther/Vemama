@@ -11,19 +11,21 @@
             <li class="breadcrumb-item active">{{ task }}</li>
         </ol>
     </nav>
-
-    <a href="{% url 'tasks:do_task' last=view.kwargs.last pk=task.pk %}" class="btn btn-primary">
-        <i class="fas fa-check"></i> Do task</a>&ensp;
+    <h3><small class="text-muted">Task:</small> {{ task }}</h3>
+    {% if not task.completed %}
+        <a href="{% url 'tasks:do_task' last=view.kwargs.last pk=task.pk %}" class="btn btn-primary">
+            <i class="fas fa-check"></i> Do task</a>&ensp;
+    {% endif %}
     <a href="{% url 'cars:car_detail' city=task.car.car_city.pk pk=task.car.pk %}" class="btn btn-info">
         <i class="fas fa-car"></i> Go to car page</a>
     <a href="{% url 'tasks:task_edit' last=view.kwargs.last pk=task.pk %}" class="btn btn-warning">
         <i class="fas fa-pen"></i> Edit</a>
-    {% if not task.completed %}
 
-    {% endif %}
+
+
 
     <p></p>
-    <h3><small class="text-muted">Task:</small> {{ task }}</h3>
+
     {% if task.completed %}
         <div class="alert alert-success" role="alert">
             Task is completed!

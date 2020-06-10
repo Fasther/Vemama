@@ -9,10 +9,10 @@
             <li class="breadcrumb-item active">{{ car.car_name }}</li>
         </ol>
     </nav>
-
-    <p></p>
+    {% if car_msg %}
+        <div class="alert alert-info" role="alert">{{ car_msg }}</div>
+    {% endif %}
     <h3><small class="text-muted">Car detail:</small> {{ car.car_name }}</h3>
-    <p></p>
     <a href="{% url 'cars:car_edit' city=car.car_city.pk pk=car.pk %}" class="btn btn-warning"><i
             class="fas fa-pen"></i>
         Edit</a>&ensp;
@@ -54,7 +54,7 @@
             {% for task in tasks %}
                 <a href="{% url 'tasks:task_detail' last='active' pk=task.pk %}"
                    class="list-group-item list-group-item-action {% if task.is_past_due %}list-group-item-warning{% endif %}">
-                    {{ task.name }} | Due date: {{ task.due_date }} | Person: {{ task.user }}</a>
+                    {{ task }} | Due date: {{ task.due_date }} | Person: {{ task.user }}</a>
             {% endfor %}
         </div>
     {% endif %}
