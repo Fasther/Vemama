@@ -2,14 +2,16 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-<nav>
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{% url 'cars:city_list'%}">Cars</a></li>
-        <li class="breadcrumb-item"><a href="{% url 'cars:car_list' city=car.car_city.id %}">{{ car.car_city }}</a></li>
-        <li class="breadcrumb-item active"><a href="{% url 'cars:car_detail' city=car.car_city.id pk=car.pk %}">{{ car.car_name }}</a></li>
-        <li class="breadcrumb-item active">Check</li>
-    </ol>
-</nav>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'cars:city_list' %}">Cars</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'cars:car_list' city=car.car_city.id %}">{{ car.car_city }}</a>
+            </li>
+            <li class="breadcrumb-item"><a
+                    href="{% url 'cars:car_detail' city=car.car_city.id pk=car.pk %}">{{ car.car_name }}</a></li>
+            <li class="breadcrumb-item active">Check</li>
+        </ol>
+    </nav>
 
     <p></p>
     <h3>Checking car: {{ car.car_name }}</h3>

@@ -42,6 +42,8 @@ class CarDetailView(LoginRequiredMixin, DetailView):
 
 
 class CarReport(LoginRequiredMixin, TemplateView):
+    template_name = "cars/car_report.html"
+
     def get(self, request, *args, **kwargs):
         context = self.get_context_data(**kwargs)
         car = get_object_or_404(Car, pk=kwargs.get("pk"))

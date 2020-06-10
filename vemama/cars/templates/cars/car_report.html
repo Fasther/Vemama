@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'cars:city_list' %}">Cars</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'cars:car_list' city=car.car_city.id %}">{{ car.car_city }}</a>
+            </li>
+            <li class="breadcrumb-item"><a
+                    href="{% url 'cars:car_detail' city=car.car_city.id pk=car.pk %}">{{ car.car_name }}</a></li>
+            <li class="breadcrumb-item active">Report</li>
+        </ol>
+    </nav>
+    <h3><small class="text-muted">New report</small> {{ car }} </h3>
+
+    {% if errors %}
+        <div class="alert alert-danger" role="alert">
+            {{ errors|escape }}
+        </div>
+    {% endif %}
+    <form method="POST" class="form">
+        {% csrf_token %}
+        <ul class="list-group">
+            <li class="list-group-item list-group-item-action">
+                <h5>Information about task</h5>
+                <hr>
+                {{ task_form|crispy }}
+            </li>
+        </ul>
+        <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Save Report</button>&ensp;
+        <a class="btn btn-secondary" href="{% url 'cars:car_detail' city=car.car_city.id pk=car.pk %}"><i
+                class="fas fa-times"></i> Cancel</a>
+    </form>
+    <p></p>
+
+{% endblock %}
