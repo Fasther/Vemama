@@ -1,4 +1,7 @@
 from django.contrib.auth import get_user_model
+from django.db.models import Q, Count
+
+from core.models import Profile
 from tasks.models import Task
 
 
@@ -50,6 +53,18 @@ from tasks.models import Task
 #     return assigned_tasks_count
 
 def assign_task(task: Task):
+    from tasks.models import Task
+    task = Task.objects.get(id=281)
+    suitable_workers = Profile.objects.filter(
+        user__is_active=True, cities__name__contains=task.city, suitable_tasks__contains=[task.task_type]
+    )
+    if not suitable_workers:
+        suitable_workers = Profile.objects.filter(user__is_superuser=True)
+        task.description = f'Task assigned to SuperUser because no Person available in "{task.city}" ' \
+                           f'to do "{task.get_task_type_display()}".'
+    suitable_worker = suitable_workers.annotate(
+        tasks=Count("user__tasks", filter=Q(user__tasks__completed=False))).order_by("-tasks").first()
+
     # filter workers by city
     # filter by task type, if None assing to staff
     # if still none, assign to super_user by lowest ID
