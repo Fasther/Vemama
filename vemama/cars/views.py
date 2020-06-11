@@ -51,7 +51,7 @@ class CarReport(LoginRequiredMixin, TemplateView):
         context = self.get_context_data(**kwargs)
         car = get_object_or_404(Car, pk=kwargs.get("pk"))
         context["car"] = car
-        context["task_form"] = CreateReportTask()
+        context["task_form"] = CreateReportTask(initial={"description": "Manually reported problem"})
         return self.render_to_response(context)
 
     def post(self, request, *args, **kwargs):
