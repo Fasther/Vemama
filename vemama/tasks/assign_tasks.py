@@ -49,14 +49,16 @@ from tasks.models import Task
 #                            assign_tasks(get_tasks(inspection_name))
 #     return assigned_tasks_count
 
+def assign_task(task: Task):
+    # filter workers by city
+    # filter by task type, if None assing to staff
+    # if still none, assign to super_user by lowest ID
+    return task
 
-def assign_tasks():
+
+def assign_all_tasks():
     unassigned_tasks = Task.objects.filter(completed=False, user=None)
     assigned_tasks = []
     for task in unassigned_tasks:
-        pass
-        # TODO this
-        # set city
-        # filter workers by city
-        # filter by task type, if None assing to staff
-        # if still none, assign to super_user by lowest ID
+        assigned_tasks.append(assign_task(task))
+    return assigned_tasks
