@@ -138,7 +138,7 @@ class CreateTasks(LoginRequiredMixin, View):
 
         enumerated_tasks = []
         for order, task in enumerate(created_tasks):
-            enumerated_tasks.append(f"{order:<2}: {task}")
+            enumerated_tasks.append(f"{order:>2}: {task}")
         enumerated_tasks = "\n".join(enumerated_tasks)
 
         return HttpResponse(f"----- {timezone.now().strftime('%X %x')}\n"
@@ -154,7 +154,7 @@ class AssignTasks(LoginRequiredMixin, View):
 
         enumerated_tasks = []
         for order, task in enumerate(assigned_tasks):
-            enumerated_tasks.append(f"{order:<2}: {task}")
+            enumerated_tasks.append(f"{order:>2}: {task}")
         enumerated_tasks = "\n".join(enumerated_tasks)
 
         return HttpResponse(f"----- {timezone.now().strftime('%X %x')}\n"

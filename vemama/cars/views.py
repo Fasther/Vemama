@@ -110,16 +110,16 @@ class UpdateActualDrivenKMsFromZemtu(LoginRequiredMixin, View):
     def __init__(self):
         super().__init__()
         self.zemtu_url = "https://autonapul.zemtu.com/api/v2/reservationaccounting/?&state=closed&reservation_end__gte="
-        self.login = settings.Z_LOGIN
-        self.pswd = settings.Z_PASS
+        self.token = settings.Z_TOKEN
 
-    def update_driven_kms(self, car_id, driven_kms):
+    @staticmethod
+    def update_driven_kms(car_id, driven_kms):
         try:
             car_instance = Car.objects.get(car_id=car_id)
             car_instance.car_actual_driven_kms = int(driven_kms)
             car_instance.save()
             return car_instance
-        except Car.DoesNotExist:
+        except (Car.DoesNotExist, TypeError):
             return None
 
     def get_driven_kms(self, parsed_json_data: dict):
@@ -131,6 +131,8 @@ class UpdateActualDrivenKMsFromZemtu(LoginRequiredMixin, View):
                 )
                 if updated_car:
                     updated_cars.append(updated_car)
+                else:
+                    continue
             except KeyError:
                 pass
 
@@ -139,13 +141,13 @@ class UpdateActualDrivenKMsFromZemtu(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         from_date = timezone.now().date() - timedelta(days=1)
         iso_time = from_date.strftime("%Y-%m-%dT00:00:00Z")
-        headers = {"Authorization": f"Token {settings.Z_TOKEN}"}
+        headers = {"Authorization": f"Token {self.token}"}
         zemtu_data = requests.get(self.zemtu_url + iso_time, headers=headers)
         if zemtu_data.ok:
             updated_cars = self.get_driven_kms(zemtu_data.json())
             enum_updates = []
             for order, car in enumerate(updated_cars):
-                enum_updates.append(f"{order:<2}: {car} ({car.car_actual_driven_kms} km)")
+                enum_updates.append(f"{order:>3}: {car} ({car.car_actual_driven_kms} km)")
             enum_updates = "\n".join(enum_updates)
             return HttpResponse(f"-- KMs update -- {timezone.now().strftime('%X %x')}\n"
                                 f"Updated: {len(updated_cars)}\n"

@@ -11,4 +11,5 @@ urlpatterns = [
     path("<int:city>/<int:pk>/edit", views.CarUpdateView.as_view(), name="car_edit"),
     path("<int:city>/<int:pk>/check", views.CarCheckView.as_view(), name="car_check"),
     path("<int:city>/<int:pk>/report", views.CarReport.as_view(), name="car_report"),
+    path("update_kms", views.UpdateActualDrivenKMsFromZemtu.as_view(), name="update_kms"),
 ]
