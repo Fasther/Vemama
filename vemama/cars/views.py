@@ -3,7 +3,7 @@ from datetime import timedelta
 import requests
 from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from django.utils import timezone
@@ -113,7 +113,28 @@ class UpdateActualDrivenKMsFromZemtu(LoginRequiredMixin, View):
         self.login = settings.Z_LOGIN
         self.pswd = settings.Z_PASS
 
+    def update_driven_kms(self, car_id, driven_kms):
+        try:
+            car_instance = Car.objects.get(car_id=car_id)
+            car_instance.car_actual_driven_kms = int(driven_kms)
+            car_instance.save()
+            return car_instance
+        except Car.DoesNotExist:
+            return None
 
+    def get_driven_kms(self, parsed_json_data: dict):
+        updated_cars = []
+        for result in parsed_json_data.get("results"):
+            try:
+                updated_car = self.update_driven_kms(
+                    result['vehicle']['id'], result['odometer_end']
+                )
+                if updated_car:
+                    updated_cars.append(updated_car)
+            except KeyError:
+                pass
+
+        return updated_cars
 
     def get(self, request, *args, **kwargs):
         from_date = timezone.now().date() - timedelta(days=1)
@@ -121,3 +142,17 @@ class UpdateActualDrivenKMsFromZemtu(LoginRequiredMixin, View):
         headers = {"Authorization": f"Token {settings.Z_TOKEN}"}
         zemtu_data = requests.get(self.zemtu_url + iso_time, headers=headers)
         if zemtu_data.ok:
+            updated_cars = self.get_driven_kms(zemtu_data.json())
+            enum_updates = []
+            for order, car in enumerate(updated_cars):
+                enum_updates.append(f"{order:<2}: {car} ({car.car_actual_driven_kms} km)")
+            enum_updates = "\n".join(enum_updates)
+            return HttpResponse(f"-- KMs update -- {timezone.now().strftime('%X %x')}\n"
+                                f"Updated: {len(updated_cars)}\n"
+                                f"List of cars:\n"
+                                f"{enum_updates}", content_type="text/plain", status=200)
+        else:
+            return HttpResponse(f"-- KMs update -- {timezone.now().strftime('%X %x')}\n"
+                                f"Response not OK:\n"
+                                f"{zemtu_data.status_code}: {zemtu_data.reason}",
+                                content_type="text/plain", status=400)
