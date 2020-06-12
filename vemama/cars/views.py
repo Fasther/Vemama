@@ -1,15 +1,17 @@
 from datetime import timedelta
 
+import requests
 from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from django.utils import timezone
+from django.views import View
 from django.views.generic import ListView, DetailView, UpdateView, TemplateView
 
 from tasks.forms import CreateReportTask
-from .models import City, Car
+from cars.models import City, Car
 
 
 class CityList(LoginRequiredMixin, ListView):
@@ -102,3 +104,20 @@ class CarCheckView(LoginRequiredMixin, UpdateView):
     def post(self, request, *args, **kwargs):
         request.session["car_msg"] = "Check completed! Thank you!"
         return super().post(self, request, *args, **kwargs)
+
+
+class UpdateActualDrivenKMsFromZemtu(LoginRequiredMixin, View):
+    def __init__(self):
+        super().__init__()
+        self.zemtu_url = "https://autonapul.zemtu.com/api/v2/reservationaccounting/?&state=closed&reservation_end__gte="
+        self.login = settings.Z_LOGIN
+        self.pswd = settings.Z_PASS
+
+
+
+    def get(self, request, *args, **kwargs):
+        from_date = timezone.now().date() - timedelta(days=1)
+        iso_time = from_date.strftime("%Y-%m-%dT00:00:00Z")
+        headers = {"Authorization": f"Token {settings.Z_TOKEN}"}
+        zemtu_data = requests.get(self.zemtu_url + iso_time, headers=headers)
+        if zemtu_data.ok:
