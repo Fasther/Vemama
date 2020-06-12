@@ -40,7 +40,7 @@ class Task(models.Model):
         if self.pk:  # notification for assigned user
             orig = Task.objects.get(pk=self.pk)
             if orig.user != self.user and (self.user is not None):
-                send_notification("New task (#{self}) for you", [self, ])
+                send_notification(f"New task (#{self}) for you", [self, ])
         elif self.user:
             super().save(*args, **kwargs)
             send_notification(f"New task (#{self}) for you", [self, ])

@@ -35,8 +35,8 @@ class Person(User):
 class Profile(models.Model):
     user = models.OneToOneField(Person, related_name="profile", on_delete=models.CASCADE, blank=False,
                                 verbose_name="User")
-    suitable_tasks = ChoiceArrayField(base_field=models.IntegerField(choices=Task.TASK_TYPES))
-    cities = models.ManyToManyField(City)
+    suitable_tasks = ChoiceArrayField(base_field=models.IntegerField(choices=Task.TASK_TYPES), blank=True)
+    cities = models.ManyToManyField(City, blank=True)
 
     def __str__(self):
         return f"{self.user.first_name} {self.user.last_name}"
