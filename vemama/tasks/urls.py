@@ -17,6 +17,6 @@ urlpatterns = [
     path("create/run", views.CreateTasks.as_view(), name="create_tasks"),
     path("create/notify-daily", views.send_daily_notification_view, name="send_daily_notify"),
     path("create/notify-weekly", views.send_weekly_notification_view, name="send_weekly_notify"),
-    path("create/assign", views.assign_tasks_view, name="assign_tasks"),
+    path("create/assign", views.AssignTasks.as_view(), name="assign_tasks"),
 
 ]

@@ -1,9 +1,11 @@
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, HttpResponse
 from django.views import View
 from django.views.generic import ListView, DetailView, UpdateView, TemplateView
 from django.utils.formats import date_format
 from cars.forms import CarTaskForm
 from cars.models import Car
+from .assign_tasks import assign_all_tasks
 from .create_tasks import create_all_tasks
 from .forms import CompleteTaskForm
 from .models import Task
@@ -133,11 +135,26 @@ class CreateTasks(LoginRequiredMixin, View):
         created_tasks = create_all_tasks()
 
         enumerated_tasks = []
-        for order, task in created_tasks:
+        for order, task in enumerate(created_tasks):
             enumerated_tasks.append(f"{order:<2}: {task}")
         enumerated_tasks = "\n".join(enumerated_tasks)
 
         return HttpResponse(f"Created: {len(created_tasks)}\n"
+                            f"List of tasks:\n"
+                            f"{enumerated_tasks}", content_type="text/plain")
+
+
+class AssignTasks(LoginRequiredMixin, View):
+
+    def get(self, request, *args, **kwargs):
+        assigned_tasks = assign_all_tasks()
+
+        enumerated_tasks = []
+        for order, task in enumerate(assigned_tasks):
+            enumerated_tasks.append(f"{order:<2}: {task}")
+        enumerated_tasks = "\n".join(enumerated_tasks)
+
+        return HttpResponse(f"Assigned: {len(assigned_tasks)}\n"
                             f"List of tasks:\n"
                             f"{enumerated_tasks}", content_type="text/plain")
 
@@ -266,34 +283,15 @@ class DoTask(LoginRequiredMixin, TemplateView):
             return self.get(request, *args, **kwargs)
 
 
-# TODO do daily and weekly task view?
-# TODO log this?
-
-# def create_service_tasks_view(request):
-#     msg = create_tasks.create_service_tasks()
-#     request.session['msg'] = "I have created {} new service tasks".format(msg)
-#     return redirect("tasks:create_tasks")
-#
-#
-# def create_check_tasks_view(request):
-#     msg = create_tasks.create_check_tasks()
-#     request.session['msg'] = "I have created {} new check tasks".format(msg)
-#     return redirect("tasks:create_tasks")
-
-
+@login_required
 def send_daily_notification_view(request):
     msg = notifications.summary_notification(f" Tasks due tomorrow ({timezone.now().strftime('%d/%m')})", 1)
     request.session['msg'] = "I have sent {} email(s) about tasks due tomorrow".format(msg)
     return redirect("tasks:create_tasks_index")
 
 
+@login_required
 def send_weekly_notification_view(request):
     msg = notifications.summary_notification(" Tasks due upcoming week", 7)
     request.session['msg'] = "I have sent {} email(s) about tasks due in this week".format(msg)
-    return redirect("tasks:create_tasks_index")
-
-
-def assign_tasks_view(request):
-    msg = assign_tasks.assign_check_inspection_tasks()
-    request.session['msg'] = "I have assigned {} tasks".format(msg)
     return redirect("tasks:create_tasks_index")
