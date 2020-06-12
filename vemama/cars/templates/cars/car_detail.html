@@ -1,45 +1,64 @@
 {% extends "base.html" %}
 
 {% block content %}
-<nav>
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{% url 'cars:city_list'%}">Cars</a></li>
-        <li class="breadcrumb-item"><a href="{% url 'cars:car_list' city=car.car_city.id %}">{{ car.car_city }}</a></li>
-        <li class="breadcrumb-item active">{{ car.car_name }}</li>
-    </ol>
-</nav>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'cars:city_list' %}">Cars</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'cars:car_list' city=car.car_city.id %}">{{ car.car_city }}</a>
+            </li>
+            <li class="breadcrumb-item active">{{ car.car_name }}</li>
+        </ol>
+    </nav>
+    {% if car_msg %}
+        <div class="alert alert-info" role="alert">{{ car_msg }}</div>
+    {% endif %}
+    <h3><small class="text-muted">Car detail:</small> {{ car.car_name }}</h3>
+    <a href="{% url 'cars:car_edit' city=car.car_city.pk pk=car.pk %}" class="btn btn-warning"><i
+            class="fas fa-pen"></i>
+        Edit</a>&ensp;
+    <a href="{% url 'cars:car_check' city=car.car_city.pk pk=car.pk %}" class="btn btn-info"><i
+            class="far fa-check-square"></i> Do Check</a>
+    <a href="{% url 'cars:car_report' city=car.car_city.pk pk=car.pk %}" class="btn btn-danger"><i
+            class="fas fa-exclamation-circle"></i> Report problem</a>
+    <p></p>
+    <ul class="list-group ">
+        <li class="list-group-item list-group-item-action">City: {{ car.car_city }} | External ID: {{ car.car_id }}</li>
 
-<p></p>
-<h3>Name: {{car.car_name}}</h3>
-<p></p>
-<a href="{% url 'cars:car_edit' city=car.car_city.pk pk=car.pk %}" class="btn btn-warning"><i class="fas fa-pen"></i> Edit</a>&ensp;
-<a href="{% url 'cars:car_check' city=car.car_city.pk pk=car.pk %}" class="btn btn-info"><i class="far fa-check-square"></i> Do Check</a>
-<p></p>
-<ul class="list-group ">
-    <li class="list-group-item list-group-item-action">City: {{car.car_city}} | External ID: {{car.car_id}}</li>
-    <li class="list-group-item list-group-item-action">Last check date: {{car.car_last_check}}</li>
-    <li class="list-group-item list-group-item-action">Driven kms: {{car.car_actual_driven_kms}}kms</li>
-    <li class="list-group-item list-group-item-action">Next oil or inspection date:
-        {{car.car_next_date}}
-    </li>
-    <li class="list-group-item list-group-item-action">Next oil or inspection in: {{car.car_next_km}}km
-    </li>
-    <li class="list-group-item list-group-item-action">Next inspection on: {{car.car_next_inspection_date}} or
-        {{car.car_next_inspection_km}}kms
-    </li>
-    <li class="list-group-item list-group-item-action">Next oil on: {{car.car_next_oil_date}} or
-        {{car.car_next_oil_km}}kms
-    </li>
-    <li class="list-group-item list-group-item-action">Note: </br> {{car.car_note|linebreaks}}</li>
-</ul>
-<p></p>
-{% if tasks %}
-<h3>Active Tasks:</h3>
-<div class="list-group">
-    {% for task in tasks %}
-        <a href="{% url 'tasks:task_detail' last='active' pk=task.pk %}" class="list-group-item list-group-item-action">{{ task.name }} | Due date: {{task.due_date}} | Person: {{ task.user }}</a>
-    {% endfor %}
-</div>
-{% endif %}
-<p></p>
+        <li class="list-group-item list-group-item-action">Driven kms: {{ car.car_actual_driven_kms }}kms</li>
+        <li class="list-group-item list-group-item-action
+            {% if car.needs_tyres_switch %}list-group-item-warning{% endif %}">
+            Actual tyres: {{ car.get_car_tyres_display }}</li>
+        <li class="list-group-item list-group-item-action
+            {% if car.needs_cleaning %}list-group-item-warning{% endif %}">
+            Need of wet cleaning: {{ car.get_car_dirtiness_display }}</li>
+        <li class="list-group-item list-group-item-action {% if car.needs_check %}list-group-item-warning{% endif %}">
+            Last check date: {{ car.car_last_check }}</li>
+        <li class="list-group-item list-group-item-action {% if car.needs_service %}list-group-item-warning{% endif %}">
+            Next oil or inspection date: {{ car.car_next_date }}</li>
+
+        <li class="list-group-item list-group-item-action {% if car.needs_service %}list-group-item-warning{% endif %}">
+            Next oil or inspection in: {{ car.car_next_km }}km
+        </li>
+        <li class="list-group-item list-group-item-action {% if car.needs_service %}list-group-item-warning{% endif %}">
+            Next inspection on: {{ car.car_next_inspection_date }} or {{ car.car_next_inspection_km }}kms
+        </li>
+        <li class="list-group-item list-group-item-action {% if car.needs_service %}list-group-item-warning{% endif %}">
+            Next oil on: {{ car.car_next_oil_date }} or {{ car.car_next_oil_km }}kms
+        </li>
+        <li class="list-group-item list-group-item-action {% if car.needs_stk %}list-group-item-danger{% endif %}">
+            STK till: {{ car.car_next_stk_date }}</li>
+        <li class="list-group-item list-group-item-action">Note: </br> {{ car.car_note|linebreaks }}</li>
+    </ul>
+    <p></p>
+    {% if tasks %}
+        <h3>Active Tasks:</h3>
+        <div class="list-group">
+            {% for task in tasks %}
+                <a href="{% url 'tasks:task_detail' last='active' pk=task.pk %}"
+                   class="list-group-item list-group-item-action {% if task.is_past_due %}list-group-item-warning{% endif %}">
+                    {{ task }} | Due date: {{ task.due_date }} | Person: {{ task.user }}</a>
+            {% endfor %}
+        </div>
+    {% endif %}
+    <p></p>
 {% endblock %}

@@ -13,64 +13,64 @@
 
 
 
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
-<script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/plug-ins/1.10.19/sorting/datetime-moment.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8"
+            src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" charset="utf8"
+            src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+    <script type="text/javascript" charset="utf8"
+            src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.25.3/moment.min.js"></script>
+    <script type="text/javascript" charset="utf8"
+            src="https://cdn.datatables.net/plug-ins/1.10.21/sorting/datetime-moment.js"></script>
 
-<script>
+    <script>
 
-$(document).ready( function () {
-    $.fn.dataTable.moment( 'DD.MM.YY' );
-    $('#task-list').DataTable( {
-    "paging":   false,
-    }
-    );
-} );
-</script>
+        $(document).ready(function () {
+            $.fn.dataTable.moment('DD.MM.YY');
+            $('#task-list').DataTable({
+                    "paging": false,
+                }
+            );
+        });
+    </script>
 
-<div class="table-responsive-sm">
-<table id="task-list" class="table table-bordered display compact" style="width:100%">
+    <div class="table-responsive-sm">
+        <table id="task-list" class="table table-bordered display compact" style="width:100%">
 
-
-    <thead>
-        <tr>
-            <td>Task Name</td>
-            <td>Car</td>
-            {% if not last == 'my' %}
+            <thead>
+            <tr>
+                <td>Task Name</td>
+                <td>Car</td>
+                {% if not last == 'my' %}
             <td>User</td>
             {% endif %}
             {% if last == 'completed' %}
-            <td>Completed at</td>
+                <td>Completed at</td>
             {% else %}
-            <td>Due date</td>
+                <td>Due date</td>
             {% endif %}
-            {% if not last == 'my' %}
-            <td>City</td>
-            {% endif %}
-        </tr>
-    </thead>
-    <tbody>
-    {% for task in tasks %}
-        <tr>
-            <td><a href="{% url 'tasks:task_detail' last=last pk=task.pk %}">{{ task.name }}</a></td>
-            <td>{{ task.car }}</td>
-            {% if not last == 'my' %}
-            <td>{{ task.user }}</td>
-            {% endif %}
-            {% if last == 'completed' %}
-            <td>{{ task.completed_date|date:'d.m.y' }}</td>
-            {% else %}
-            <td>{{ task.due_date|date:'d.m.y' }}</td>
-            {% endif %}
-            {% if not last == 'my' %}
-            <td>{{ task.city }}</td>
-            {% endif %}
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
-</div>
+                <td>City</td>
+            </tr>
+            </thead>
+            <tbody>
+            {% for task in tasks %}
+                <tr>
+                    <td><a href="{% url 'tasks:task_detail' last=last pk=task.pk %}">{{ task }}</a>
+                        {% if task.is_past_due %}<i class="fas fa-exclamation"></i>{% endif %}</td>
+                    <td>{{ task.car.car_name }}</td>
+                    {% if not last == 'my' %}
+                        <td>{{ task.user.username }}</td>
+                    {% endif %}
+                    {% if last == 'completed' %}
+                        <td>{{ task.completed_date|date:'d.m.y' }}</td>
+                    {% else %}
+                        <td>{{ task.due_date|date:'d.m.y' }}</td>
+                    {% endif %}
+                    <td>{{ task.city }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
 {% endblock %}

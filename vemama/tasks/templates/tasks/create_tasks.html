@@ -9,27 +9,28 @@
   </ol>
 </nav>
 <p></p>
-{% if msg %}
-<div class="alert alert-primary" role="alert">
-    {{ msg }}
-</div>
-{% endif %}
+    {% if msg %}
+        <div class="alert alert-primary" role="alert">
+            {{ msg }}
+        </div>
+    {% endif %}
 
-<div class="tasks-list">
-    <p>Create tasks</p>
-<div class="list-group">
-    <a class="list-group-item list-group-item-action" href="{% url 'tasks:create_service_tasks' %}"> Create service tasks </a>
-    <a class="list-group-item list-group-item-action" href="{% url 'tasks:create_check_tasks' %}"> Create check tasks </a>
-</div>
+    <div class="tasks-list">
+        <p>Create tasks</p>
+        <div class="list-group">
+            <a class="list-group-item list-group-item-action" href="{% url 'tasks:create_tasks' %}">
+                Create tasks (Service & check, etc.)</a>
+        </div>
 
-    <p>Assign tasks</p>
-    <div class="list-group">
-        <a class="list-group-item list-group-item-action" href="{% url 'tasks:assign_tasks' %}"> Assign tasks </a>
-    </div>
+        <p>Assign tasks</p>
+        <div class="list-group">
+            <a class="list-group-item list-group-item-action" href="{% url 'tasks:assign_tasks' %}"> Assign tasks </a>
+        </div>
 
-    <p>Send notifications</p>
-    <div class="list-group">
-        <a class="list-group-item list-group-item-action" href="{% url 'tasks:send_weekly_notify' %}"> Notification on
+        <p>Send notifications</p>
+        <div class="list-group">
+            <a class="list-group-item list-group-item-action" href="{% url 'tasks:send_weekly_notify' %}"> Notification
+                on
             this week deadlines </a>
         <a class="list-group-item list-group-item-action" href="{% url 'tasks:send_daily_notify' %}"> Notification on
             tomorrow deadlines </a>

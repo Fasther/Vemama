@@ -23,6 +23,6 @@ def summary_notification(heading, duedatedays):  # sending email with all tasks 
     for user in users:  # get user, get their tasks and send them
         tasks = user.tasks.filter(completed=False, due_date__lte=timezone.now() + timedelta(days=duedatedays)).order_by(
             "due_date")
-        send_notification(heading, tasks)
+        send_notification(str(len(tasks)) + heading, tasks)
         send_emails += 1
     return send_emails

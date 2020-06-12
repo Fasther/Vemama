@@ -4,22 +4,24 @@
 {% block content %}
 <nav xmlns="http://www.w3.org/1999/html">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{% url 'cars:city_list'%}">Cars</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'cars:city_list' %}">Cars</a></li>
         <li class="breadcrumb-item"><a href="{% url 'cars:car_list' city=car.car_city.id %}">{{ car.car_city }}</a></li>
-        <li class="breadcrumb-item"><a href="{% url 'cars:car_detail' city=car.car_city.id pk=car.pk %}">{{ car.car_name }}</a></li>
+        <li class="breadcrumb-item"><a
+                href="{% url 'cars:car_detail' city=car.car_city.id pk=car.pk %}">{{ car.car_name }}</a></li>
         <li class="breadcrumb-item active">Edit</li>
     </ol>
 </nav>
 
-<h3>Edit: {{car.car_name}}</h3>
+    <h3><small class="text-muted">Edit car:</small> {{ car.car_name }}</h3>
     <form method="POST" class="form">
         {% csrf_token %}
         {{ form|crispy }}
-      <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Save Changes</button>
-        <a class="btn btn-primary" href="{% url 'cars:car_detail' city=car.car_city.id pk=car.pk %}"><i class="fas fa-times"></i> Cancel</a>
+        <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Save Changes</button>&ensp;
+        <a class="btn btn-secondary" href="{% url 'cars:car_detail' city=car.car_city.id pk=car.pk %}"><i
+                class="fas fa-times"></i> Cancel</a>
     </form>
 
-        <p></p>
+    <p></p>
 
 
 {% endblock %}

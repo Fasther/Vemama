@@ -50,7 +50,8 @@ $(document).ready( function () {
     <tbody>
     {% for car in cars %}
         <tr>
-            <td><a href="{{ car.pk }}">{{ car.car_name }}</a></td>
+            <td><a href="{{ car.pk }}">{{ car.car_name }}</a>
+                {% if car.needs_attention %}<i class="fas fa-exclamation"></i>{% endif %}</td>
             <td>{{ car.car_last_check|date:'d.m.y' }}</td>
             <td>{{ car.car_actual_driven_kms|safe }}</td>
             <td>{{ car.car_next_date|date:'d.m.y' }}</td>

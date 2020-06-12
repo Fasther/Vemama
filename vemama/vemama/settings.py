@@ -3,7 +3,7 @@ Django settings for Vemama project.
 """
 
 import os
-from decouple import config
+from decouple import config, Csv
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
@@ -32,6 +32,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     "crispy_forms",
+    "simple_history",
+    "core.apps.CoreConfig",
     "cars",
     "tasks",
 ]
@@ -44,6 +46,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'simple_history.middleware.HistoryRequestMiddleware',
 ]
 
 ROOT_URLCONF = 'vemama.urls'
@@ -126,7 +129,7 @@ USE_THOUSAND_SEPARATOR = True
 
 # email settings
 
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_BACKEND = config("EMAIL_BACKEND", default="django.core.mail.backends.smtp.EmailBackend")
 EMAIL_HOST = config("EMAIL_HOST", default="")
 EMAIL_USE_SSL = config("EMAIL_USE_SSL", default="True", cast=bool)
 EMAIL_PORT = config("EMAIL_PORT", default=0, cast=int)
@@ -135,3 +138,12 @@ EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", default="")
 
 # APP settings
 ROUTINE_CHECK_INTERVAL = config("ROUTINE_CHECK_INTERVAL", default=30, cast=int)
+CHECK_TASK_DUE_DATE = config("CHECK_TASK_DUE_DATE", default=15, cast=int)
+CAR_SERVICE_KM_THRESHOLD = config("CAR_SERVICE_KM_THRESHOLD", default=3000, cast=int)
+CAR_SERVICE_DAYS_THRESHOLD = config("CAR_SERVICE_DAYS_THRESHOLD", default=30, cast=int)
+CAR_TYRE_SWITCH_DAYS_THRESHOLD = config("CAR_TYRE_SWITCH_DAYS_THRESHOLD", default=45, cast=int)
+WINTER_TYRE_SWITCH_DUE_DATE = config("WINTER_TYRE_SWITCH_DUE_DATE", default="10,31", cast=Csv())
+SUMMER_TYRE_SWITCH_DUE_DATE = config("SUMMER_TYRE_SWITCH_DUE_DATE", default="5,30", cast=Csv())
+
+# Zemtu API
+Z_TOKEN = config("Z_TOKEN", default="")

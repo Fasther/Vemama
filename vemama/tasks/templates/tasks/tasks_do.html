@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'tasks:tasks_index' %}">Tasks</a></li>
+            <li class="breadcrumb-item"><a
+                    href="{% url 'tasks:'|add:view.kwargs.last|add:'_tasks' %}">{{ view.kwargs.last|title }} tasks</a>
+            </li>
+            <li class="breadcrumb-item"><a
+                    href="{% url 'tasks:task_detail' last=view.kwargs.last pk=task.pk %}">{{ task }}</a></li>
+            <li class="breadcrumb-item active">Complete</li>
+        </ol>
+    </nav>
+    <h3><small class="text-muted">Complete task:</small> {{ task }} </h3>
+    <h4><span class="badge badge-info">Car: {{ car.car_name }}</span></h4>
+    {% if errors %}
+        <div class="alert alert-danger" role="alert">
+            {{ errors|escape }}
+        </div>
+    {% endif %}
+    <form method="POST" class="form">
+        {% csrf_token %}
+        <ul class="list-group">
+            <li class="list-group-item list-group-item-action">
+                <h5>Task info</h5>
+                <hr>
+                <p>{{ task_info|linebreaks }}</p>
+                {% if task_actions %}
+                    <ul class="list-group ">
+                        {% for task_action in task_actions %}
+                            <li class="list-group-item list-group-item-action list-group-item-secondary">
+                                {{ task_action|linebreaksbr }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </li>
+            <li class="list-group-item list-group-item-action">
+                <h5>Car info</h5>
+                <hr>
+                {{ car_form|crispy }}
+            </li>
+        </ul>
+        <p>{{ task_form|crispy }}</p>
+        <button type="submit" class="btn btn-success"><i class="fas fa-check"></i> Task is done!</button>&ensp;
+        <a class="btn btn-secondary" href="{% url 'tasks:task_detail' last=view.kwargs.last pk=task.pk %}"><i
+                class="fas fa-times"></i> Cancel</a>
+    </form>
+    <p></p>
+
+{% endblock %}
