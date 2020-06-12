@@ -64,6 +64,8 @@ def assign_task(task: Task):
                            f'to do "{task.get_task_type_display()}".'
     suitable_worker = suitable_workers.annotate(
         tasks=Count("user__tasks", filter=Q(user__tasks__completed=False))).order_by("-tasks").first()
+    task.user = suitable_worker.user
+    task.save()
 
     # filter workers by city
     # filter by task type, if None assing to staff

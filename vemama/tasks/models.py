@@ -40,10 +40,10 @@ class Task(models.Model):
         if self.pk:  # notification for assigned user
             orig = Task.objects.get(pk=self.pk)
             if orig.user != self.user and (self.user is not None):
-                send_notification("New task for you", [self, ])
+                send_notification("New task (#{self}) for you", [self, ])
         elif self.user:
             super().save(*args, **kwargs)
-            send_notification("New task for you", [self, ])
+            send_notification(f"New task (#{self}) for you", [self, ])
         self.city = str(self.car.car_city)
         self.completed = True if self.completed_date else False
         super().save(*args, **kwargs)
@@ -54,6 +54,8 @@ class Task(models.Model):
                 return True if timezone.now().date() >= self.due_date else False
             except TypeError:
                 pass
+        else:
+            return False
     is_past_due.boolean = True
 
     def __str__(self):
