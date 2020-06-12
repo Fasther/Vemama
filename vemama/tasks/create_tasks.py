@@ -37,7 +37,7 @@ def create_all_tasks():
             if car.needs_service:
                 task_type = Task.SERVICE
                 if not task_already_exist(car, task_type):
-                    due_date = (timezone.now().date() + settings.CAR_SERVICE_DAYS_THRESHOLD) if (
+                    due_date = (timezone.now().date() + timedelta(days=settings.CAR_SERVICE_DAYS_THRESHOLD)) if (
                             settings.CAR_SERVICE_KM_THRESHOLD > car.car_next_km) else car.car_next_date
                     created_tasks.append(create_task(car, task_type, due_date))
             if car.needs_stk:

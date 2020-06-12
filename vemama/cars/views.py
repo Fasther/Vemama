@@ -1,16 +1,15 @@
 from datetime import timedelta
+
 from django.conf import settings
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
+from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from django.utils import timezone
-from django.views import View
 from django.views.generic import ListView, DetailView, UpdateView, TemplateView
 
 from tasks.forms import CreateReportTask
 from .models import City, Car
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import get_object_or_404, redirect
 
 
 class CityList(LoginRequiredMixin, ListView):

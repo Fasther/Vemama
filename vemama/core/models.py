@@ -1,13 +1,11 @@
-from django.db import models
+from django import forms
 from django.contrib.auth.models import User
-
+from django.contrib.postgres.fields import ArrayField
 # Create your models here.
 from django.db import models
-from django.contrib.postgres.fields import ArrayField
-from django.contrib.auth import get_user_model
-from django import forms
-from tasks.models import Task
+
 from cars.models import City
+from tasks.models import Task
 
 
 class ChoiceArrayField(ArrayField):

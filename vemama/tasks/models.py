@@ -1,9 +1,9 @@
 from django.db import models
-from cars import models as cars
-from django.utils import timezone
 from django.urls import reverse
-from tasks.notifications import send_notification
+from django.utils import timezone
 from simple_history.models import HistoricalRecords
+
+from tasks.notifications import send_notification
 
 
 class Task(models.Model):

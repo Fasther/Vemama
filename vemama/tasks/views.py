@@ -1,20 +1,22 @@
+from datetime import timedelta
+
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect, HttpResponse
+from django.shortcuts import get_object_or_404, redirect
+from django.urls import reverse
+from django.utils import timezone
+from django.utils.formats import date_format
 from django.views import View
 from django.views.generic import ListView, DetailView, UpdateView, TemplateView
-from django.utils.formats import date_format
+
 from cars.forms import CarTaskForm
 from cars.models import Car
+from tasks import notifications
 from .assign_tasks import assign_all_tasks
 from .create_tasks import create_all_tasks
 from .forms import CompleteTaskForm
 from .models import Task
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import get_object_or_404, redirect
-from django.urls import reverse
-from django.utils import timezone
-from datetime import timedelta
-from tasks import notifications, assign_tasks
 
 
 class TasksIndexView(LoginRequiredMixin, TemplateView):
@@ -139,7 +141,8 @@ class CreateTasks(LoginRequiredMixin, View):
             enumerated_tasks.append(f"{order:<2}: {task}")
         enumerated_tasks = "\n".join(enumerated_tasks)
 
-        return HttpResponse(f"Created: {len(created_tasks)}\n"
+        return HttpResponse(f"----- {timezone.now().strftime('%X %x')}\n"
+                            f"Created: {len(created_tasks)}\n"
                             f"List of tasks:\n"
                             f"{enumerated_tasks}", content_type="text/plain")
 
@@ -154,7 +157,8 @@ class AssignTasks(LoginRequiredMixin, View):
             enumerated_tasks.append(f"{order:<2}: {task}")
         enumerated_tasks = "\n".join(enumerated_tasks)
 
-        return HttpResponse(f"Assigned: {len(assigned_tasks)}\n"
+        return HttpResponse(f"----- {timezone.now().strftime('%X %x')}\n"
+                            f"Assigned: {len(assigned_tasks)}\n"
                             f"List of tasks:\n"
                             f"{enumerated_tasks}", content_type="text/plain")
 
