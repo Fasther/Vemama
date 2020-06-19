@@ -290,6 +290,7 @@ class DoTask(LoginRequiredMixin, TemplateView):
             kwargs["errors"] = car_form.errors
             return self.get(request, *args, **kwargs)
 
+# TODO rework notifications
 
 @login_required
 def send_daily_notification_view(request):
