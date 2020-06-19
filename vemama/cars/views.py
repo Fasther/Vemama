@@ -7,7 +7,6 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from django.utils import timezone
-from django.views import View
 from django.views.generic import ListView, DetailView, UpdateView, TemplateView
 from rest_framework import authentication
 from rest_framework.views import APIView
