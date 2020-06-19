@@ -33,7 +33,7 @@ class PersonAdmin(admin.ModelAdmin):
               "is_superuser", "date_joined", "last_login", "password",)
 
 
-admin.site.unregister(User)
+# admin.site.unregister(User)
 # admin.site.unregister(Group)
 
 admin.site.site_header = "Vemama, takes care"
