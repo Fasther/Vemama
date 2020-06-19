@@ -9,6 +9,8 @@ from django.utils import timezone
 from django.utils.formats import date_format
 from django.views import View
 from django.views.generic import ListView, DetailView, UpdateView, TemplateView
+from rest_framework.views import APIView
+from rest_framework import authentication
 
 from cars.forms import CarTaskForm
 from cars.models import Car
@@ -131,7 +133,8 @@ class CreateTasksIndex(LoginRequiredMixin, TemplateView):
         return context
 
 
-class CreateTasks(LoginRequiredMixin, View):
+class CreateTasks(APIView):
+    authentication_classes = (authentication.BasicAuthentication,)
 
     def get(self, request, *args, **kwargs):
         created_tasks = create_all_tasks()
@@ -147,7 +150,8 @@ class CreateTasks(LoginRequiredMixin, View):
                             f"{enumerated_tasks}", content_type="text/plain")
 
 
-class AssignTasks(LoginRequiredMixin, View):
+class AssignTasks(APIView):
+    authentication_classes = (authentication.BasicAuthentication,)
 
     def get(self, request, *args, **kwargs):
         assigned_tasks = assign_all_tasks()

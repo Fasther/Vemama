@@ -9,6 +9,8 @@ from django.urls import reverse
 from django.utils import timezone
 from django.views import View
 from django.views.generic import ListView, DetailView, UpdateView, TemplateView
+from rest_framework import authentication
+from rest_framework.views import APIView
 
 from tasks.forms import CreateReportTask
 from cars.models import City, Car
@@ -106,7 +108,9 @@ class CarCheckView(LoginRequiredMixin, UpdateView):
         return super().post(self, request, *args, **kwargs)
 
 
-class UpdateActualDrivenKMsFromZemtu(LoginRequiredMixin, View):
+class UpdateActualDrivenKMsFromZemtu(APIView):
+    authentication_classes = (authentication.BasicAuthentication,)
+
     def __init__(self):
         super().__init__()
         self.zemtu_url = "https://autonapul.zemtu.com/api/v2/reservationaccounting/?&state=closed&reservation_end__gte="
