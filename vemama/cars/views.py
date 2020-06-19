@@ -12,6 +12,7 @@ from django.views.generic import ListView, DetailView, UpdateView, TemplateView
 from rest_framework import authentication
 from rest_framework.views import APIView
 
+from tasks.assign_tasks import assign_task
 from tasks.forms import CreateReportTask
 from cars.models import City, Car
 
@@ -65,9 +66,9 @@ class CarReport(LoginRequiredMixin, TemplateView):
             task_instance = task_form.save(commit=False)
             task_instance.car = car
             task_instance.due_date = timezone.now().date() + timedelta(days=settings.CHECK_TASK_DUE_DATE)
-            # TODO also assign it right away!
             task_instance.save()
-            request.session["car_msg"] = f'Task "{task_instance}" created.'
+            task_instance = assign_task(task_instance)
+            request.session["car_msg"] = f'Task "{task_instance}" created. Assigned to {task_instance.user}.'
             return HttpResponseRedirect(reverse("cars:car_detail", kwargs={**kwargs}))
         else:
             kwargs["errors"] = task_form.errors
