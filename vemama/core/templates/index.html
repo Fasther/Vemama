@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+    {% if user.is_authenticated %}
+        <h1>Welcome to Vemama!</h1>
+        <p>Start working by choosing one of Tasks or Cars! Keep up good work!</p>
+        <div class="list-group">
+            <a class="list-group-item list-group-item-action" href="{% url 'tasks:my_tasks' %}">
+                My tasks <span class="badge badge-primary">{{ tasks_num }}</span> <span
+                    class="badge badge-warning">{{ tasks_num_over }}</span>
+            </a>
+        </div>
+    {% else %}
+        <h1>Please log-in</h1>
+        <p>If you want to do some work, you need to be logged in.</p>
+    {% endif %}
+    <p></p>
+{% endblock %}

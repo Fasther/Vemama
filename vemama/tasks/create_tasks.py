@@ -14,7 +14,7 @@ def create_task(car, task_type, due_date):
 
 
 def create_all_tasks():
-    cars = Car.objects.all()
+    cars = Car.objects.filter(is_active=True)
     created_tasks = []
     for car in cars:
         # check for car needs:

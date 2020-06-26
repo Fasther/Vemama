@@ -21,8 +21,9 @@
 </head>
 <body>
 <div class="container">
-    <a href="{% url 'index' %}"> <img src="{% static 'pic/logo.png' %}" alt="Vemama logo" title="Dashboard" width="200"
-                                      height="82.5"></a>
+    <a href="{% url 'core:index' %}"> <img src="{% static 'pic/logo.png' %}" alt="Vemama logo" title="Dashboard"
+                                           width="200"
+                                           height="82.5"></a>
     <nav class="navbar navbar-expand-lg navbar-light">
         {% if user.is_authenticated %}
             <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target=".navbar-collapse"
