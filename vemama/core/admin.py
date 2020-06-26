@@ -19,7 +19,8 @@ class ProfileAdmin(admin.ModelAdmin):
 
     cities_list.short_description = "Cities"
 
-    def active_tasks(self, obj):
+    @staticmethod
+    def active_tasks(obj):
         return len(obj.user.tasks.filter(completed=False))
 
 
