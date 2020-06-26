@@ -153,12 +153,15 @@ class UpdateActualDrivenKMsFromZemtu(APIView):
             for order, car in enumerate(updated_cars):
                 enum_updates.append(f"{order:>3}: {car} ({car.car_actual_driven_kms} km)")
             enum_updates = "\n".join(enum_updates)
-            return HttpResponse(f"-- KMs update -- {timezone.now().strftime('%X %x')}\n"
+            return HttpResponse(f"-- Update KMs {timezone.now().strftime('%X %x')} -------\n"
                                 f"Updated: {len(updated_cars)}\n"
                                 f"List of cars:\n"
-                                f"{enum_updates}", content_type="text/plain", status=200)
+                                f"{enum_updates}"
+                                f"{36 * '-'}\n",
+                                content_type="text/plain", status=200)
         else:
-            return HttpResponse(f"-- KMs update -- {timezone.now().strftime('%X %x')}\n"
+            return HttpResponse(f"-- Update KMs {timezone.now().strftime('%X %x')} -------\n"
                                 f"Response not OK:\n"
-                                f"{zemtu_data.status_code}: {zemtu_data.reason}",
+                                f"{zemtu_data.status_code}: {zemtu_data.reason}\n"
+                                f"{36 * '-'}\n",
                                 content_type="text/plain", status=400)
