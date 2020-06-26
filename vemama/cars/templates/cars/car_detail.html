@@ -47,7 +47,7 @@
         </li>
         <li class="list-group-item list-group-item-action {% if car.needs_stk %}list-group-item-danger{% endif %}">
             STK till: {{ car.car_next_stk_date }}</li>
-        <li class="list-group-item list-group-item-action">Note: </br> {{ car.car_note|linebreaks }}</li>
+        <li class="list-group-item list-group-item-action">Note: <br> {{ car.car_note|linebreaks }}</li>
     </ul>
     <p></p>
     {% if tasks %}

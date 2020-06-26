@@ -7,10 +7,9 @@ from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.formats import date_format
-from django.views import View
 from django.views.generic import ListView, DetailView, UpdateView, TemplateView
-from rest_framework.views import APIView
 from rest_framework import authentication
+from rest_framework.views import APIView
 
 from cars.forms import CarTaskForm
 from cars.models import Car
@@ -136,6 +135,7 @@ class CreateTasksIndex(LoginRequiredMixin, TemplateView):
 class CreateTasks(APIView):
     authentication_classes = (authentication.BasicAuthentication,)
 
+    # noinspection DuplicatedCode
     def get(self, request, *args, **kwargs):
         created_tasks = create_all_tasks()
 
@@ -152,6 +152,7 @@ class CreateTasks(APIView):
                             content_type="text/plain")
 
 
+# noinspection DuplicatedCode
 class AssignTasks(APIView):
     authentication_classes = (authentication.BasicAuthentication,)
 
@@ -294,7 +295,6 @@ class DoTask(LoginRequiredMixin, TemplateView):
             kwargs["errors"] = car_form.errors
             return self.get(request, *args, **kwargs)
 
-# TODO rework notifications
 
 @login_required
 def send_daily_notification_view(request):
