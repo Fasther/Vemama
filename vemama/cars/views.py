@@ -30,7 +30,7 @@ class CarsInCityList(LoginRequiredMixin, ListView):
     context_object_name = "cars"
 
     def get_queryset(self):
-        return Car.objects.filter(car_city__exact=self.kwargs["city"])
+        return Car.objects.filter(car_city__exact=self.kwargs["city"], is_active=True)
 
 
 class CarDetailView(LoginRequiredMixin, DetailView):
