@@ -144,10 +144,12 @@ class CreateTasks(APIView):
             enumerated_tasks.append(f"{order:>2}: {task}")
         enumerated_tasks = "\n".join(enumerated_tasks)
 
-        return HttpResponse(f"----- {timezone.now().strftime('%X %x')}\n"
+        return HttpResponse(f"-- Create tasks {timezone.now().strftime('%X %x')} -----\n"
                             f"Created: {len(created_tasks)}\n"
                             f"List of tasks:\n"
-                            f"{enumerated_tasks}", content_type="text/plain")
+                            f"{enumerated_tasks}\n"
+                            f"{36 * '-'}\n",
+                            content_type="text/plain")
 
 
 class AssignTasks(APIView):
@@ -161,10 +163,12 @@ class AssignTasks(APIView):
             enumerated_tasks.append(f"{order:>2}: {task}")
         enumerated_tasks = "\n".join(enumerated_tasks)
 
-        return HttpResponse(f"----- {timezone.now().strftime('%X %x')}\n"
+        return HttpResponse(f"-- Assign tasks {timezone.now().strftime('%X %x')} -----\n"
                             f"Assigned: {len(assigned_tasks)}\n"
                             f"List of tasks:\n"
-                            f"{enumerated_tasks}", content_type="text/plain")
+                            f"{enumerated_tasks}\n"
+                            f"{36 * '-'}\n",
+                            content_type="text/plain")
 
 
 class DoTask(LoginRequiredMixin, TemplateView):
