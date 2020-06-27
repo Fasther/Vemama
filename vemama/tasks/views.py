@@ -137,6 +137,7 @@ class CreateTasks(APIView):
 
     # noinspection DuplicatedCode
     def get(self, request, *args, **kwargs):
+        start = timezone.now()
         created_tasks = create_all_tasks()
 
         enumerated_tasks = []
@@ -144,11 +145,13 @@ class CreateTasks(APIView):
             enumerated_tasks.append(f"{order:>2}: {task}")
         enumerated_tasks = "\n".join(enumerated_tasks)
 
+        time_taken = timezone.now() - start
         return HttpResponse(f"-- Create tasks {timezone.now().strftime('%X %x')} -----\n"
                             f"Created: {len(created_tasks)}\n"
                             f"List of tasks:\n"
                             f"{enumerated_tasks}\n"
-                            f"{36 * '-'}\n",
+                            f"Taken: {time_taken}\n"
+                            f"{40 * '-'}\n",
                             content_type="text/plain")
 
 
@@ -157,6 +160,7 @@ class AssignTasks(APIView):
     authentication_classes = (authentication.BasicAuthentication,)
 
     def get(self, request, *args, **kwargs):
+        start = timezone.now()
         assigned_tasks = assign_all_tasks()
 
         enumerated_tasks = []
@@ -164,11 +168,13 @@ class AssignTasks(APIView):
             enumerated_tasks.append(f"{order:>2}: {task}")
         enumerated_tasks = "\n".join(enumerated_tasks)
 
+        time_taken = timezone.now() - start
         return HttpResponse(f"-- Assign tasks {timezone.now().strftime('%X %x')} -----\n"
                             f"Assigned: {len(assigned_tasks)}\n"
                             f"List of tasks:\n"
                             f"{enumerated_tasks}\n"
-                            f"{36 * '-'}\n",
+                            f"Taken: {time_taken}\n"
+                            f"{40 * '-'}\n",
                             content_type="text/plain")
 
 

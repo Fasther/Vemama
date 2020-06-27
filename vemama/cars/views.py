@@ -143,6 +143,7 @@ class UpdateActualDrivenKMsFromZemtu(APIView):
         return updated_cars
 
     def get(self, request, *args, **kwargs):
+        start = timezone.now()
         from_date = timezone.now().date() - timedelta(days=1)
         iso_time = from_date.strftime("%Y-%m-%dT00:00:00Z")
         headers = {"Authorization": f"Token {self.token}"}
@@ -153,15 +154,17 @@ class UpdateActualDrivenKMsFromZemtu(APIView):
             for order, car in enumerate(updated_cars):
                 enum_updates.append(f"{order:>3}: {car} ({car.car_actual_driven_kms} km)")
             enum_updates = "\n".join(enum_updates)
+            time_taken = timezone.now() - start
             return HttpResponse(f"-- Update KMs {timezone.now().strftime('%X %x')} -------\n"
                                 f"Updated: {len(updated_cars)}\n"
                                 f"List of cars:\n"
-                                f"{enum_updates}"
-                                f"{36 * '-'}\n",
+                                f"{enum_updates}\n"
+                                f"Taken: {time_taken}\n"
+                                f"{40 * '-'}\n",
                                 content_type="text/plain", status=200)
         else:
             return HttpResponse(f"-- Update KMs {timezone.now().strftime('%X %x')} -------\n"
                                 f"Response not OK:\n"
                                 f"{zemtu_data.status_code}: {zemtu_data.reason}\n"
-                                f"{36 * '-'}\n",
+                                f"{40 * '-'}\n",
                                 content_type="text/plain", status=400)
