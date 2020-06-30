@@ -11,9 +11,9 @@
                         <p class="card-text">You have <span class="badge badge-primary">{{ tasks_num }}</span> tasks.
                             {% if tasks_num_over %}
                                 <br>And <span class="badge badge-warning">{{ tasks_num_over }}</span> of them are
-                                overdue!</p>
-                            {% endif %}
-                        <br>
+                                overdue!
+                            {% endif %}</p>
+
                         <a href="{% url 'tasks:my_tasks' %}" class="btn btn-primary">Go to my tasks</a>
                     </div>
                 </div>
