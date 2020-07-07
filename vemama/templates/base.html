@@ -43,17 +43,19 @@
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> {{ user.username }}</a>
+                        <a class="nav-link" href="{% url 'logout' %}"><i
+                                class="fas fa-sign-out-alt"></i> {{ user.username }}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" title="Change password" href="{% url 'change_password' %}"><i
+                        <a class="nav-link" title="Change password" href="{% url 'core:change_password' %}"><i
                                 class="fas fa-key"></i> Pass</a>
                     </li>
                     {% if user.is_staff %}
-                    <li class="nav-item">
-                        <a class="nav-link" title="Admin" href="{% url 'admin:index' %}"><i class="fas fa-dungeon"></i>
-                            Admin</a>
-                    </li>
+                        <li class="nav-item">
+                            <a class="nav-link" title="Admin" href="{% url 'admin:index' %}"><i
+                                    class="fas fa-dungeon"></i>
+                                Admin</a>
+                        </li>
                     {% endif %}
                 </ul>
             </div>

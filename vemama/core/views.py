@@ -1,3 +1,5 @@
+from django.contrib.auth.views import PasswordChangeView
+from django.urls import reverse_lazy
 from django.views.generic import TemplateView
 from django.db.models import Sum
 from cars.models import Car, City
@@ -30,3 +32,21 @@ class IndexView(TemplateView):
             return context
         else:
             return super().get_context_data(**kwargs)
+
+
+class ChangePasswordView(PasswordChangeView):
+    template_name = "change-password.html"
+    success_url = reverse_lazy("core:change_password")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        try:  # show message of what work have been done
+            context["msg"] = self.request.session.pop("msg")
+        except KeyError:
+            pass
+        return context
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        self.request.session["msg"] = "Password updated successfully!"
+        return response
