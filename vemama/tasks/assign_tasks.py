@@ -13,7 +13,7 @@ def assign_task(task: Task):
         task.description = f'Task assigned to SuperUser because no Person available in "{task.city}" ' \
                            f'to do "{task.get_task_type_display()}".'
     suitable_worker = suitable_workers.annotate(
-        tasks=Count("user__tasks", filter=Q(user__tasks__completed=False))).order_by("-tasks").first()
+        tasks=Count("user__tasks", filter=Q(user__tasks__completed=False))).order_by("tasks").first()
     task.user = suitable_worker.user
     task.save()
     return task
