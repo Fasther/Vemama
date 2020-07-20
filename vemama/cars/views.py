@@ -9,6 +9,7 @@ from django.urls import reverse
 from django.utils import timezone
 from django.views.generic import ListView, DetailView, UpdateView, TemplateView
 from rest_framework import authentication
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 
 from tasks.assign_tasks import assign_task
@@ -110,17 +111,20 @@ class CarCheckView(LoginRequiredMixin, UpdateView):
 
 class UpdateActualDrivenKMsFromZemtu(APIView):
     authentication_classes = (authentication.BasicAuthentication,)
+    permission_classes = (IsAuthenticated,)
 
     def __init__(self):
         super().__init__()
         self.zemtu_url = "https://autonapul.zemtu.com/api/v2/reservationaccounting/?&state=closed&reservation_end__gte="
         self.token = settings.Z_TOKEN
 
-    @staticmethod
-    def update_driven_kms(car_id, driven_kms):
+    def update_driven_kms(self, car_id, driven_kms, add=False):
         try:
             car_instance = Car.objects.get(car_id=car_id)
-            car_instance.car_actual_driven_kms = int(driven_kms)
+            if add:
+                car_instance.car_actual_driven_kms += int(driven_kms)
+            else:
+                car_instance.car_actual_driven_kms = int(driven_kms)
             car_instance.save()
             return car_instance
         except (Car.DoesNotExist, TypeError):
@@ -138,6 +142,14 @@ class UpdateActualDrivenKMsFromZemtu(APIView):
                 else:
                     continue
             except KeyError:
+                try:
+                    updated_car = self.update_driven_kms(
+                        result['vehicle']['id'], result['distance'], add=True
+                    )  # If we dont have ODO state, just add kms from last reservation.
+                    if updated_car:
+                        updated_cars.append(updated_car)
+                except KeyError:
+                    pass
                 pass
 
         return updated_cars
