@@ -133,15 +133,18 @@ class UpdateActualDrivenKMsFromZemtu(APIView):
     def get_driven_kms(self, parsed_json_data: dict):
         updated_cars = []
         for result in parsed_json_data.get("results"):
-            try:
-                updated_car = self.update_driven_kms(
-                    result['vehicle']['id'], result['odometer_end']
-                )
-                if updated_car:
-                    updated_cars.append(updated_car)
-                else:
+            if result.get("odometer_end"):
+                try:
+                    updated_car = self.update_driven_kms(
+                        result['vehicle']['id'], result['odometer_end']
+                    )
+                    if updated_car:
+                        updated_cars.append(updated_car)
+                    else:
+                        continue
+                except KeyError:
                     continue
-            except KeyError:
+            elif result.get("distance"):
                 try:
                     updated_car = self.update_driven_kms(
                         result['vehicle']['id'], result['distance'], add=True
@@ -149,8 +152,7 @@ class UpdateActualDrivenKMsFromZemtu(APIView):
                     if updated_car:
                         updated_cars.append(updated_car)
                 except KeyError:
-                    pass
-                pass
+                    continue
 
         return updated_cars
 
