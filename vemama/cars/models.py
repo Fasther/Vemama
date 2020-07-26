@@ -94,12 +94,13 @@ class Car(models.Model):
 
     @property
     def needs_check(self):
+        if not self.car_last_check:
+            return True
         time_from_last_check = timezone.now().date() - self.car_last_check
         if time_from_last_check > timedelta(days=settings.ROUTINE_CHECK_INTERVAL):
             return True
         else:
             return False
-        pass
 
     @property
     def needs_cleaning(self):
