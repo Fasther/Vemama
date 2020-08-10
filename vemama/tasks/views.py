@@ -224,11 +224,11 @@ class DoTask(LoginRequiredMixin, TemplateView):
             context["task_info"] = "Car needs bigger cleaning, also with wet cleaning of seats.\n" \
                                    "Also do regular check."
             context["task_actions"] = (
-                "Wet cleaning:\n"
-                "- Plan appointment for this car at local cleaning business.\n"
-                "- Take the car to cleaning\n"
-                "- and from cleaning :)"
-            )
+                                          "Wet cleaning:\n"
+                                          "- Plan appointment for this car at local cleaning business.\n"
+                                          "- Take the car to cleaning\n"
+                                          "- and from cleaning :)",
+                                      ) + car_check_actions
         elif task_type == Task.SERVICE:
             exclude = ("car_tyres", "car_next_stk_date",)
             context["task_info"] = "Car needs service soon!\n" \
