@@ -17,7 +17,7 @@ class TaskAdmin(SimpleHistoryAdmin):
     search_fields = ["name", "car__car_name"]
     history_list_display = ["completed", "changed_fields"]
     raw_id_fields = ["car", ]
-    list_filter = ["city", "task_type", "completed", "user"]
+    list_filter = ["city", "completed", "task_type", "user", "car__car_name"]
 
     @staticmethod
     def changed_fields(obj):
