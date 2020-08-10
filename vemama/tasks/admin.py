@@ -14,7 +14,7 @@ class TaskAdmin(SimpleHistoryAdmin):
                     ]
     readonly_fields = ["created_date", "completed", "is_past_due", "city", ]
     autocomplete_fields = ["car", "user"]
-    search_fields = ["name", "car"]
+    search_fields = ["name", "car__car_name"]
     history_list_display = ["completed", "changed_fields"]
     raw_id_fields = ["car", ]
     list_filter = ["city", "task_type", "completed", "user"]
