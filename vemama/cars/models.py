@@ -11,6 +11,12 @@ from django.conf import settings
 
 class City(models.Model):
     name = models.CharField(max_length=200)
+    car_routine_check_interval = models.IntegerField(verbose_name="Days between checks",
+                                                     help_text="Apply only to cars in this city.",
+                                                     default=settings.ROUTINE_CHECK_INTERVAL)
+    car_task_due_date = models.IntegerField(verbose_name="Days to complete generated task",
+                                            help_text="Apply only to cars in this city.",
+                                            default=settings.CHECK_TASK_DUE_DATE)
 
     def __str__(self):
         return self.name
