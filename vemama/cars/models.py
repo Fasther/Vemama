@@ -14,7 +14,7 @@ class City(models.Model):
     car_routine_check_interval = models.IntegerField(verbose_name="Days between checks",
                                                      help_text="Apply only to cars in this city.",
                                                      default=settings.ROUTINE_CHECK_INTERVAL)
-    car_task_due_date = models.IntegerField(verbose_name="Days to complete generated task",
+    car_task_due_days = models.IntegerField(verbose_name="Days to complete generated task",
                                             help_text="Apply only to cars in this city.",
                                             default=settings.CHECK_TASK_DUE_DATE)
 

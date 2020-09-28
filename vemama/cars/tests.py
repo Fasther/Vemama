@@ -12,7 +12,7 @@ class CityTests(TestCase):
         self.test_user = get_user_model().objects.create(username="test_user")
 
     def test_city_create(self):
-        city = City.objects.create(name="Brno")
+        city = City.objects.create(name="Brno", )
         self.assertIsNotNone(city)
         self.assertAlmostEqual(1, len(City.objects.all()))
 
@@ -30,3 +30,13 @@ class CityTests(TestCase):
         c.force_login(self.test_user)
         response = c.get(cities_url)
         self.assertContains(response, city.name, status_code=200)
+
+    def test_city_intervals(self):
+        city = City.objects.create(name="Brno", )
+        city.car_routine_check_interval = 30
+        city.car_task_due_days = 8
+        city.save()
+        # test if data is same
+        city = City.objects.get(name="Brno")
+        self.assertEqual(city.car_routine_check_interval, 30)
+        self.assertEqual(city.car_task_due_days, 8)
