@@ -17,6 +17,15 @@ class City(models.Model):
     car_task_due_days = models.IntegerField(verbose_name="Days to complete generated task",
                                             help_text="Apply only to cars in this city.",
                                             default=settings.CHECK_TASK_DUE_DATE)
+    car_service_km_threshold = models.IntegerField(verbose_name="KMs service threshold",
+                                                   help_text="How many KMs before task for service will popup",
+                                                   default=settings.CAR_SERVICE_KM_THRESHOLD)
+    car_service_days_threshold = models.IntegerField(verbose_name="Days service threshold",
+                                                     help_text="How many DAYs before task for service will popup",
+                                                     default=settings.CAR_SERVICE_DAYS_THRESHOLD)
+    car_tyre_switch_days_threshold = models.IntegerField(verbose_name="Tyre switch days delay",
+                                                         help_text="How many days before tyres switch date",
+                                                         default=settings.CAR_TYRE_SWITCH_DAYS_THRESHOLD)
 
     def __str__(self):
         return self.name
@@ -76,6 +85,8 @@ class Car(models.Model):
     objects = Manager()
     active = ActiveCarManager()
 
+    # TODO Add tests for methods bellow
+
     def _next_oil_or_inspection_date(self):
         return min(self.car_next_inspection_date, self.car_next_oil_date) if self.car_id else timezone.now()
 
@@ -103,7 +114,7 @@ class Car(models.Model):
         if not self.car_last_check:
             return True
         time_from_last_check = timezone.now().date() - self.car_last_check
-        if time_from_last_check > timedelta(days=settings.ROUTINE_CHECK_INTERVAL):
+        if time_from_last_check > timedelta(days=self.car_city.car_routine_check_interval):
             return True
         else:
             return False
