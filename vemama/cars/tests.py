@@ -40,3 +40,39 @@ class CityTests(TestCase):
         city = City.objects.get(name="Brno")
         self.assertEqual(city.car_routine_check_interval, 30)
         self.assertEqual(city.car_task_due_days, 8)
+
+
+class CarTests(TestCase):
+    # TODO implement all tests
+    def setUp(self) -> None:
+        super().__init__()
+        self.test_user = get_user_model().objects.create(username="test_user")
+        # TODO create test city
+        # TODO create test car
+
+    def test_needs_attention(self):
+        pass
+
+    def test_car_needs_check(self):
+        pass
+
+    def test_car_str(self):
+        pass
+
+    def test_do_check(self):
+        pass
+
+    def test_needs_check(self):
+        pass
+
+    def test_needs_cleaning(self):
+        pass
+
+    def test_needs_service(self):
+        pass
+
+    def test_needs_stk(self):
+        pass
+
+    def test_needs_tyres_switch(self):
+        pass
