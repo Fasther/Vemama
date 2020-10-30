@@ -43,6 +43,10 @@ class IndexView(TemplateView):
             context["total_driven_km"] = f"""{Car.objects.all().aggregate(
                 Sum("car_actual_driven_kms")
             ).get("car_actual_driven_kms__sum"):,}""".replace(",", " ")
+            try:  # show message of what work have been done
+                context["go_to_msg"] = self.request.session.pop("go_to_msg")
+            except KeyError:
+                pass
             return context
         else:
             return super().get_context_data(**kwargs)
