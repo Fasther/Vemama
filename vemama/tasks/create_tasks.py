@@ -4,6 +4,7 @@ from datetime import timedelta, date
 from django.utils import timezone
 from django.conf import settings
 
+# TODO add tests for this
 
 def task_already_exist(car, task_type):
     return car.tasks.filter(completed=False, task_type=task_type).exists()
@@ -24,9 +25,9 @@ def create_all_tasks():
             if car.needs_cleaning:  # cleaning is subtype of check. So we want to plan it instead of check.
                 task_type = Task.CLEANING
                 time_from_last_check = timezone.now().date() - car.car_last_check
-                if time_from_last_check > timedelta(days=settings.ROUTINE_CHECK_INTERVAL):
+                if time_from_last_check > timedelta(days=car.car_city.car_routine_check_interval):
                     if not task_already_exist(car, task_type) and not task_already_exist(car, Task.CHECK):
-                        due_date = timezone.now().date() + timedelta(days=settings.CHECK_TASK_DUE_DATE)
+                        due_date = timezone.now().date() + timedelta(days=car.car_city.car_task_due_days)
                         created_tasks.append(create_task(car, task_type, due_date))
             elif car.needs_check:
                 task_type = Task.CHECK

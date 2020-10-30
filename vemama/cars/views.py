@@ -65,7 +65,7 @@ class CarReport(LoginRequiredMixin, TemplateView):
 
             task_instance = task_form.save(commit=False)
             task_instance.car = car
-            task_instance.due_date = timezone.now().date() + timedelta(days=settings.CHECK_TASK_DUE_DATE)
+            task_instance.due_date = timezone.now().date() + timedelta(days=car.car_city.car_task_due_days)
             task_instance.save()
             task_instance = assign_task(task_instance)
             request.session["car_msg"] = f'Task "{task_instance}" created. Assigned to {task_instance.user}.'
