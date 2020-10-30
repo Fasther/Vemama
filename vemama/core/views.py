@@ -14,7 +14,12 @@ class LoginView(DjangoLoginView):
     template_name = "login.html"
 
     def get_context_data(self, **kwargs):
-        return super().get_context_data()
+        context = super().get_context_data()
+        try:  # show message of what work have been done
+            context["msg"] = self.request.session.pop("msg")
+        except KeyError:
+            pass
+        return context
 
 
 class IndexView(TemplateView):
@@ -68,7 +73,25 @@ class ResetPassView(PasswordResetView):
     subject_template_name = "reset-pass-subject.txt"
     email_template_name = "reset-pass-email.html"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        try:  # show message of what work have been done
+            context["msg"] = self.request.session.pop("msg")
+        except KeyError:
+            pass
+        return context
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        self.request.session["msg"] = "Forgot password? That could happen, email is on its way!"
+        return response
+
 
 class PassResetConfirm(PasswordResetConfirmView):
     template_name = "change-password.html"
-    success_url = reverse_lazy("core:reset_password")
+    success_url = reverse_lazy("login")
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        self.request.session["msg"] = "Password set successfully, you can login now with new password!"
+        return response
