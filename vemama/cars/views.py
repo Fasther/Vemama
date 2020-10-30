@@ -193,7 +193,7 @@ def redirect_to_car(request, **kwargs):
         return redirect("core:index")
     try:
         car = Car.objects.get(car_name__icontains=car_name)
-    except Car.DoesNotExist:
+    except (Car.DoesNotExist, Car.MultipleObjectsReturned):
         request.session["go_to_msg"] = f"""Car "{car_name}" doesn't exist!"""
         return redirect("core:index")
     return redirect(car.get_absolute_url())
