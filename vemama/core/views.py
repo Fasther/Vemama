@@ -1,4 +1,5 @@
-from django.contrib.auth.views import PasswordChangeView, PasswordResetView
+from django.contrib.auth.views import PasswordChangeView, PasswordResetView, PasswordResetConfirmView, \
+    LoginView as DjangoLoginView
 from django.conf import settings
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView
@@ -7,6 +8,13 @@ from cars.models import Car, City
 from tasks.models import Task
 from django.utils import timezone
 from core.models import Profile
+
+
+class LoginView(DjangoLoginView):
+    template_name = "login.html"
+
+    def get_context_data(self, **kwargs):
+        return super().get_context_data()
 
 
 class IndexView(TemplateView):
@@ -54,9 +62,13 @@ class ChangePasswordView(PasswordChangeView):
 
 
 class ResetPassView(PasswordResetView):
-    # https://docs.djangoproject.com/en/3.1/topics/auth/default/#django.contrib.auth.views.PasswordResetView
     template_name = "reset-password.html"
     success_url = reverse_lazy("core:reset_password")
     from_email = settings.DEFAULT_FROM_EMAIL
     subject_template_name = "reset-pass-subject.txt"
     email_template_name = "reset-pass-email.html"
+
+
+class PassResetConfirm(PasswordResetConfirmView):
+    template_name = "change-password.html"
+    success_url = reverse_lazy("core:reset_password")

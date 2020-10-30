@@ -11,10 +11,10 @@
         <img src="https://media.giphy.com/media/S3bndf0POYeRbwecRD/giphy.gif" alt="I forgot pass!">
     </p>
     <p><a style="text-decoration: none; color: #5baf0c; font-weight: bold"
-          href="https://vemama.pancho.cz{% url 'tasks:my_tasks' %}">>> Reset it!</a></p>
+          href="https://{{ domain }}{% url 'core:reset_password_confirm' uidb64=uid token=token %}">>> Reset it!</a></p>
     <p>Have a nice day!</p>
     <p>&nbsp;</p>
-    <a style="text-decoration: none" href="https://vemama.pancho.cz{% url 'core:index' %}">
+    <a style="text-decoration: none" href="https://{{ domain }}{% url 'core:index' %}">
         <div style="text-align: center; font-weight: bold; font-size: 1.2em;">
             <span style="color: #5baf0c">Ve</span>
             <span style="color: #ffc300">ma</span>
