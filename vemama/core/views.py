@@ -1,4 +1,5 @@
 from django.contrib.auth.views import PasswordChangeView, PasswordResetView
+from django.conf import settings
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView
 from django.db.models import Sum
@@ -55,9 +56,7 @@ class ChangePasswordView(PasswordChangeView):
 class ResetPassView(PasswordResetView):
     # https://docs.djangoproject.com/en/3.1/topics/auth/default/#django.contrib.auth.views.PasswordResetView
     template_name = "reset-password.html"
-    subject_template_name = "Request for password reset on Vemama"
     success_url = reverse_lazy("core:reset_password")
-    # TODO Add urls
-    # TODO complete this
-    # TODO email_template
-    # TODO context data
+    from_email = settings.DEFAULT_FROM_EMAIL
+    subject_template_name = "reset-pass-subject.txt"
+    email_template_name = "reset-pass-email.html"
