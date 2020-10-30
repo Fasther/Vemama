@@ -7,6 +7,28 @@
             <div class="col-sm-6" style="padding: 0.3rem">
                 <div class="card text-center">
                     <div class="card-body">
+                        <h5 class="card-title">Go to car</h5>
+                        {% if go_to_msg %}
+                            <div class="alert alert-warning" role="alert">{{ go_to_msg }}</div>
+                        {% endif %}
+                        <p class="card-text">Just type in name of car!</p>
+                        <form action="{% url "cars:redirect_to_car" %}" method="get">
+                            <div class="container">
+                                <div class="row form-group">
+                                    <div class="form-group col-10">
+                                        <input type="text" class="form-control" name="car_name" placeholder="Car name">
+                                    </div>
+                                    <button type="submit" class="btn form-control col-2 btn-sm btn-info " title="Go!"><i
+                                            class="fas fa-chevron-right"></i></button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6" style="padding: 0.3rem">
+                <div class="card text-center">
+                    <div class="card-body">
                         <h5 class="card-title">My tasks</h5>
                         <p class="card-text">You have <span class="badge badge-primary">{{ tasks_num }}</span> tasks.
                             {% if tasks_num_over %}

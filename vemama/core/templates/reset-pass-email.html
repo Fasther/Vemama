@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Vemama password reset</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+<div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,'Helvetica Neue',sans-serif;">
+    <h3>You forgot password?</h3>
+    <p style="text-align: center">
+        <img src="https://media.giphy.com/media/S3bndf0POYeRbwecRD/giphy.gif" alt="I forgot pass!">
+    </p>
+    <p><a style="text-decoration: none; color: #5baf0c; font-weight: bold"
+          href="https://{{ domain }}{% url 'core:reset_password_confirm' uidb64=uid token=token %}">>> Reset it!</a></p>
+    <p>Have a nice day!</p>
+    <p>&nbsp;</p>
+    <a style="text-decoration: none" href="https://{{ domain }}{% url 'core:index' %}">
+        <div style="text-align: center; font-weight: bold; font-size: 1.2em;">
+            <span style="color: #5baf0c">Ve</span>
+            <span style="color: #ffc300">ma</span>
+            <span style="color: #e23400">ma</span>
+        </div>
+    </a>
+</div>
+</body>
+</html>

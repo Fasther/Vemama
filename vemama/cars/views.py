@@ -2,9 +2,10 @@ from datetime import timedelta
 
 import requests
 from django.conf import settings
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect, HttpResponse
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse
 from django.utils import timezone
 from django.views.generic import ListView, DetailView, UpdateView, TemplateView
@@ -182,3 +183,17 @@ class UpdateActualDrivenKMsFromZemtu(APIView):
                                 f"{zemtu_data.status_code}: {zemtu_data.reason}\n"
                                 f"{40 * '-'}\n",
                                 content_type="text/plain", status=400)
+
+
+@login_required
+def redirect_to_car(request, **kwargs):
+    car_name = request.GET.get("car_name")
+    if not car_name:
+        request.session["go_to_msg"] = f"""Please enter car name!"""
+        return redirect("core:index")
+    try:
+        car = Car.objects.get(car_name__icontains=car_name)
+    except Car.DoesNotExist:
+        request.session["go_to_msg"] = f"""Car "{car_name}" doesn't exist!"""
+        return redirect("core:index")
+    return redirect(car.get_absolute_url())
