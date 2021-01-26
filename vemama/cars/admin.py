@@ -13,13 +13,12 @@ class CarAdmin(SimpleHistoryAdmin):
                     "car_next_km",
                     "car_next_date",
                     "car_next_stk_date",
+                    "car_tyres"
                     ]
     list_editable = ["car_actual_driven_kms", ]
     history_list_display = ["car_actual_driven_kms", "changed_fields", ]
-    readonly_fields = ["car_next_date",
-                       "car_next_km",
-                       ]
-    list_filter = ["car_city", "is_active"]
+    readonly_fields = ["car_next_date", "car_next_km", ]
+    list_filter = ["car_city", "is_active", "car_tyres", ]
     search_fields = ["car_name"]
 
     @staticmethod
